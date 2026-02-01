@@ -10,9 +10,12 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
+        const existingProjects = this.getProjects();
+        // Force l'initialisation si pas de projets ou si on a rajouté des nouveaux projets dans les mocks
+        if (existingProjects.length < MOCK_PROJETS.length) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
         }
+
         if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
         }
@@ -25,6 +28,15 @@ export const storageService = {
     getProjects(): ProjetPFE[] {
         const data = localStorage.getItem(STORAGE_KEYS.PROJECTS);
         return data ? JSON.parse(data) : [];
+    },
+
+    syncStudentName(studentId: string, newName: string) {
+        const projects = this.getProjects();
+        const index = projects.findIndex(p => p.idEtudiant === studentId);
+        if (index !== -1) {
+            projects[index].nomEtudiant = newName;
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+        }
     },
 
     getProjectById(id: string): ProjetPFE | undefined {

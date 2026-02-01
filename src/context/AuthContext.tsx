@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
+import { storageService } from '../services/storageService';
 import type { Utilisateur, EtatAuth, Role } from '../types';
 
 interface AuthContextType extends EtatAuth {
@@ -80,7 +81,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setState(newState);
         localStorage.setItem('pfe_auth', JSON.stringify(newState));
 
-        // Optionnel: Mettre à jour MOCK_STUDENTS en mémoire pour la session actuelle si nécessaire
+        // Synchroniser avec le projet si c'est un étudiant et que le nom a changé
+        if (newUser.role === 'student' && updatedUser.nom) {
+            storageService.syncStudentName(newUser.id, updatedUser.nom);
+        }
+
+        // Optionnel: Mettre à jour MOCK_STUDENTS en mémoire
         const studentIdx = MOCK_STUDENTS.findIndex(s => s.id === newUser.id);
         if (studentIdx !== -1) {
             MOCK_STUDENTS[studentIdx] = newUser as Utilisateur;

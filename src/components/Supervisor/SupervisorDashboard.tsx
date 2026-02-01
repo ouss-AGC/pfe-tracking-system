@@ -111,6 +111,22 @@ const SupervisorDashboard = () => {
                     </div>
                 </div>
             )}
+            {/* BANDEAU BIENVENUE DR ATOUI */}
+            <div className="welcome-banner glass animate-slide-down">
+                <div className="welcome-photo-container">
+                    <img src="/dr-atoui.jpg" alt="Dr. Oussama Atoui" className="welcome-photo" />
+                </div>
+                <div className="welcome-text">
+                    <span className="rank-label">OFFICIER ENCADRANT</span>
+                    <h2>Bienvenue, Dr. Oussama Atoui</h2>
+                    <p>Système de Suivi des Projets de Fin d'Études - Promotion 2026</p>
+                </div>
+                <div className="welcome-badge">
+                    <ShieldCheck size={40} className="badge-icon" />
+                    <span>ACCÈS COMMANDEMENT SIGNE</span>
+                </div>
+            </div>
+
             <header className="dashboard-header">
                 <div className="header-info">
                     <div className="military-label">
