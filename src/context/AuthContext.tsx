@@ -48,7 +48,14 @@ const MOCK_STUDENTS: Utilisateur[] = [
         motDePasse: PASSWORD_DEFAULT,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ghofrane'
     },
-    { id: 'std-4', nom: 'En attente...', email: 'std4@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=4' },
+    {
+        id: 'std-4',
+        nom: 'Fedi Karmi',
+        email: 'karmifedi@gmail.com',
+        role: 'student',
+        motDePasse: PASSWORD_DEFAULT,
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fedi'
+    },
     { id: 'std-5', nom: 'En attente...', email: 'std5@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=5' }
 ];
 

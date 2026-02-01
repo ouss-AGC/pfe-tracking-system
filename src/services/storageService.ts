@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.2_ghofrane'; // Nouvelle version pour Oueslati Ghofrane
+        const VERSION = 'v2.3_fedi'; // Nouvelle version pour Fedi Karmi
         if (localStorage.getItem('pfe_storage_version') !== VERSION) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
             localStorage.setItem('pfe_storage_version', VERSION);

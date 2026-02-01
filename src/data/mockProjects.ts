@@ -56,15 +56,15 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-4',
-        titre: 'Sujet PFE - En attente d\'affectation',
+        titre: 'Étude Comparative de l’Efficacité de Différents Additifs Naturels (Cactus, Blanc d’Œuf) comme Stabilisants pour Mortiers de Terre',
         idEtudiant: 'std-4',
-        nomEtudiant: 'En attente...',
+        nomEtudiant: 'Fedi Karmi',
         nomEncadrant: 'Dr. Oussama Atoui',
-        description: 'Poste vacant pour futur étudiant.',
+        description: 'Comparaison de l\'impact du cactus et du blanc d\'œuf sur la stabilisation et la performance des mortiers de terre.',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Rédaction 1', progres: 0 }, { id: 'red-2', label: 'Rédaction 2', progres: 0 }, { id: 'red-3', label: 'Rédaction 3', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Préparation additifs', progres: 0 }, { id: 'exp-2', label: 'Confection éprouvettes', progres: 0 }, { id: 'exp-3', label: 'Essais de durabilité', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 0 }, { id: 'red-2', label: 'Protocole expérimental', progres: 0 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
         },
         urlFichePFE: '',
         journalSuivi: []
