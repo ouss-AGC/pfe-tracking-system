@@ -67,9 +67,10 @@ const Login = () => {
                             <label htmlFor="email">{role === 'supervisor' ? 'Identifiant Personnel' : 'Email Address'}</label>
                             <div className="input-wrapper">
                                 <input
+                                    <input
                                     id="email"
                                     type="text"
-                                    placeholder={role === 'supervisor' ? '08530118' : 'Enter your email'}
+                                    placeholder={role === 'supervisor' ? 'Identifiant' : 'Enter your email'}
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
@@ -82,9 +83,9 @@ const Login = () => {
                             <div className="input-wrapper">
                                 <input
                                     id="password"
-                                    type={role === 'supervisor' ? 'text' : 'password'}
+                                    type="password"
                                     maxLength={role === 'supervisor' ? 4 : undefined}
-                                    placeholder={role === 'supervisor' ? '0331' : '••••••••'}
+                                    placeholder="••••"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
