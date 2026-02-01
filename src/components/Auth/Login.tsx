@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { LogIn, Shield, Users, GraduationCap } from 'lucide-react';
-import { Role } from '../../types';
+import type { Role } from '../../types';
 import './Login.css';
 
 const Login = () => {
