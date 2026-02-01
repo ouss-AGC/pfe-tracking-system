@@ -12,6 +12,23 @@ const BookingManagement = () => {
     const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     const SLOTS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'];
 
+    // Calcul des dates de la semaine actuelle
+    const getWeekDates = () => {
+        const now = new Date();
+        const day = now.getDay(); // 0 (Sun) to 6 (Sat)
+        const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
+        const monday = new Date(now.setDate(diff));
+
+        return DAYS.map((_, i) => {
+            const d = new Date(monday);
+            d.setDate(monday.getDate() + i);
+            return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+        });
+    };
+
+    const weekDates = getWeekDates();
+    const currentYear = new Date().getFullYear();
+
     const handleAction = (id: string, statut: 'accepte' | 'annule') => {
         const app = appointments.find(a => a.id === id);
         storageService.updateAppointment(id, { statut });
@@ -183,13 +200,21 @@ const BookingManagement = () => {
                 <aside className="booking-decision-helper glass animate-slide-in-right">
                     <div className="helper-header">
                         <Calendar size={18} />
-                        <h3>CALENDRIER HEBDOMADAIRE</h3>
+                        <div>
+                            <h3>AGENDA SEMAINE</h3>
+                            <span className="week-range">Février {currentYear}</span>
+                        </div>
                     </div>
 
                     <div className="calendar-grid-container">
                         <div className="grid-header-row">
                             <div className="slot-label-empty"></div>
-                            {DAYS.map(d => <div key={d} className="day-label">{d}</div>)}
+                            {DAYS.map((d, i) => (
+                                <div key={d} className="day-label">
+                                    <span className="d-name">{d}</span>
+                                    <span className="d-date">{weekDates[i]}</span>
+                                </div>
+                            ))}
                         </div>
 
                         {SLOTS.map(slot => (

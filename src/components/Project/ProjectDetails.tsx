@@ -10,8 +10,13 @@ import {
 } from 'lucide-react';
 import './ProjectDetails.css';
 
-const ProjectDetails = () => {
-    const { id } = useParams<{ id: string }>();
+interface ProjectDetailsProps {
+    projectId?: string;
+}
+
+const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
+    const { id: urlId } = useParams<{ id: string }>();
+    const id = projectId || urlId;
     const navigate = useNavigate();
     const { user } = useAuth();
     const [project, setProject] = useState<ProjetPFE | null>(null);

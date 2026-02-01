@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
 import BroadcastBanner from '../Layout/BroadcastBanner';
 import FicheInteractivePFE from '../Project/FicheInteractivePFE';
+import ProjectDetails from '../Project/ProjectDetails';
 import type { ProjetPFE } from '../../types';
 import {
     Users, ShieldCheck, Clock,
@@ -17,6 +18,7 @@ const SupervisorDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [projects, setProjects] = useState<ProjetPFE[]>([]);
     const [selectedProjectForFiche, setSelectedProjectForFiche] = useState<ProjetPFE | null>(null);
+    const [selectedProjectForJournal, setSelectedProjectForJournal] = useState<ProjetPFE | null>(null);
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
     const [broadcastMsg, setBroadcastMsg] = useState('');
@@ -57,6 +59,24 @@ const SupervisorDashboard = () => {
                             <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
                         <FicheInteractivePFE project={selectedProjectForFiche} />
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Visualisation du Journal de SUIVI */}
+            {selectedProjectForJournal && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setSelectedProjectForJournal(null)}>
+                    <div className="pdf-viewer-modal glass journal-modal-wide animate-scale-up" onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header">
+                            <div className="header-with-icon">
+                                <Activity size={20} />
+                                <h3>JOURNAL DE SUIVI INTERACTIF</h3>
+                            </div>
+                            <button className="btn-close" onClick={() => setSelectedProjectForJournal(null)}>×</button>
+                        </div>
+                        <div className="modal-scroll-body">
+                            <ProjectDetails projectId={selectedProjectForJournal.id} />
+                        </div>
                     </div>
                 </div>
             )}
@@ -211,7 +231,10 @@ const SupervisorDashboard = () => {
 
                         <div className="modal-academic-footer">
                             <button className="btn btn-outline" onClick={() => setSelectedStudent(null)}>Fermer</button>
-                            <button className="btn btn-primary" onClick={() => navigate(`/project/${selectedStudent.id}`)}>
+                            <button className="btn btn-primary" onClick={() => {
+                                setSelectedProjectForJournal(selectedStudent);
+                                setSelectedStudent(null);
+                            }}>
                                 Accéder au Journal de Suivi <ChevronRight size={18} />
                             </button>
                         </div>
@@ -364,7 +387,7 @@ const SupervisorDashboard = () => {
                                             className="v-btn-open"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                navigate(`/project/${project.id}`);
+                                                setSelectedProjectForJournal(project);
                                             }}
                                         >
                                             Suivi <ChevronRight size={16} />

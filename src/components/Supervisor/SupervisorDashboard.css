@@ -921,3 +921,28 @@
     justify-content: flex-end;
     gap: 1rem;
 }
+/* Modal Journal de Suivi Immersif */
+.journal-modal-wide {
+    width: 95vw !important;
+    height: 95vh !important;
+    max-width: 1400px !important;
+}
+
+.modal-scroll-body {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--color-bg-sidebar);
+}
+
+.header-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-accent-blue);
+}
+
+.header-with-icon h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+}
