@@ -40,6 +40,7 @@ export interface ProjetPFE {
     avatarEtudiant?: string; // Photo de l'étudiant
     telephoneEtudiant?: string; // GSM de l'étudiant
     nomEncadrant: string;
+    emailEncadrant: string; // Nouveau: Pour communication directe étudiant -> encadrant
     description: string;
     urlFicheProposition?: string;
     progres: ProgresProjet;
