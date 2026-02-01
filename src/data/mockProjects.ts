@@ -25,7 +25,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
                 { id: 'red-3', label: 'Analyse des résultats', progres: 0 },
             ]
         },
-        urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
     },
     {
@@ -43,7 +43,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 0 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
-        urlFichePFE: '',
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
     },
     {
@@ -62,7 +62,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Sélection fibres', progres: 0 }, { id: 'exp-2', label: 'Pressage briques', progres: 0 }, { id: 'exp-3', label: 'Tests conductivité', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 0 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
-        urlFichePFE: '',
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
     },
     {
@@ -81,7 +81,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Préparation additifs', progres: 0 }, { id: 'exp-2', label: 'Confection éprouvettes', progres: 0 }, { id: 'exp-3', label: 'Essais de durabilité', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 0 }, { id: 'red-2', label: 'Protocole expérimental', progres: 0 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
         },
-        urlFichePFE: '',
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
     },
     {
@@ -99,7 +99,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Traitement coquilles', progres: 0 }, { id: 'exp-2', label: 'Formulation mortiers', progres: 0 }, { id: 'exp-3', label: 'Essais de flexion', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
         },
-        urlFichePFE: '',
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
     }
 ];

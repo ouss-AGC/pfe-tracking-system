@@ -7,7 +7,7 @@ import type { ProjetPFE } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
     Calendar, Check, AlertCircle, ArrowLeft, Mail,
-    ChevronRight, Shield, Upload, Paperclip, PenTool, Send, X, Save
+    ChevronRight, Shield, Upload, Paperclip, PenTool, Send, X, Save, Edit3
 } from 'lucide-react';
 import './StudentDashboard.css';
 
@@ -62,12 +62,19 @@ const StudentDashboard = () => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // Editable Progress State
+    const [isEditingProgress, setIsEditingProgress] = useState(false);
+    const [tempExperimental, setTempExperimental] = useState<any[]>([]);
+    const [tempRedaction, setTempRedaction] = useState<any[]>([]);
+
     useEffect(() => {
         if (user) {
             setNotifications(storageService.getNotifications().filter(n => n.idEtudiant === user.id));
             const userProject = storageService.getProjectByStudent(user.id);
             if (userProject) {
                 setProject(userProject);
+                setTempExperimental(userProject.progres.experimental);
+                setTempRedaction(userProject.progres.redaction);
             }
         }
     }, [user]);
@@ -84,11 +91,13 @@ const StudentDashboard = () => {
     );
 
     const calculateSectionProgress = (milestones: any[]) => {
+        if (!milestones || milestones.length === 0) return 0;
         return Math.round(milestones.reduce((acc, m) => acc + m.progres, 0) / milestones.length);
     };
 
-    const expProgress = calculateSectionProgress(project.progres.experimental);
-    const redProgress = calculateSectionProgress(project.progres.redaction);
+    // Use temp state for calculations to reflect live edits
+    const expProgress = calculateSectionProgress(isEditingProgress ? tempExperimental : project.progres.experimental);
+    const redProgress = calculateSectionProgress(isEditingProgress ? tempRedaction : project.progres.redaction);
     const totalProgress = Math.round((expProgress + redProgress) / 2);
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,6 +118,38 @@ const StudentDashboard = () => {
             setUploadedFile(null);
             setTimeout(() => setSubmitSuccess(false), 3000);
         }, 1500);
+    };
+
+    const handleProgressChange = (type: 'experimental' | 'redaction', id: string, newValue: number) => {
+        const updater = type === 'experimental' ? setTempExperimental : setTempRedaction;
+        const currentList = type === 'experimental' ? tempExperimental : tempRedaction;
+
+        updater(currentList.map(item =>
+            item.id === id ? { ...item, progres: parseInt(newValue.toString()) } : item
+        ));
+    };
+
+    const saveProgress = () => {
+        if (!project) return;
+
+        const updatedProject = {
+            ...project,
+            progres: {
+                experimental: tempExperimental,
+                redaction: tempRedaction
+            }
+        };
+
+        storageService.updateProject(updatedProject);
+        setProject(updatedProject);
+        setIsEditingProgress(false); // Mode lecture seule après sauvegarde
+    };
+
+    const cancelProgressEdit = () => {
+        if (!project) return;
+        setTempExperimental(project.progres.experimental);
+        setTempRedaction(project.progres.redaction);
+        setIsEditingProgress(false);
     };
 
     return (
@@ -160,43 +201,92 @@ const StudentDashboard = () => {
                 </div>
             </div>
 
+            <div className="dashboard-subheader" style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem', paddingRight: '2rem' }}>
+                {!isEditingProgress ? (
+                    <button className="btn btn-primary" onClick={() => setIsEditingProgress(true)}>
+                        <Edit3 size={16} /> Mettre à jour l'Avancement
+                    </button>
+                ) : (
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <button className="btn btn-outline" onClick={cancelProgressEdit}>
+                            Annuler
+                        </button>
+                        <button className="btn btn-primary" onClick={saveProgress}>
+                            <Save size={16} /> Enregistrer
+                        </button>
+                    </div>
+                )}
+            </div>
+
             <div className="dashboard-content-grid">
-                <section className="milestones-section glass">
+                <section className={`milestones-section glass ${isEditingProgress ? 'editing-mode' : ''}`}>
                     <div className="section-title">
                         <FlaskConical size={20} />
                         <h2>OBJECTIFS OPÉRATIONNELS</h2>
                     </div>
                     <div className="milestone-list">
-                        {project.progres.experimental.map((m) => (
+                        {(isEditingProgress ? tempExperimental : project.progres.experimental).map((m) => (
                             <div key={m.id} className="milestone-item">
                                 <div className="m-info">
                                     <span className="m-label">{m.label}</span>
-                                    <span className="m-date">MAJ : {m.derniereMiseAJour || 'N/A'}</span>
+                                    {!isEditingProgress && <span className="m-date">MAJ : {m.derniereMiseAJour || 'N/A'}</span>}
                                 </div>
-                                <div className="m-progress">
-                                    <div className="progress-bar"><div className="fill" style={{ width: `${m.progres}%` }}></div></div>
-                                    <span className="m-percent">{m.progres}%</span>
+                                <div className="m-progress-interactive">
+                                    {isEditingProgress ? (
+                                        <>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={m.progres}
+                                                onChange={(e) => handleProgressChange('experimental', m.id, parseInt(e.target.value))}
+                                                className="progress-slider"
+                                            />
+                                            <span className="m-percent-editable">{m.progres}%</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="progress-bar"><div className="fill" style={{ width: `${m.progres}%` }}></div></div>
+                                            <span className="m-percent">{m.progres}%</span>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         ))}
                     </div>
                 </section>
 
-                <section className="milestones-section glass">
+                <section className={`milestones-section glass ${isEditingProgress ? 'editing-mode' : ''}`}>
                     <div className="section-title">
                         <BookOpen size={20} />
                         <h2>REVUE ET RÉDACTION</h2>
                     </div>
                     <div className="milestone-list">
-                        {project.progres.redaction.map((m) => (
+                        {(isEditingProgress ? tempRedaction : project.progres.redaction).map((m) => (
                             <div key={m.id} className="milestone-item">
                                 <div className="m-info">
                                     <span className="m-label">{m.label}</span>
-                                    <span className="m-date">MAJ : {m.derniereMiseAJour || 'N/A'}</span>
+                                    {!isEditingProgress && <span className="m-date">MAJ : {m.derniereMiseAJour || 'N/A'}</span>}
                                 </div>
-                                <div className="m-progress">
-                                    <div className="progress-bar"><div className="fill red" style={{ width: `${m.progres}%` }}></div></div>
-                                    <span className="m-percent">{m.progres}%</span>
+                                <div className="m-progress-interactive">
+                                    {isEditingProgress ? (
+                                        <>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={m.progres}
+                                                onChange={(e) => handleProgressChange('redaction', m.id, parseInt(e.target.value))}
+                                                className="progress-slider red-slider"
+                                            />
+                                            <span className="m-percent-editable">{m.progres}%</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="progress-bar"><div className="fill red" style={{ width: `${m.progres}%` }}></div></div>
+                                            <span className="m-percent">{m.progres}%</span>
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -279,6 +369,7 @@ const StudentDashboard = () => {
                 <p>
                     <strong>CONSIGNE :</strong> La mise à jour de l'avancement est obligatoire avant chaque remise hebdomadaire.
                     Le non-respect des échéances peut impacter votre visa de soutenance.
+                    L'encadrant validera vos déclarations.
                 </p>
                 <button className="btn btn-primary" onClick={() => navigate(`/project/${project.id}`)}>
                     Journal de Suivi <ChevronRight size={18} />

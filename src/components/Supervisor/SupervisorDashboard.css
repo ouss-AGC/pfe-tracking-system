@@ -963,3 +963,72 @@
 .contact-pill.link:hover span {
     color: var(--color-accent-blue);
 }
+
+/* Validation Modal for Progress */
+.validation-modal {
+    width: 600px !important;
+    background: #1e293b;
+}
+
+.validation-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.validation-section {
+    margin-bottom: 2rem;
+}
+
+.validation-section h4 {
+    color: var(--color-accent-blue);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.validation-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem;
+    border-radius: 6px;
+}
+
+.v-label-text {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    flex: 1;
+}
+
+.v-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.v-input-val {
+    width: 60px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.validation-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+}

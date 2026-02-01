@@ -10,7 +10,7 @@ import {
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
     Activity, Shield, FileText, Megaphone, Send, Trash2,
-    Phone, Mail, Info, X, ArrowLeft
+    Phone, Mail, Info, X, ArrowLeft, Edit2, Save
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -23,6 +23,12 @@ const SupervisorDashboard = () => {
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
     const [broadcastMsg, setBroadcastMsg] = useState('');
     const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
+
+    // NEW: Validation Modal State
+    const [studentForValidation, setStudentForValidation] = useState<ProjetPFE | null>(null);
+    const [validationExp, setValidationExp] = useState<any[]>([]);
+    const [validationRed, setValidationRed] = useState<any[]>([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -47,6 +53,33 @@ const SupervisorDashboard = () => {
         return Math.round((exp + red) / 2);
     };
 
+    const openValidationModal = (project: ProjetPFE, e: React.MouseEvent) => {
+        e.stopPropagation();
+        setStudentForValidation(project);
+        setValidationExp(project.progres.experimental);
+        setValidationRed(project.progres.redaction);
+    };
+
+    const handleValidationChange = (type: 'experimental' | 'redaction', id: string, val: number) => {
+        const updater = type === 'experimental' ? setValidationExp : setValidationRed;
+        const list = type === 'experimental' ? validationExp : validationRed;
+        updater(list.map(m => m.id === id ? { ...m, progres: val } : m));
+    };
+
+    const saveValidation = () => {
+        if (!studentForValidation) return;
+        const updated = {
+            ...studentForValidation,
+            progres: {
+                experimental: validationExp,
+                redaction: validationRed
+            }
+        };
+        storageService.updateProject(updated);
+        setProjects(storageService.getProjects()); // Refresh list
+        setStudentForValidation(null);
+    };
+
     return (
         <div className="dashboard-page animate-fade-in">
             <BroadcastBanner />
@@ -59,6 +92,65 @@ const SupervisorDashboard = () => {
                             <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
                         <FicheInteractivePFE project={selectedProjectForFiche} />
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Validation Progression */}
+            {studentForValidation && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setStudentForValidation(null)}>
+                    <div className="pdf-viewer-modal glass validation-modal animate-scale-up" onClick={e => e.stopPropagation()}>
+                        <div className="validation-header">
+                            <h3>VALIDATION DE L'AVANCEMENT - {studentForValidation.nomEtudiant.toUpperCase()}</h3>
+                            <button className="btn-close" onClick={() => setStudentForValidation(null)}>×</button>
+                        </div>
+
+                        <div className="modal-scroll-body">
+                            <div className="validation-section">
+                                <h4>Volet Expérimental</h4>
+                                {validationExp.map(m => (
+                                    <div key={m.id} className="validation-row">
+                                        <span className="v-label-text">{m.label}</span>
+                                        <div className="v-controls">
+                                            <input
+                                                type="number"
+                                                min="0" max="100"
+                                                value={m.progres}
+                                                onChange={(e) => handleValidationChange('experimental', m.id, parseInt(e.target.value))}
+                                                className="v-input-val"
+                                            />
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="validation-section">
+                                <h4>Volet Rédactionnel</h4>
+                                {validationRed.map(m => (
+                                    <div key={m.id} className="validation-row">
+                                        <span className="v-label-text">{m.label}</span>
+                                        <div className="v-controls">
+                                            <input
+                                                type="number"
+                                                min="0" max="100"
+                                                value={m.progres}
+                                                onChange={(e) => handleValidationChange('redaction', m.id, parseInt(e.target.value))}
+                                                className="v-input-val"
+                                            />
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="validation-actions">
+                                <button className="btn btn-outline" onClick={() => setStudentForValidation(null)}>Annuler</button>
+                                <button className="btn btn-primary" onClick={saveValidation}>
+                                    <Save size={18} /> Valider et Mettre à Jour
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
@@ -365,13 +457,10 @@ const SupervisorDashboard = () => {
                                     <div className="v-actions-group">
                                         <button
                                             className="v-btn-ref info"
-                                            title="Voir Détails Étudiant"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setSelectedStudent(project);
-                                            }}
+                                            title="Éditer et Valider la Progression"
+                                            onClick={(e) => openValidationModal(project, e)}
                                         >
-                                            <Info size={16} />
+                                            <Edit2 size={16} />
                                         </button>
                                         <button
                                             className="v-btn-ref"
