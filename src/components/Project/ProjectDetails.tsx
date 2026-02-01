@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
-import type { ProjetPFE, JalonProgres } from '../../types';
+import type { ProjetPFE } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import {
     ArrowLeft, FlaskConical, BookOpen, Save,
