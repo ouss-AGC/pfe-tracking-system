@@ -67,7 +67,6 @@ const Login = () => {
                             <label htmlFor="email">{role === 'supervisor' ? 'Identifiant Personnel' : 'Email Address'}</label>
                             <div className="input-wrapper">
                                 <input
-                                    <input
                                     id="email"
                                     type="text"
                                     placeholder={role === 'supervisor' ? 'Identifiant' : 'Enter your email'}
