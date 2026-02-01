@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
 import BroadcastBanner from '../Layout/BroadcastBanner';
+import FicheInteractivePFE from '../Project/FicheInteractivePFE';
 import type { ProjetPFE } from '../../types';
 import {
     Users, ShieldCheck, Clock,
@@ -15,7 +16,7 @@ import './SupervisorDashboard.css';
 const SupervisorDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [projects, setProjects] = useState<ProjetPFE[]>([]);
-    const [selectedPDF, setSelectedPDF] = useState<string | null>(null);
+    const [selectedProjectForFiche, setSelectedProjectForFiche] = useState<ProjetPFE | null>(null);
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
     const [broadcastMsg, setBroadcastMsg] = useState('');
@@ -47,20 +48,15 @@ const SupervisorDashboard = () => {
     return (
         <div className="dashboard-page animate-fade-in">
             <BroadcastBanner />
-            {/* Modal de Visualisation PDF */}
-            {selectedPDF && (
-                <div className="pdf-viewer-overlay glass" onClick={() => setSelectedPDF(null)}>
-                    <div className="pdf-viewer-modal glass" onClick={e => e.stopPropagation()}>
+            {/* Modal de Visualisation de Fiche INTERACTIVE */}
+            {selectedProjectForFiche && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setSelectedProjectForFiche(null)}>
+                    <div className="pdf-viewer-modal glass" style={{ width: '90%', maxWidth: '900px', height: '90vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
                         <div className="pdf-header">
-                            <h3>RÉFÉRENTIEL : FICHE DE PROPOSITION PFE</h3>
-                            <button className="btn-close" onClick={() => setSelectedPDF(null)}>×</button>
+                            <h3>RÉFÉRENTIEL ACADÉMIQUE : FICHE DE PROPOSITION</h3>
+                            <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
-                        <iframe
-                            src={selectedPDF}
-                            title="Fiche PFE"
-                            width="100%"
-                            height="100%"
-                        ></iframe>
+                        <FicheInteractivePFE project={selectedProjectForFiche} />
                     </div>
                 </div>
             )}
@@ -358,7 +354,7 @@ const SupervisorDashboard = () => {
                                             title="Voir la Fiche de Proposition (Référentiel)"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                setSelectedPDF(project.urlFichePFE || null);
+                                                setSelectedProjectForFiche(project);
                                             }}
                                         >
                                             <FileText size={16} />

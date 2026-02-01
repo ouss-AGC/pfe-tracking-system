@@ -1,0 +1,202 @@
+.fiche-pfe-container {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.fiche-pfe-paper {
+    width: 210mm;
+    min-height: 297mm;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 30mm 20mm;
+    color: #1a1a1a;
+    font-family: 'Times New Roman', Times, serif;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Texture de papier subtile */
+.fiche-pfe-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+    pointer-events: none;
+}
+
+.republique-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px double #1a1a1a;
+    padding-bottom: 1rem;
+}
+
+.fiche-title-box {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.fiche-title-box h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
+    color: #000;
+}
+
+.academic-year {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.fiche-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 1rem;
+    color: #1e40af;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fiche-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-item.full {
+    grid-column: span 2;
+}
+
+.grid-item label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.grid-item span {
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid #eee;
+    padding: 8px 12px;
+    background: #fcfcfc;
+    border-radius: 4px;
+}
+
+.sujet-box {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.description-text {
+    line-height: 1.7;
+    text-align: justify;
+    font-size: 1rem;
+    color: #333;
+}
+
+.placeholder-text {
+    margin-top: 1rem;
+    color: #666;
+}
+
+.planning-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.planning-table th,
+.planning-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.planning-table th {
+    background: #f1f5f9;
+    font-weight: 700;
+}
+
+.fiche-footer {
+    margin-top: 4rem;
+    border-top: 1px dashed #ddd;
+    padding-top: 2rem;
+}
+
+.signature-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.sig-block {
+    text-align: center;
+    width: 30%;
+}
+
+.sig-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-decoration: underline;
+}
+
+.sig-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.official-seal {
+    width: 150px;
+    height: auto;
+    margin-top: -10px;
+    opacity: 0.9;
+    mix-blend-mode: multiply;
+    /* Rend le blanc transparent */
+}
+
+@media print {
+    .fiche-pfe-container {
+        padding: 0;
+        background: white;
+    }
+
+    .fiche-pfe-paper {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+    }
+}
