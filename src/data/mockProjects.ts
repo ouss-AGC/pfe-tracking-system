@@ -41,15 +41,15 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-3',
-        titre: 'Sujet PFE - En attente d\'affectation',
+        titre: 'Amélioration des propriétés thermiques et mécaniques de briques en terre crue par l\'incorporation de fibres végétales locales',
         idEtudiant: 'std-3',
-        nomEtudiant: 'En attente...',
+        nomEtudiant: 'Oueslati Ghofrane',
         nomEncadrant: 'Dr. Oussama Atoui',
-        description: 'Poste vacant pour futur étudiant.',
+        description: 'Étude de l\'amélioration des caractéristiques des briques de terre crue via des fibres locales (thèrmique et mécanique).',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Rédaction 1', progres: 0 }, { id: 'red-2', label: 'Rédaction 2', progres: 0 }, { id: 'red-3', label: 'Rédaction 3', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Sélection fibres', progres: 0 }, { id: 'exp-2', label: 'Pressage briques', progres: 0 }, { id: 'exp-3', label: 'Tests conductivité', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 0 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
         urlFichePFE: '',
         journalSuivi: []
