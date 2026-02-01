@@ -165,7 +165,8 @@ const SupervisorDashboard = () => {
                                             <span>{selectedStudent.idEtudiant === 'std-1' ? 'mohamedhmaidi922@gmail.com' :
                                                 selectedStudent.idEtudiant === 'std-2' ? 'melkiwael36@gmail.com' :
                                                     selectedStudent.idEtudiant === 'std-3' ? 'fechbej@gmail.com' :
-                                                        'karmifedi@gmail.com'}</span>
+                                                        selectedStudent.idEtudiant === 'std-4' ? 'karmifedi@gmail.com' :
+                                                            'mohamedaziz@gmail.com'}</span>
                                         </div>
                                         <div className="contact-pill">
                                             <Phone size={14} />

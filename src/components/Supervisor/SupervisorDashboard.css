@@ -749,3 +749,175 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* MODALE DÉTAILS ÉTUDIANT - PREMIUM */
+.student-details-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 2rem;
+}
+
+.student-details-modal {
+    width: 100%;
+    max-width: 850px;
+    max-height: 90vh;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-academic-content {
+    padding: 2.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.student-hero {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.student-photo-large img {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    object-fit: cover;
+    border: 2px solid var(--color-accent-blue);
+    box-shadow: 0 0 20px rgba(30, 64, 175, 0.3);
+}
+
+.info-id {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--color-accent-blue);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+}
+
+.contact-pills {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.academic-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    margin: 2rem 0;
+}
+
+.project-highlight label,
+.academic-progress-view label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent-blue);
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+}
+
+.project-highlight h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.project-highlight p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.academic-progress-view {
+    margin-top: 2.5rem;
+}
+
+.large-progress-track {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.track-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+}
+
+.track-header .pct {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.main-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.main-fill {
+    height: 100%;
+    background: var(--color-accent-blue);
+}
+
+.sub-progress-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.sub-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.sub-fill {
+    height: 100%;
+    background: #10b981;
+}
+
+.sub-fill.blue {
+    background: var(--color-accent-blue);
+}
+
+.modal-academic-footer {
+    padding: 1.5rem 2.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
