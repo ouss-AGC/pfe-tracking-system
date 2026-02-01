@@ -3,22 +3,22 @@ import type { ProjetPFE, RendezVous } from '../types';
 export const MOCK_PROJETS: ProjetPFE[] = [
     {
         id: 'proj-1',
-        titre: 'Étude du comportement des bétons fibrés à haute performance',
+        titre: 'Valorisation des déchets de bouteilles de plastique (PET) comme Granulats partiels dans la formulation des bétons légers',
         idEtudiant: 'std-1',
-        nomEtudiant: 'Ahmed Ben Salem',
+        nomEtudiant: 'Hmaidi Mohamed',
         nomEncadrant: 'Dr. Oussama Atoui',
-        description: 'Analyse des propriétés mécaniques du BFHP.',
+        description: 'Étude de l\'incorporation de granulats PET recyclés pour l\'allègement des structures en béton.',
         statut: 'en-cours',
         progres: {
             experimental: [
-                { id: 'exp-1', label: 'Caractérisation', progres: 100, derniereMiseAJour: '2024-01-15' },
-                { id: 'exp-2', label: 'Coulage', progres: 80, derniereMiseAJour: '2024-01-20' },
-                { id: 'exp-3', label: 'Essais', progres: 20, derniereMiseAJour: '2024-01-28' },
+                { id: 'exp-1', label: 'Caractérisation PET', progres: 0 },
+                { id: 'exp-2', label: 'Formulation bétons légers', progres: 0 },
+                { id: 'exp-3', label: 'Essais de compression/traction', progres: 0 },
             ],
             redaction: [
-                { id: 'red-1', label: 'Revue bibliographique', progres: 90, derniereMiseAJour: '2024-01-10' },
-                { id: 'red-2', label: 'Partie expérimentale', progres: 40, derniereMiseAJour: '2024-01-25' },
-                { id: 'red-3', label: 'Analyse', progres: 0, derniereMiseAJour: '2024-01-28' },
+                { id: 'red-1', label: 'Revue bibliographique (Plastiques)', progres: 0 },
+                { id: 'red-2', label: 'Synthèse bibliographique', progres: 0 },
+                { id: 'red-3', label: 'Analyse des résultats', progres: 0 },
             ]
         },
         urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',

@@ -11,8 +11,8 @@ export const storageService = {
     // INITIALISATION
     init() {
         const existingProjects = this.getProjects();
-        // Force l'initialisation si pas de projets ou si on a rajouté des nouveaux projets dans les mocks
-        if (existingProjects.length < MOCK_PROJETS.length) {
+        // Force l'initialisation si pas de projets ou si le premier projet n'est pas Hmaidi Mohamed
+        if (existingProjects.length < MOCK_PROJETS.length || (existingProjects.length > 0 && existingProjects[0].nomEtudiant !== MOCK_PROJETS[0].nomEtudiant)) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
         }
 

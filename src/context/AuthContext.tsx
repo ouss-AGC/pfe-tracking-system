@@ -26,11 +26,11 @@ const MOCK_SUPERVISOR: Utilisateur = {
 const MOCK_STUDENTS: Utilisateur[] = [
     {
         id: 'std-1',
-        nom: 'Ahmed Ben Salem',
-        email: 'ahmed.bs@student.tn',
+        nom: 'Hmaidi Mohamed',
+        email: 'mohamedhmaidi922@gmail.com',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ahmed'
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=hmaidi'
     },
     {
         id: 'std-2',
