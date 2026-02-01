@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { storageService } from '../../services/storageService';
-import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle } from 'lucide-react';
+import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle, Info } from 'lucide-react';
 import './BookingManagement.css';
 
 const BookingManagement = () => {
     const [appointments, setAppointments] = useState(storageService.getAppointments());
     const [delayingId, setDelayingId] = useState<string | null>(null);
     const [delayTime, setDelayTime] = useState('');
+    const [hoveredApp, setHoveredApp] = useState<any>(null);
+
+    const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    const SLOTS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'];
 
     const handleAction = (id: string, statut: 'accepte' | 'annule') => {
         const app = appointments.find(a => a.id === id);
@@ -45,10 +49,23 @@ const BookingManagement = () => {
         setDelayTime('');
     };
 
-    // Créneaux occupés pour le calendrier aide-mémoire
-    const occupiedSlots = appointments
-        .filter(a => a.statut === 'accepte')
-        .map(a => `${a.date} | ${a.creneauHoraire}`);
+    // Créneaux occupés
+    const confirmedApps = appointments.filter(a => a.statut === 'accepte');
+
+    const getDayFromDate = (dateStr: string) => {
+        const date = new Date(dateStr);
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        return days[date.getDay()];
+    };
+
+    const isSlotOccupied = (day: string, slot: string) => {
+        return confirmedApps.find(a => getDayFromDate(a.date) === day && a.creneauHoraire === slot);
+    };
+
+    const isHoveredSlot = (day: string, slot: string) => {
+        if (!hoveredApp) return false;
+        return getDayFromDate(hoveredApp.date) === day && hoveredApp.creneauHoraire === slot;
+    };
 
     return (
         <div className="booking-page animate-fade-in">
@@ -76,8 +93,13 @@ const BookingManagement = () => {
                             <div className="col-actions">Actions</div>
                         </div>
 
-                        {appointments.map(app => (
-                            <div key={app.id} className="table-row appointment-row animate-fade-in">
+                        {appointments.filter(a => a.statut === 'en-attente').map(app => (
+                            <div
+                                key={app.id}
+                                className="table-row appointment-row animate-fade-in"
+                                onMouseEnter={() => setHoveredApp(app)}
+                                onMouseLeave={() => setHoveredApp(null)}
+                            >
                                 <div className="col-student">
                                     <div className="student-profile">
                                         <div className="mini-avatar">{app.nomEtudiant[0]}</div>
@@ -157,31 +179,49 @@ const BookingManagement = () => {
                     </div>
                 </div>
 
-                {/* Volet Calendrier Aide-à-la-Décision */}
+                {/* Calendrier Graphique (Teams Style) */}
                 <aside className="booking-decision-helper glass animate-slide-in-right">
                     <div className="helper-header">
                         <Calendar size={18} />
-                        <h3>AIDE À LA DÉCISION</h3>
+                        <h3>CALENDRIER HEBDOMADAIRE</h3>
                     </div>
-                    <div className="helper-body">
-                        <p className="helper-hint">Consultez vos créneaux déjà validés avant de confirmer une nouvelle demande.</p>
-                        <div className="occupied-list">
-                            <h4>CRÉNEAUX OCCUPÉS</h4>
-                            {occupiedSlots.length > 0 ? (
-                                occupiedSlots.map((slot, idx) => (
-                                    <div key={idx} className="occupied-item">
-                                        <Clock size={12} />
-                                        <span>{slot}</span>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="empty-msg">Aucun engagement pour le moment.</p>
-                            )}
+
+                    <div className="calendar-grid-container">
+                        <div className="grid-header-row">
+                            <div className="slot-label-empty"></div>
+                            {DAYS.map(d => <div key={d} className="day-label">{d}</div>)}
                         </div>
-                        <div className="decision-legend">
-                            <div className="legend-item"><span className="dot accept"></span> Accepté</div>
-                            <div className="legend-item"><span className="dot pending"></span> En attente</div>
-                        </div>
+
+                        {SLOTS.map(slot => (
+                            <div key={slot} className="grid-row">
+                                <div className="slot-time-label">{slot.split(' ')[0]}</div>
+                                {DAYS.map(day => {
+                                    const occupiedBy = isSlotOccupied(day, slot);
+                                    const isHovered = isHoveredSlot(day, slot);
+
+                                    return (
+                                        <div
+                                            key={`${day}-${slot}`}
+                                            className={`grid-cell ${occupiedBy ? 'occupied' : ''} ${isHovered ? 'highlight-hover' : ''}`}
+                                            title={occupiedBy ? `Occupé par ${occupiedBy.nomEtudiant}` : 'Libre'}
+                                        >
+                                            {occupiedBy && <span className="occ-name">{occupiedBy.nomEtudiant[0]}</span>}
+                                            {isHovered && <div className="pulse-spot"></div>}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="decision-legend-refined">
+                        <div className="leg-item"><span className="box confirmed"></span> Confirmé</div>
+                        <div className="leg-item"><span className="box requested pulse-anim"></span> Demande survolée</div>
+                    </div>
+
+                    <div className="helper-tip">
+                        <Info size={14} />
+                        <p>Survolez une demande à gauche pour visualiser l'impact sur votre agenda.</p>
                     </div>
                 </aside>
             </div>
