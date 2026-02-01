@@ -461,6 +461,209 @@
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* MODALES MILITAIRES PREMIUM */
+.modal-military-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(90deg, rgba(30, 64, 175, 0.2) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.title-icon {
+    color: var(--color-accent-blue);
+    filter: drop-shadow(0 0 8px var(--color-accent-blue));
+}
+
+.modal-military-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    margin: 0;
+}
+
+.btn-close-military {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-military:hover {
+    background: var(--color-accent-red);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.broadcast-form-body-refined {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.military-sublabel {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent-blue);
+    letter-spacing: 1.5px;
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+}
+
+.type-selector-military {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.type-btn-mil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.type-btn-mil.info.active {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+    color: #60a5fa;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.type-btn-mil.alerte.active {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: #f59e0b;
+    color: #fbbf24;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.type-btn-mil.urgent.active {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: #ef4444;
+    color: #f87171;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.textarea-wrapper-military {
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.military-textarea {
+    width: 100%;
+    min-height: 120px;
+    background: transparent;
+    border: none;
+    padding: 1.2rem;
+    color: white;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+}
+
+.textarea-focus-border {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-accent-blue);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.textarea-wrapper-military:focus-within {
+    border-color: rgba(30, 64, 175, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.textarea-wrapper-military:focus-within .textarea-focus-border {
+    width: 100%;
+}
+
+.broadcast-actions-refined {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.btn-mil-outline {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-mil-outline:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+.btn-mil-primary {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--color-accent-blue);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+    transition: all 0.3s;
+}
+
+.btn-mil-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+}
+
 .v-overall label {
     display: block;
     font-size: 0.7rem;

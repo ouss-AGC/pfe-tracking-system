@@ -7,7 +7,8 @@ import {
     Users, ShieldCheck, Clock,
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
-    Activity, Shield, FileText, Megaphone, Send, Trash2
+    Activity, Shield, FileText, Megaphone, Send, Trash2,
+    Phone, Mail, Info, X
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -16,6 +17,7 @@ const SupervisorDashboard = () => {
     const [projects, setProjects] = useState<ProjetPFE[]>([]);
     const [selectedPDF, setSelectedPDF] = useState<string | null>(null);
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
+    const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
     const [broadcastMsg, setBroadcastMsg] = useState('');
     const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
     const navigate = useNavigate();
@@ -62,36 +64,66 @@ const SupervisorDashboard = () => {
                     </div>
                 </div>
             )}
-            {/* Modal de Diffusion de Message */}
+            {/* Modal de Diffusion de Message (Flash Info) */}
             {showBroadcastModal && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setShowBroadcastModal(false)}>
-                    <div className="pdf-viewer-modal glass broadcast-modal" onClick={e => e.stopPropagation()}>
-                        <div className="pdf-header">
-                            <h3>DIFFUSION DE MESSAGE GLOBAL</h3>
-                            <button className="btn-close" onClick={() => setShowBroadcastModal(false)}>×</button>
-                        </div>
-                        <div className="broadcast-form-body">
-                            <label>Type de message</label>
-                            <div className="type-selector">
-                                <button className={`type-btn info ${broadcastType === 'info' ? 'active' : ''}`} onClick={() => setBroadcastType('info')}>Information</button>
-                                <button className={`type-btn alerte ${broadcastType === 'alerte' ? 'active' : ''}`} onClick={() => setBroadcastType('alerte')}>Alerte</button>
-                                <button className={`type-btn urgent ${broadcastType === 'urgent' ? 'active' : ''}`} onClick={() => setBroadcastType('urgent')}>Urgent</button>
+                    <div className="pdf-viewer-modal glass broadcast-modal animate-scale-up" onClick={e => e.stopPropagation()}>
+                        <div className="modal-military-header">
+                            <div className="header-title">
+                                <Megaphone className="title-icon" size={24} />
+                                <h3>DIFFUSION FLASH INFO COLLECTIVE</h3>
                             </div>
-                            <label>Votre Message</label>
-                            <textarea
-                                placeholder="Tapez votre message ici (ex: Rappel : Remise des rapports lundi avant 12h)..."
-                                value={broadcastMsg}
-                                onChange={(e) => setBroadcastMsg(e.target.value)}
-                            ></textarea>
-                            <div className="broadcast-actions">
-                                <button className="btn btn-outline" onClick={() => {
+                            <button className="btn-close-military" onClick={() => setShowBroadcastModal(false)}>
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        <div className="broadcast-form-body-refined">
+                            <div className="priority-section">
+                                <label className="military-sublabel">NIVEAU D'URGENCE / PRIORITÉ</label>
+                                <div className="type-selector-military">
+                                    <button
+                                        className={`type-btn-mil info ${broadcastType === 'info' ? 'active' : ''}`}
+                                        onClick={() => setBroadcastType('info')}
+                                    >
+                                        <Info size={16} /> INFO
+                                    </button>
+                                    <button
+                                        className={`type-btn-mil alerte ${broadcastType === 'alerte' ? 'active' : ''}`}
+                                        onClick={() => setBroadcastType('alerte')}
+                                    >
+                                        <AlertTriangle size={16} /> ALERTE
+                                    </button>
+                                    <button
+                                        className={`type-btn-mil urgent ${broadcastType === 'urgent' ? 'active' : ''}`}
+                                        onClick={() => setBroadcastType('urgent')}
+                                    >
+                                        <Activity size={16} /> CRITIQUE
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="message-section">
+                                <label className="military-sublabel">CORPS DU MESSAGE (ORDRES ET CONSIGNES)</label>
+                                <div className="textarea-wrapper-military">
+                                    <textarea
+                                        placeholder="Tapez votre message ici (ex: Rappel : Remise des rapports lundi avant 12h)..."
+                                        value={broadcastMsg}
+                                        onChange={(e) => setBroadcastMsg(e.target.value)}
+                                        className="military-textarea"
+                                    ></textarea>
+                                    <div className="textarea-focus-border"></div>
+                                </div>
+                            </div>
+
+                            <div className="broadcast-actions-refined">
+                                <button className="btn-mil-outline" onClick={() => {
                                     storageService.clearNotifications();
                                     setBroadcastMsg('');
-                                    alert('Historique effacé');
                                 }}>
-                                    <Trash2 size={16} /> Effacer Historique
+                                    <Trash2 size={16} /> EFFACER L'HISTORIQUE
                                 </button>
-                                <button className="btn btn-primary" onClick={() => {
+                                <button className="btn-mil-primary" onClick={() => {
                                     if (!broadcastMsg) return;
                                     storageService.addNotification({
                                         id: `note-${Date.now()}`,
@@ -104,9 +136,87 @@ const SupervisorDashboard = () => {
                                     setBroadcastMsg('');
                                     setShowBroadcastModal(false);
                                 }}>
-                                    <Send size={16} /> Diffuser le Message
+                                    <Send size={18} /> TRANSMETTRE L'ORDRE
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Modal Détails Étudiant Académique */}
+            {selectedStudent && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setSelectedStudent(null)}>
+                    <div className="student-details-modal glass animate-scale-up" onClick={e => e.stopPropagation()}>
+                        <div className="modal-academic-header">
+                            <div className="academic-seal">
+                                <ShieldCheck size={40} />
+                                <span>ACADÉMIE MILITAIRE</span>
+                            </div>
+                            <button className="btn-close" onClick={() => setSelectedStudent(null)}>×</button>
+                        </div>
+
+                        <div className="modal-academic-content">
+                            <div className="student-hero">
+                                <div className="student-photo-large">
+                                    <img src={selectedStudent.avatarEtudiant || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + selectedStudent.idEtudiant} alt={selectedStudent.nomEtudiant} />
+                                </div>
+                                <div className="student-main-info">
+                                    <span className="info-id">MATRICULE PFE-{selectedStudent.id.split('-')[1]}</span>
+                                    <h2>{selectedStudent.nomEtudiant}</h2>
+                                    <div className="contact-pills">
+                                        <div className="contact-pill">
+                                            <Mail size={14} />
+                                            <span>{selectedStudent.idEtudiant === 'std-1' ? 'mohamedhmaidi922@gmail.com' :
+                                                selectedStudent.idEtudiant === 'std-2' ? 'melkiwael36@gmail.com' :
+                                                    selectedStudent.idEtudiant === 'std-3' ? 'fechbej@gmail.com' :
+                                                        'karmifedi@gmail.com'}</span>
+                                        </div>
+                                        <div className="contact-pill">
+                                            <Phone size={14} />
+                                            <span>{selectedStudent.telephoneEtudiant || 'Non renseigné'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="academic-divider"></div>
+
+                            <div className="project-highlight">
+                                <label>SUJET DE RECHERCHE</label>
+                                <h3>{selectedStudent.titre}</h3>
+                                <p>{selectedStudent.description}</p>
+                            </div>
+
+                            <div className="academic-progress-view">
+                                <label>PROGRESSION ACADÉMIQUE GLOBALE</label>
+                                <div className="large-progress-track">
+                                    <div className="track-header">
+                                        <span className="pct">{calculateTotalProgress(selectedStudent)}%</span>
+                                        <span className="status-label">{selectedStudent.statut.replace('-', ' ').toUpperCase()}</span>
+                                    </div>
+                                    <div className="main-bar">
+                                        <div className="main-fill" style={{ width: `${calculateTotalProgress(selectedStudent)}%` }}></div>
+                                    </div>
+                                </div>
+
+                                <div className="sub-progress-grid">
+                                    <div className="sub-item">
+                                        <label>Partie Expérimentale</label>
+                                        <div className="sub-bar"><div className="sub-fill" style={{ width: `${Math.round(selectedStudent.progres.experimental.reduce((acc, m) => acc + m.progres, 0) / selectedStudent.progres.experimental.length)}%` }}></div></div>
+                                    </div>
+                                    <div className="sub-item">
+                                        <label>Phase Rédactionnelle</label>
+                                        <div className="sub-bar"><div className="sub-fill blue" style={{ width: `${Math.round(selectedStudent.progres.redaction.reduce((acc, m) => acc + m.progres, 0) / selectedStudent.progres.redaction.length)}%` }}></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="modal-academic-footer">
+                            <button className="btn btn-outline" onClick={() => setSelectedStudent(null)}>Fermer</button>
+                            <button className="btn btn-primary" onClick={() => navigate(`/project/${selectedStudent.id}`)}>
+                                Accéder au Journal de Suivi <ChevronRight size={18} />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -194,7 +304,7 @@ const SupervisorDashboard = () => {
                         const late = allMilestones.some(m => m.dateLimite && new Date(m.dateLimite) < now && m.progres < 100);
 
                         return (
-                            <div key={project.id} className={`project-card glass ${late ? 'border-late' : ''}`} onClick={() => navigate(`/project/${project.id}`)}>
+                            <div key={project.id} className={`project-card glass ${late ? 'border-late' : ''}`} onClick={() => setSelectedStudent(project)}>
                                 <div className="card-header">
                                     <div className="student-meta">
                                         <div className="student-info-row">
@@ -234,6 +344,16 @@ const SupervisorDashboard = () => {
                                     </div>
                                     <div className="v-actions-group">
                                         <button
+                                            className="v-btn-ref info"
+                                            title="Voir Détails Étudiant"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedStudent(project);
+                                            }}
+                                        >
+                                            <Info size={16} />
+                                        </button>
+                                        <button
                                             className="v-btn-ref"
                                             title="Voir la Fiche de Proposition (Référentiel)"
                                             onClick={(e) => {
@@ -243,7 +363,13 @@ const SupervisorDashboard = () => {
                                         >
                                             <FileText size={16} />
                                         </button>
-                                        <button className="v-btn-open">
+                                        <button
+                                            className="v-btn-open"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/project/${project.id}`);
+                                            }}
+                                        >
                                             Suivi <ChevronRight size={16} />
                                         </button>
                                     </div>

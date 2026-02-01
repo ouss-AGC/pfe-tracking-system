@@ -28,6 +28,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         id: 'std-1',
         nom: 'Hmaidi Mohamed',
         email: 'mohamedhmaidi922@gmail.com',
+        telephone: '22524322',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
         avatar: '/students/hmaidi-mohamed.png'
@@ -36,6 +37,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         id: 'std-2',
         nom: 'Melki Wael',
         email: 'melkiwael36@gmail.com',
+        telephone: '99230369',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wael'
@@ -44,6 +46,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         id: 'std-3',
         nom: 'Oueslati Ghofrane',
         email: 'fechbej@gmail.com',
+        telephone: '56601931',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
         avatar: '/students/ghofrane-oueslati.png'
@@ -52,6 +55,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         id: 'std-4',
         nom: 'Fedi Karmi',
         email: 'karmifedi@gmail.com',
+        telephone: '53277762',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
         avatar: '/students/fedi-karmi.png'

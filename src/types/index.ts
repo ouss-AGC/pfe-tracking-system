@@ -8,6 +8,7 @@ export interface Utilisateur {
     motDePasse?: string; // Mot de passe pour l'accès sécurisé
     avatar?: string;
     numeroMatricule?: string;
+    telephone?: string;
 }
 
 export interface JalonProgres {
@@ -36,6 +37,7 @@ export interface ProjetPFE {
     idEtudiant: string;
     nomEtudiant: string;
     avatarEtudiant?: string; // Photo de l'étudiant
+    telephoneEtudiant?: string; // GSM de l'étudiant
     nomEncadrant: string;
     description: string;
     urlFicheProposition?: string;
