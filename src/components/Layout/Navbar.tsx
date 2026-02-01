@@ -1,4 +1,4 @@
-import { LogOut, Shield, Calendar, LayoutDashboard, User } from 'lucide-react';
+import { LogOut, Shield, Calendar, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
@@ -34,11 +34,11 @@ const Navbar = () => {
                     <>
                         <Link to="/student" className={`nav-link ${location.pathname === '/student' ? 'active' : ''}`}>
                             <LayoutDashboard size={18} />
-                            <span>My Project</span>
+                            <span>Mon Projet</span>
                         </Link>
                         <Link to="/student/booking" className={`nav-link ${location.pathname === '/student/booking' ? 'active' : ''}`}>
                             <Calendar size={18} />
-                            <span>Book Meeting</span>
+                            <span>Prendre RDV</span>
                         </Link>
                     </>
                 )}

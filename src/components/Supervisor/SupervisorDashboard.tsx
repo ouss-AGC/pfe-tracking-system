@@ -6,13 +6,14 @@ import {
     Users, ShieldCheck, Clock,
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
-    Activity, Shield
+    Activity, Shield, FileText
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
 const SupervisorDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [projects, setProjects] = useState<ProjetPFE[]>([]);
+    const [selectedPDF, setSelectedPDF] = useState<string | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,6 +41,23 @@ const SupervisorDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
+            {/* Modal de Visualisation PDF */}
+            {selectedPDF && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setSelectedPDF(null)}>
+                    <div className="pdf-viewer-modal glass" onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header">
+                            <h3>RÉFÉRENTIEL : FICHE DE PROPOSITION PFE</h3>
+                            <button className="btn-close" onClick={() => setSelectedPDF(null)}>×</button>
+                        </div>
+                        <iframe
+                            src={selectedPDF}
+                            title="Fiche PFE"
+                            width="100%"
+                            height="100%"
+                        ></iframe>
+                    </div>
+                </div>
+            )}
             <header className="dashboard-header">
                 <div className="header-info">
                     <div className="military-label">
@@ -68,8 +86,8 @@ const SupervisorDashboard = () => {
 
             {/* RACK DE STATISTIQUES HAUTE VISIBILITÉ */}
             <div className="stats-rack">
-                {stats.map((stat, i) => (
-                    <div key={i} className="stat-box glass-card animate-slide-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                {stats.map((stat, idx) => (
+                    <div key={idx} className="stat-box glass-card animate-slide-up" style={{ animationDelay: `${idx * 0.1}s` }}>
                         <div className="stat-box-inner">
                             <div className="stat-info">
                                 <label>{stat.label}</label>
@@ -94,7 +112,7 @@ const SupervisorDashboard = () => {
                 </div>
 
                 <div className="verification-grid">
-                    {filteredProjects.map((project, i) => {
+                    {filteredProjects.map((project) => {
                         const totalProgress = calculateTotalProgress(project);
                         const isPending = project.statut === 'attente-validation';
 
@@ -136,9 +154,21 @@ const SupervisorDashboard = () => {
                                         <label>Progression Globale</label>
                                         <div className="v-total-val">{totalProgress}%</div>
                                     </div>
-                                    <button className="v-btn-open">
-                                        Fiche Officielle <ChevronRight size={16} />
-                                    </button>
+                                    <div className="v-actions-group">
+                                        <button
+                                            className="v-btn-ref"
+                                            title="Voir la Fiche de Proposition (Référentiel)"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setSelectedPDF(project.urlFichePFE || null);
+                                            }}
+                                        >
+                                            <FileText size={16} />
+                                        </button>
+                                        <button className="v-btn-open">
+                                            Suivi <ChevronRight size={16} />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         );

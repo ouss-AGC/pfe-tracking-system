@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Calendar as CalendarIcon, Clock, ChevronLeft, ChevronRight, Check } from 'lucide-react';
-import { MOCK_APPOINTMENTS } from '../../data/mockProjects';
+import { Calendar as CalendarIcon, Clock, Check, HelpCircle } from 'lucide-react';
+import { MOCK_RENDEZVOUS } from '../../data/mockProjects';
 import { useAuth } from '../../context/AuthContext';
 import './BookingCalendar.css';
 
@@ -9,34 +9,43 @@ const TIME_SLOTS = [
     '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'
 ];
 
+const MOTIFS_PREDEFINIS = [
+    "Demande d'explications sur une tâche spécifique",
+    "Validation des résultats expérimentaux",
+    "Correction de la partie rédaction",
+    "Blocage technique / Matériel",
+    "Autre motif (Précisez ci-dessous)"
+];
+
 const BookingCalendar = () => {
     const { user } = useAuth();
     const [selectedDate, setSelectedDate] = useState('2024-02-10');
     const [selectedSlot, setSelectedSlot] = useState('');
-    const [reason, setReason] = useState('');
+    const [selectedMotif, setSelectedMotif] = useState(MOTIFS_PREDEFINIS[0]);
+    const [details, setDetails] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
-    const studentAppointments = MOCK_APPOINTMENTS.filter(a => a.studentId === user?.id);
+    const studentAppointments = MOCK_RENDEZVOUS.filter(a => a.idEtudiant === user?.id);
 
     const handleBooking = (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
+        // Simulation d'appel API
         setTimeout(() => {
             setIsSubmitting(false);
             setIsSuccess(true);
             setTimeout(() => setIsSuccess(false), 3000);
-        }, 1500);
+        }, 1200);
     };
 
     return (
         <div className="booking-page animate-fade-in">
             <header className="page-header">
                 <div className="header-info">
-                    <span className="welcome-tag">MEETING SCHEDULER</span>
-                    <h1>Book a Supervision Slot</h1>
-                    <p>SELECT AN AVAILABLE TIME FOR PROJECT REVIEW WITH YOUR SUPERVISOR</p>
+                    <span className="welcome-tag">PLANIFICATEUR DE RÉUNIONS</span>
+                    <h1>Prendre Rendez-vous</h1>
+                    <p>RÉSERVEZ UN CRÉNEAU POUR UNE CONSULTATION AVEC VOTRE ENCADRANT</p>
                 </div>
             </header>
 
@@ -44,7 +53,7 @@ const BookingCalendar = () => {
                 <div className="booking-form-section glass">
                     <form onSubmit={handleBooking} className="booking-form">
                         <div className="form-group">
-                            <label>Select Date</label>
+                            <label>Date du Rendez-vous</label>
                             <div className="date-picker-placeholder glass">
                                 <CalendarIcon size={20} />
                                 <input
@@ -57,7 +66,7 @@ const BookingCalendar = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Select Time Slot</label>
+                            <label>Créneau Horaire</label>
                             <div className="slots-grid">
                                 {TIME_SLOTS.map(slot => (
                                     <button
@@ -74,12 +83,22 @@ const BookingCalendar = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Reason for Meeting</label>
+                            <label>Motif de la Consultation</label>
+                            <select
+                                className="motif-select glass"
+                                value={selectedMotif}
+                                onChange={(e) => setSelectedMotif(e.target.value)}
+                            >
+                                {MOTIFS_PREDEFINIS.map(m => <option key={m} value={m}>{m}</option>)}
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Détails Supplémentaires (Optionnel)</label>
                             <textarea
-                                placeholder="Briefly describe what you want to discuss..."
-                                value={reason}
-                                onChange={(e) => setReason(e.target.value)}
-                                required
+                                placeholder="Décrivez brièvement votre besoin d'explication..."
+                                value={details}
+                                onChange={(e) => setDetails(e.target.value)}
                             ></textarea>
                         </div>
 
@@ -91,16 +110,16 @@ const BookingCalendar = () => {
                             {isSubmitting ? (
                                 <div className="loader"></div>
                             ) : isSuccess ? (
-                                <><Check size={20} /> Request Sent</>
+                                <><Check size={20} /> Demande Envoyée</>
                             ) : (
-                                'Request Meeting'
+                                'Demander le Rendez-vous'
                             )}
                         </button>
                     </form>
                 </div>
 
                 <div className="booking-history-section">
-                    <h2 className="section-subtitle">Your Requests</h2>
+                    <h2 className="section-subtitle">Mes Demandes</h2>
                     <div className="requests-list">
                         {studentAppointments.length > 0 ? (
                             studentAppointments.map(app => (
@@ -110,19 +129,24 @@ const BookingCalendar = () => {
                                             <CalendarIcon size={14} />
                                             <span>{app.date}</span>
                                         </div>
-                                        <span className={`status-badge ${app.status}`}>{app.status.toUpperCase()}</span>
+                                        <span className={`status-badge ${app.statut}`}>{app.statut.toUpperCase()}</span>
                                     </div>
                                     <div className="request-body">
                                         <div className="request-time">
                                             <Clock size={14} />
-                                            <span>{app.timeSlot}</span>
+                                            <span>{app.creneauHoraire}</span>
                                         </div>
-                                        <p className="request-reason">"{app.reason}"</p>
+                                        <div className="request-motif">
+                                            <HelpCircle size={14} />
+                                            <p>"{app.motif}"</p>
+                                        </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p className="no-requests">No pending or previous requests.</p>
+                            <div className="empty-history glass">
+                                <p>Aucun rendez-vous planifié.</p>
+                            </div>
                         )}
                     </div>
                 </div>

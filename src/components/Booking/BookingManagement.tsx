@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import { MOCK_APPOINTMENTS } from '../../data/mockProjects';
-import { Calendar, Clock, Check, X, User, AlertCircle, RefreshCw } from 'lucide-react';
+import { MOCK_RENDEZVOUS } from '../../data/mockProjects';
+import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle } from 'lucide-react';
 import './BookingManagement.css';
 
 const BookingManagement = () => {
-    const [appointments, setAppointments] = useState(MOCK_APPOINTMENTS);
+    const [appointments, setAppointments] = useState(MOCK_RENDEZVOUS);
     const [delayingId, setDelayingId] = useState<string | null>(null);
     const [delayTime, setDelayTime] = useState('');
 
-    const handleAction = (id: string, status: 'accepted' | 'cancelled') => {
+    const handleAction = (id: string, statut: 'accepte' | 'annule') => {
         setAppointments(prev => prev.map(app =>
-            app.id === id ? { ...app, status } : app
+            app.id === id ? { ...app, statut } : app
         ));
     };
 
     const handleDelay = (id: string) => {
         setAppointments(prev => prev.map(app =>
-            app.id === id ? { ...app, status: 'delayed', timeSlot: delayTime || app.timeSlot } : app
+            app.id === id ? { ...app, statut: 'reporte', creneauHoraire: delayTime || app.creneauHoraire } : app
         ));
         setDelayingId(null);
         setDelayTime('');
@@ -26,24 +26,24 @@ const BookingManagement = () => {
         <div className="booking-page animate-fade-in">
             <header className="page-header">
                 <div className="header-info">
-                    <span className="welcome-tag">COMMANDER'S LOG</span>
-                    <h1>Meeting Requests</h1>
-                    <p>MANAGE AND COORDINATE STUDENT SUPERVISION SESSIONS</p>
+                    <span className="welcome-tag">LOGISTIQUE D'ENCADREMENT</span>
+                    <h1>Gestion des Rendez-vous</h1>
+                    <p>COORDONNEZ LES SESSIONS DE CONSULTATION AVEC LES ÉLÈVES OFFICERS</p>
                 </div>
             </header>
 
             <div className="booking-mgmt-container glass">
                 <div className="mgmt-header">
-                    <div className="tab-active">Pending Requests ({appointments.filter(a => a.status === 'pending').length})</div>
-                    <div>History</div>
+                    <div className="tab-active">Demandes en Attente ({appointments.filter(a => a.statut === 'en-attente').length})</div>
+                    <div>Historique</div>
                 </div>
 
                 <div className="appointments-table">
                     <div className="table-row header">
-                        <div className="col-student">Student</div>
-                        <div className="col-project">Project Reference</div>
-                        <div className="col-date">Requested Time</div>
-                        <div className="col-reason">Reason</div>
+                        <div className="col-student">Étudiant</div>
+                        <div className="col-project">Projet</div>
+                        <div className="col-date">Créneau Demandé</div>
+                        <div className="col-reason">Motif / Besoin d'explications</div>
                         <div className="col-actions">Actions</div>
                     </div>
 
@@ -51,52 +51,55 @@ const BookingManagement = () => {
                         <div key={app.id} className="table-row appointment-row animate-fade-in">
                             <div className="col-student">
                                 <div className="student-profile">
-                                    <div className="mini-avatar">{app.studentName[0]}</div>
-                                    <span>{app.studentName}</span>
+                                    <div className="mini-avatar">{app.nomEtudiant[0]}</div>
+                                    <span>{app.nomEtudiant}</span>
                                 </div>
                             </div>
                             <div className="col-project">
-                                <span className="project-ref">{app.projectTitle}</span>
+                                <span className="project-ref">{app.titreProjet}</span>
                             </div>
                             <div className="col-date">
                                 <div className="time-info">
                                     <Calendar size={14} /> <span>{app.date}</span>
                                 </div>
                                 <div className="time-info accent">
-                                    <Clock size={14} /> <span>{app.timeSlot}</span>
+                                    <Clock size={14} /> <span>{app.creneauHoraire}</span>
                                 </div>
                             </div>
                             <div className="col-reason">
-                                <p className="reason-text">"{app.reason}"</p>
+                                <div className="reason-container">
+                                    <MessageCircle size={14} className="reason-icon" />
+                                    <p className="reason-text">{app.motif}</p>
+                                </div>
                             </div>
                             <div className="col-actions">
-                                {app.status === 'pending' ? (
+                                {app.statut === 'en-attente' ? (
                                     <div className="action-buttons">
                                         <button
                                             className="action-btn accept"
-                                            onClick={() => handleAction(app.id, 'accepted')}
-                                            title="Accept Meeting"
+                                            onClick={() => handleAction(app.id, 'accepte')}
+                                            title="Accepter le RDV"
                                         >
                                             <Check size={18} />
                                         </button>
                                         <button
                                             className="action-btn delay"
                                             onClick={() => setDelayingId(app.id)}
-                                            title="Propose Delay"
+                                            title="Proposer de reporter"
                                         >
                                             <RefreshCw size={18} />
                                         </button>
                                         <button
                                             className="action-btn reject"
-                                            onClick={() => handleAction(app.id, 'cancelled')}
-                                            title="Reject Request"
+                                            onClick={() => handleAction(app.id, 'annule')}
+                                            title="Refuser"
                                         >
                                             <X size={18} />
                                         </button>
                                     </div>
                                 ) : (
-                                    <span className={`status-pill ${app.status}`}>
-                                        {app.status.toUpperCase()}
+                                    <span className={`status-pill ${app.statut}`}>
+                                        {app.statut.toUpperCase()}
                                     </span>
                                 )}
                             </div>
@@ -105,17 +108,17 @@ const BookingManagement = () => {
                                 <div className="delay-panel glass animate-fade-in">
                                     <AlertCircle size={20} className="alert-icon" />
                                     <div className="delay-content">
-                                        <h4>Propose Reschedule</h4>
-                                        <p>Suggest an alternative time slot for this student.</p>
+                                        <h4>Proposer un Report</h4>
+                                        <p>Suggérez un créneau alternatif à l'élève officier.</p>
                                         <div className="delay-form">
-                                            <select value={delayTime} onChange={(e) => setDelayTime(e.target.value)}>
-                                                <option value="">Select New Slot</option>
+                                            <select className="glass" value={delayTime} onChange={(e) => setDelayTime(e.target.value)}>
+                                                <option value="">Sélectionner Nouveau Créneau</option>
                                                 <option value="08:00 - 09:00">08:00 - 09:00</option>
                                                 <option value="11:00 - 12:00">11:00 - 12:00</option>
                                                 <option value="15:00 - 16:00">15:00 - 16:00</option>
                                             </select>
-                                            <button className="btn btn-primary" onClick={() => handleDelay(app.id)}>Confirm Delay</button>
-                                            <button className="btn btn-outline" onClick={() => setDelayingId(null)}>Cancel</button>
+                                            <button className="btn btn-primary" onClick={() => handleDelay(app.id)}>Confirmer Report</button>
+                                            <button className="btn btn-outline" onClick={() => setDelayingId(null)}>Annuler</button>
                                         </div>
                                     </div>
                                 </div>

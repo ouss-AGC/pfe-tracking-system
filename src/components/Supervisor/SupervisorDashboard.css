@@ -44,6 +44,64 @@
     align-items: center;
 }
 
+/* PDF Viewer Modal - Shared */
+.pdf-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+}
+
+.pdf-viewer-modal {
+    width: 90vw;
+    height: 90vh;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pdf-header {
+    padding: 1rem 2rem;
+    background: #111827;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--color-accent-blue);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Nouveau groupe d'actions pour le superviseur */
+.supervisor-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.supervisor-dashboard {
+    width: 350px;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: var(--border-radius-md);
+}
+
 .search-bar {
     width: 350px;
     padding: 0.8rem 1.2rem;
@@ -320,6 +378,31 @@
     font-size: 1.2rem;
     font-weight: 900;
     color: var(--color-accent-blue);
+}
+
+.v-actions-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.v-btn-ref {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid var(--color-accent-blue);
+    color: var(--color-accent-blue);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.v-btn-ref:hover {
+    background: var(--color-accent-blue);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .v-btn-open {

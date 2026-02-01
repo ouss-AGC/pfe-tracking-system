@@ -11,6 +11,66 @@
     border-left: 3px solid var(--color-accent-blue);
 }
 
+/* PDF Viewer Modal - Shared with ProjectDetails.css */
+.pdf-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(10px);
+}
+
+.pdf-viewer-modal {
+    width: 90vw;
+    height: 90vh;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pdf-header {
+    padding: 1rem 2rem;
+    background: #111827;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--color-accent-blue);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.btn-pulse {
+    animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
 .empty-dashboard {
     display: flex;
     flex-direction: column;

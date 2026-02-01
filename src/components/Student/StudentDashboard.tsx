@@ -10,6 +10,7 @@ const StudentDashboard = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const [project, setProject] = useState<ProjetPFE | null>(null);
+    const [showPDF, setShowPDF] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -39,6 +40,22 @@ const StudentDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
+            {showPDF && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setShowPDF(false)}>
+                    <div className="pdf-viewer-modal glass" onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header">
+                            <h3>RÉFÉRENTIEL : FICHE DE PROPOSITION PFE</h3>
+                            <button className="btn-close" onClick={() => setShowPDF(false)}>×</button>
+                        </div>
+                        <iframe
+                            src={project.urlFichePFE}
+                            title="Fiche PFE"
+                            width="100%"
+                            height="100%"
+                        ></iframe>
+                    </div>
+                </div>
+            )}
             <header className="dashboard-header">
                 <div className="header-info">
                     <span className="welcome-tag">PORTAIL ÉTUDIANT - {nomAffiche.toUpperCase()}</span>
@@ -46,9 +63,9 @@ const StudentDashboard = () => {
                     <p>ENCADRÉ PAR {project.nomEncadrant.toUpperCase()}</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn btn-outline" title="Télécharger la Fiche de Proposition">
+                    <button className="btn btn-outline btn-pulse" onClick={() => setShowPDF(true)} title="Télécharger la Fiche de Proposition">
                         <Download size={20} />
-                        <span>Fiche PFE</span>
+                        <span>Fiche PFE (Réf)</span>
                     </button>
                     <button className="btn btn-primary" onClick={() => navigate('/student/booking')}>
                         <Calendar size={20} />
