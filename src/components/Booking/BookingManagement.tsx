@@ -151,41 +151,41 @@ const BookingManagement = () => {
                                             </div>
                                         </div>
                                     </div>
+                                )}
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Volet Calendrier Aide-à-la-Décision */}
-            <aside className="booking-decision-helper glass animate-slide-in-right">
-                <div className="helper-header">
-                    <Calendar size={18} />
-                    <h3>AIDE À LA DÉCISION</h3>
-                </div>
-                <div className="helper-body">
-                    <p className="helper-hint">Consultez vos créneaux déjà validés avant de confirmer une nouvelle demande.</p>
-                    <div className="occupied-list">
-                        <h4>CRÉNEAUX OCCUPÉS</h4>
-                        {occupiedSlots.length > 0 ? (
-                            occupiedSlots.map((slot, idx) => (
-                                <div key={idx} className="occupied-item">
-                                    <Clock size={12} />
-                                    <span>{slot}</span>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="empty-msg">Aucun engagement pour le moment.</p>
-                        )}
+                {/* Volet Calendrier Aide-à-la-Décision */}
+                <aside className="booking-decision-helper glass animate-slide-in-right">
+                    <div className="helper-header">
+                        <Calendar size={18} />
+                        <h3>AIDE À LA DÉCISION</h3>
                     </div>
-                    <div className="decision-legend">
-                        <div className="legend-item"><span className="dot accept"></span> Accepté</div>
-                        <div className="legend-item"><span className="dot pending"></span> En attente</div>
+                    <div className="helper-body">
+                        <p className="helper-hint">Consultez vos créneaux déjà validés avant de confirmer une nouvelle demande.</p>
+                        <div className="occupied-list">
+                            <h4>CRÉNEAUX OCCUPÉS</h4>
+                            {occupiedSlots.length > 0 ? (
+                                occupiedSlots.map((slot, idx) => (
+                                    <div key={idx} className="occupied-item">
+                                        <Clock size={12} />
+                                        <span>{slot}</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="empty-msg">Aucun engagement pour le moment.</p>
+                            )}
+                        </div>
+                        <div className="decision-legend">
+                            <div className="legend-item"><span className="dot accept"></span> Accepté</div>
+                            <div className="legend-item"><span className="dot pending"></span> En attente</div>
+                        </div>
                     </div>
-                </div>
-            </aside>
+                </aside>
+            </div>
         </div>
-        </div >
     );
 };
 
