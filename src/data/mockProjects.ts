@@ -97,13 +97,13 @@ export const MOCK_PROJETS: ProjetPFE[] = [
 export const MOCK_RENDEZVOUS: RendezVous[] = [
     {
         id: 'rdv-1',
-        idEtudiant: 'std-1',
-        nomEtudiant: 'Ahmed Ben Salem',
-        idProjet: 'proj-1',
-        titreProjet: 'Étude du comportement des bétons fibrés à haute performance',
-        date: '2024-02-05',
+        idEtudiant: 'std-5',
+        nomEtudiant: 'Mohamed Aziz Elayed',
+        idProjet: 'proj-5',
+        titreProjet: 'Étude de l’Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
+        date: '2026-02-10',
         creneauHoraire: '09:00 - 10:00',
-        motif: 'Révision des résultats expérimentaux',
+        motif: 'Discussion sur le traitement des coquilles',
         statut: 'en-attente'
     }
 ];
