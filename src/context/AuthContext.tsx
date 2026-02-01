@@ -60,7 +60,15 @@ const MOCK_STUDENTS: Utilisateur[] = [
         motDePasse: PASSWORD_DEFAULT,
         avatar: '/students/fedi-karmi.png'
     },
-    { id: 'std-5', nom: 'En attente...', email: 'std5@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=5' }
+    {
+        id: 'std-5',
+        nom: 'Mohamed Aziz Elayed',
+        email: 'mouahmedaziza12@gmail.com',
+        telephone: '23881847',
+        role: 'student',
+        motDePasse: PASSWORD_DEFAULT,
+        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aziz'
+    }
 ];
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

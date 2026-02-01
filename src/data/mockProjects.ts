@@ -78,15 +78,16 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-5',
-        titre: 'Sujet PFE - En attente d\'affectation',
+        titre: 'Étude de l’Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         idEtudiant: 'std-5',
-        nomEtudiant: 'En attente...',
+        nomEtudiant: 'Mohamed Aziz Elayed',
+        telephoneEtudiant: '23881847',
         nomEncadrant: 'Dr. Oussama Atoui',
-        description: 'Poste vacant pour futur étudiant.',
+        description: 'Évaluation des performances mécaniques et de durabilité des mortiers incorporant des déchets de mollusques.',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Rédaction 1', progres: 0 }, { id: 'red-2', label: 'Rédaction 2', progres: 0 }, { id: 'red-3', label: 'Rédaction 3', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Traitement coquilles', progres: 0 }, { id: 'exp-2', label: 'Formulation mortiers', progres: 0 }, { id: 'exp-3', label: 'Essais de flexion', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
         },
         urlFichePFE: '',
         journalSuivi: []

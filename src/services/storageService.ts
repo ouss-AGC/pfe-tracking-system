@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.4_photos_extra'; // Nouvelle version pour les photos additionnelles
+        const VERSION = 'v2.5_aziz_final'; // Version finale avec les 5 étudiants
         if (localStorage.getItem('pfe_storage_version') !== VERSION) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
             localStorage.setItem('pfe_storage_version', VERSION);
