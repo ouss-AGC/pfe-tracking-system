@@ -185,7 +185,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                     </div>
                     <div className="info-grid">
                         <div className="info-block">
-                            <label>Étudiant :</label>
+                            <label>Officier Élève :</label>
                             <p>{user?.role === 'student' && user?.id === project.idEtudiant ? user.nom : project.nomEtudiant}</p>
                         </div>
                         <div className="info-block">
@@ -329,7 +329,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                                 </div>
                                 <div className="j-col-type">
                                     <span className={`type-badge ${entry.type}`}>
-                                        {entry.type === 'superviseur' ? 'ENCADRANT' : 'ÉTUDIANT'}
+                                        {entry.type === 'superviseur' ? 'ENCADRANT' : 'OFFICIER ÉLÈVE'}
                                     </span>
                                 </div>
                                 <div className="j-col-comm">{entry.commentaire}</div>
@@ -341,7 +341,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                 {/* Bloc de Validation Finale */}
                 <div className="validation-footer">
                     <div className="signature-area etudiant">
-                        <label>Visa de l'Étudiant</label>
+                        <label>Visa de l'Officier Élève</label>
                         <div className="signature-box-official">
                             <p className="signature-ident">{user?.role === 'student' && user?.id === project.idEtudiant ? user.nom : project.nomEtudiant}</p>
                             <span className="sign-hint">Validé via Portail Numérique</span>

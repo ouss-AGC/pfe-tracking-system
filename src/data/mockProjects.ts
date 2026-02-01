@@ -10,7 +10,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         avatarEtudiant: '/students/hmaidi-mohamed.png',
         telephoneEtudiant: '22524322',
         nomEncadrant: 'Dr. Oussama Atoui',
-        emailEncadrant: 'oussama.atoui@mil.tn',
+        emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Étude de l\'incorporation de granulats PET recyclés pour l\'allègement des structures en béton.',
         statut: 'en-cours',
         progres: {
@@ -36,7 +36,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         emailEtudiant: 'melkiwael36@gmail.com',
         telephoneEtudiant: '99230369',
         nomEncadrant: 'Dr. Oussama Atoui',
-        emailEncadrant: 'oussama.atoui@mil.tn',
+        emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Étude de l\'incorporation de granulats de pneus recyclés dans un béton auto-compactant (BAP).',
         statut: 'en-cours',
         progres: {
@@ -55,7 +55,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         avatarEtudiant: '/students/ghofrane-oueslati.png',
         telephoneEtudiant: '56601931',
         nomEncadrant: 'Col. Majdi Arfaoui',
-        emailEncadrant: 'majdi.arfaoui@mil.tn',
+        emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Étude de l\'amélioration des caractéristiques des briques de terre crue via des fibres locales (thèrmique et mécanique).',
         statut: 'en-cours',
         progres: {
@@ -74,7 +74,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         avatarEtudiant: '/students/fedi-karmi.png',
         telephoneEtudiant: '53277762',
         nomEncadrant: 'Dr. Oussama Atoui',
-        emailEncadrant: 'oussama.atoui@mil.tn',
+        emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Comparaison de l\'impact du cactus et du blanc d\'œuf sur la stabilisation et la performance des mortiers de terre.',
         statut: 'en-cours',
         progres: {
@@ -92,7 +92,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         emailEtudiant: 'mohamedaziz@gmail.com',
         telephoneEtudiant: '23881847',
         nomEncadrant: 'Dr. Oussama Atoui',
-        emailEncadrant: 'oussama.atoui@mil.tn',
+        emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Évaluation des performances mécaniques et de durabilité des mortiers incorporant des déchets de mollusques.',
         statut: 'en-cours',
         progres: {

@@ -1,11 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import BroadcastBanner from '../Layout/BroadcastBanner';
 import type { ProjetPFE } from '../../types';
-import { Download, Clock, BookOpen, FlaskConical, LayoutDashboard, Calendar, Check, AlertCircle, ArrowLeft, Mail, ChevronRight, Shield } from 'lucide-react';
+import {
+    Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
+    Calendar, Check, AlertCircle, ArrowLeft, Mail,
+    ChevronRight, Shield, Upload, Paperclip, PenTool, Send, X, Save
+} from 'lucide-react';
 import './StudentDashboard.css';
+
+const MilitaryGauge = ({ value, label }: { value: number; label: string }) => {
+    const rotation = (value / 100) * 180 - 90;
+
+    return (
+        <div className="mercedes-gauge-container">
+            <div className="gauge-glow-effect"></div>
+            <svg viewBox="0 0 100 60" className="gauge-svg">
+                {/* Background Track with Metallic Look */}
+                <path className="gauge-track" d="M10 50 A 40 40 0 0 1 90 50" fill="none" strokeWidth="6" stroke="rgba(255,255,255,0.05)" />
+
+                {/* Colored Segments with Mercedes Palette */}
+                <path className="gauge-segment" d="M10 50 A 40 40 0 0 1 30 18" fill="none" strokeWidth="4" stroke="#059669" /> {/* Deep Green */}
+                <path className="gauge-segment" d="M30 18 A 40 40 0 0 1 50 10" fill="none" strokeWidth="4" stroke="#84cc16" /> {/* Lime */}
+                <path className="gauge-segment" d="M50 10 A 40 40 0 0 1 70 18" fill="none" strokeWidth="4" stroke="#f59e0b" /> {/* Orange */}
+                <path className="gauge-segment" d="M70 18 A 40 40 0 0 1 90 50" fill="none" strokeWidth="4" stroke="#ef4444" /> {/* Red */}
+
+                {/* Needle with Chrome/White finish */}
+                <line
+                    x1="50" y1="50" x2="50" y2="15"
+                    className="needle"
+                    style={{ transform: `rotate(${rotation}deg)`, transformOrigin: '50px 50px' }}
+                />
+
+                {/* Center Cap (Mercedes Star vibe) */}
+                <circle cx="50" cy="50" r="4" className="needle-cap-outer" fill="rgba(255,255,255,0.1)" />
+                <circle cx="50" cy="50" r="2.5" className="needle-cap-inner" fill="#fff" />
+            </svg>
+            <div className="gauge-info">
+                <div className="gauge-value-box">
+                    <span className="gauge-percent">{value}%</span>
+                </div>
+                <span className="gauge-title">{label.toUpperCase()}</span>
+            </div>
+        </div>
+    );
+};
 
 const StudentDashboard = () => {
     const { user } = useAuth();
@@ -13,6 +54,13 @@ const StudentDashboard = () => {
     const [project, setProject] = useState<ProjetPFE | null>(null);
     const [showPDF, setShowPDF] = useState(false);
     const [notifications, setNotifications] = useState<any[]>([]);
+
+    // Progress Report Local State
+    const [reportContent, setReportContent] = useState('');
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (user) {
@@ -43,6 +91,25 @@ const StudentDashboard = () => {
     const redProgress = calculateSectionProgress(project.progres.redaction);
     const totalProgress = Math.round((expProgress + redProgress) / 2);
 
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.[0]) {
+            setUploadedFile(e.target.files[0]);
+        }
+    };
+
+    const handleSubmitReport = () => {
+        if (!reportContent.trim() && !uploadedFile) return;
+
+        setIsSubmitting(true);
+        // Simulate API call
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setSubmitSuccess(true);
+            setReportContent('');
+            setUploadedFile(null);
+            setTimeout(() => setSubmitSuccess(false), 3000);
+        }, 1500);
+    };
 
     return (
         <div className="dashboard-page animate-fade-in">
@@ -65,12 +132,12 @@ const StudentDashboard = () => {
                     <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: '1.5rem' }}>
                         <ArrowLeft size={18} /> Retour au Portail
                     </button>
-                    <div className="welcome-tag">SITUATION ACADÉMIQUE - ÉLÈVE OFFICIER</div>
+                    <div className="welcome-tag">SITUATION ACADÉMIQUE - OFFICIER ÉLÈVE</div>
                     <h1>{project.titre}</h1>
                     <div className="encadrant-contact">
                         <span>SOUS LA DIRECTION DE : <strong>{project.nomEncadrant.toUpperCase()}</strong></span>
-                        <a href={`mailto:${project.emailEncadrant}`} className="contact-pill link" style={{ marginLeft: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(59,130,246,0.1)', padding: '4px 12px', borderRadius: '4px', textDecoration: 'none', color: 'var(--color-accent-blue)', fontSize: '0.8rem', fontWeight: 600 }}>
-                            <Mail size={12} /> SIGNALER UN PROBLÈME
+                        <a href="mailto:oussmer@hotmail.fr" className="contact-pill link" style={{ marginLeft: '1rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(59,130,246,0.1)', padding: '6px 14px', borderRadius: '6px', textDecoration: 'none', color: 'var(--color-accent-blue)', fontSize: '0.85rem', fontWeight: 600 }}>
+                            <Mail size={14} /> CONTACT ENCADRANT
                         </a>
                     </div>
                 </div>
@@ -84,45 +151,12 @@ const StudentDashboard = () => {
                 </div>
             </header>
 
-            <div className="stats-grid">
-                <div className="stat-card glass secondary">
-                    <div className="stat-progress-circle">
-                        <svg viewBox="0 0 36 36" className="circular-chart">
-                            <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path className="circle" strokeDasharray={`${totalProgress}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        </svg>
-                        <div className="percentage">{totalProgress}%</div>
-                    </div>
-                    <div className="stat-content">
-                        <span className="stat-label">Progression Master</span>
-                        <span className="stat-value">{project.statut.replace('-', ' ').toUpperCase()}</span>
-                    </div>
-                </div>
-
-                <div className="stat-card glass">
-                    <div className="stat-icon-box blue">
-                        <FlaskConical size={24} />
-                    </div>
-                    <div className="stat-content">
-                        <span className="stat-label">Volet Expérimental</span>
-                        <div className="stat-progress-mini">
-                            <div className="progress-bar-mini"><div className="fill" style={{ width: `${expProgress}%` }}></div></div>
-                            <span className="stat-value">{expProgress}%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="stat-card glass">
-                    <div className="stat-icon-box red">
-                        <BookOpen size={24} />
-                    </div>
-                    <div className="stat-content">
-                        <span className="stat-label">Volet Rédactionnel</span>
-                        <div className="stat-progress-mini">
-                            <div className="progress-bar-mini"><div className="fill red" style={{ width: `${redProgress}%` }}></div></div>
-                            <span className="stat-value">{redProgress}%</span>
-                        </div>
-                    </div>
+            {/* Mercedes Style Dashboard Cluster */}
+            <div className="mercedes-cluster-wrapper">
+                <div className="mercedes-dashboard animate-slide-up">
+                    <MilitaryGauge value={totalProgress} label="Progression Globale" />
+                    <MilitaryGauge value={expProgress} label="Volet Expérimental" />
+                    <MilitaryGauge value={redProgress} label="Volet Rédactionnel" />
                 </div>
             </div>
 
@@ -169,6 +203,76 @@ const StudentDashboard = () => {
                     </div>
                 </section>
             </div>
+
+            {/* RAPPORT D'AVANCEMENT SECTION */}
+            <section className="avancement-report-section glass animate-slide-up">
+                <div className="section-header-banner">
+                    <PenTool size={20} />
+                    <h2>RAPPORT D'AVANCEMENT PÉRIODIQUE</h2>
+                    <div className="deadline-badge">LIVRABLE REQUIS</div>
+                </div>
+
+                <div className="report-form-layout">
+                    <div className="text-area-box">
+                        <label>Commentaires et Observations Techniques</label>
+                        <textarea
+                            className="textarea-field"
+                            placeholder="Décrivez en détail les travaux réalisés durant cette période, les difficultés rencontrées et les solutions envisagées..."
+                            value={reportContent}
+                            onChange={(e) => setReportContent(e.target.value)}
+                        ></textarea>
+                    </div>
+
+                    <div className="upload-box-wrapper">
+                        <label>Documents Joints (PDF, Word, PPT, Excel)</label>
+                        <div
+                            className={`upload-zone ${uploadedFile ? 'has-file' : ''}`}
+                            onClick={() => fileInputRef.current?.click()}
+                        >
+                            {uploadedFile ? (
+                                <div className="file-preview">
+                                    <div className="file-info">
+                                        <Paperclip size={24} className="active-icon" />
+                                        <div className="file-meta">
+                                            <span className="filename">{uploadedFile.name}</span>
+                                            <span className="filesize">{(uploadedFile.size / 1024).toFixed(1)} KB</span>
+                                        </div>
+                                    </div>
+                                    <button className="btn-remove" onClick={(e) => { e.stopPropagation(); setUploadedFile(null); }}>
+                                        <X size={16} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="upload-placeholder">
+                                    <Upload size={32} className="upload-icon" />
+                                    <span>Déposer le rapport ou cliquer ici</span>
+                                    <span className="sub-text">Formats autorisés : .pdf, .docx, .pptx, .xlsx</span>
+                                </div>
+                            )}
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileUpload}
+                                hidden
+                                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="report-actions">
+                    <button className="btn btn-outline">
+                        <Save size={18} /> Sauvegarder Brouillon
+                    </button>
+                    <button
+                        className={`btn btn-primary ${isSubmitting ? 'loading' : ''}`}
+                        onClick={handleSubmitReport}
+                        disabled={isSubmitting || (!reportContent.trim() && !uploadedFile)}
+                    >
+                        {isSubmitting ? 'Transmission...' : submitSuccess ? <><Check size={18} /> Rapport Transmis</> : <><Send size={18} /> Soumettre à l'Encadrant</>}
+                    </button>
+                </div>
+            </section>
 
             <div className="update-reminder glass animate-slide-up">
                 <Clock size={20} className="reminder-icon" />

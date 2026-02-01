@@ -35,7 +35,7 @@ const SupervisorDashboard = () => {
     );
 
     const stats = [
-        { label: 'Total Équipes PFE', value: projects.length, icon: <Users size={24} />, color: 'var(--color-accent-blue)', trend: '+2 cette semaine' },
+        { label: 'Total Officier Élèves', value: projects.length, icon: <Users size={24} />, color: 'var(--color-accent-blue)', trend: '+2 cette semaine' },
         { label: 'En Attente de Visa', value: projects.filter(p => p.statut === 'attente-validation').length, icon: <Clock size={24} />, color: 'var(--color-accent-red)', trend: 'Action Requise' },
         { label: 'Vérifications Conformité', value: '100%', icon: <ShieldCheck size={24} />, color: '#10b981', trend: 'Suivi Régulier' },
         { label: 'Jours avant Audit', value: '12', icon: <TrendingUp size={24} />, color: '#f59e0b', trend: 'Phase Finale' },
@@ -177,6 +177,7 @@ const SupervisorDashboard = () => {
                                     <img src={selectedStudent.avatarEtudiant || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + selectedStudent.idEtudiant} alt={selectedStudent.nomEtudiant} />
                                 </div>
                                 <div className="student-main-info">
+                                    <span className="user-role">OFFICIER ÉLÈVE</span>
                                     <span className="info-id">MATRICULE PFE-{selectedStudent.id.split('-')[1]}</span>
                                     <h2>{selectedStudent.nomEtudiant}</h2>
                                     <div className="contact-pills">
@@ -245,7 +246,7 @@ const SupervisorDashboard = () => {
                 <div className="welcome-text">
                     <span className="rank-label">OFFICIER ENCADRANT</span>
                     <h2>Bienvenue, Dr. Oussama Atoui</h2>
-                    <p>Système de Suivi des Projets de Fin d'Études - Promotion 2026</p>
+                    <p>Système de Suivi des Projets de Fin d'Études - Promotion Officier Élève 2026</p>
                 </div>
                 <div className="welcome-badge">
                     <ShieldCheck size={40} className="badge-icon" />
@@ -266,7 +267,7 @@ const SupervisorDashboard = () => {
                     <p>SUPERVISION ET VALIDATION DES PROJETS DE FIN D'ÉTUDES - GC</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn btn-outline" onClick={() => setShowBroadcastModal(true)} title="Diffuser un message à tous les étudiants">
+                    <button className="btn btn-outline" onClick={() => setShowBroadcastModal(true)} title="Diffuser un message à tous les officiers élèves">
                         <Megaphone size={18} />
                         <span>Flash Info</span>
                     </button>
@@ -278,7 +279,7 @@ const SupervisorDashboard = () => {
                         <Search size={18} className="search-icon" />
                         <input
                             type="text"
-                            placeholder="Rechercher un étudiant ou un sujet..."
+                            placeholder="Rechercher un officier élève ou un sujet..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />

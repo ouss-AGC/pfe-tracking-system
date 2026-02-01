@@ -108,7 +108,7 @@ const BookingManagement = () => {
 
                     <div className="appointments-table">
                         <div className="table-row header">
-                            <div className="col-student">Étudiant</div>
+                            <div className="col-student">Officier Élève</div>
                             <div className="col-project">Projet</div>
                             <div className="col-date">Créneau Demandé</div>
                             <div className="col-reason">Motif / Besoin d'explications</div>

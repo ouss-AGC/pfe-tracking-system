@@ -50,7 +50,7 @@ const Navbar = () => {
                         <Link to="/profile" className="user-profile-link" title="Mon Profil">
                             <div className="user-info">
                                 <span className="user-name">{user.nom}</span>
-                                <span className="user-role">{user.role === 'student' ? 'ÉTUDIANT' : 'ENCADRANT'}</span>
+                                <span className="user-role">{user.role === 'student' ? 'OFFICIER ÉLÈVE' : 'ENCADRANT'}</span>
                             </div>
                             <img src={user.avatar} alt={user.nom} className="user-avatar" />
                         </Link>

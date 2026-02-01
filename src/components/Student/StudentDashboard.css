@@ -1,185 +1,146 @@
-/* Dashboard Page Layout */
 .dashboard-page {
-    padding: 2rem;
+    position: relative;
     max-width: 1400px;
-    margin: 0 auto;
-    margin-top: calc(var(--header-height) + 1rem);
+    margin: 100px auto 4rem;
+    padding: 0 2rem;
 }
 
-/* Header & Welcome Banner */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2.5rem;
-    gap: 2rem;
-}
-
-.header-info {
-    flex: 1;
+    align-items: flex-end;
+    margin-bottom: 3rem;
 }
 
 .welcome-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--color-accent-blue);
+    letter-spacing: 2px;
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
 }
 
-.header-info h1 {
-    font-size: 1.75rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.2;
-    color: #fff;
+.dashboard-header h1 {
+    font-size: 2.5rem;
     font-weight: 800;
+    margin-bottom: 0.5rem;
 }
 
 .encadrant-contact {
-    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
     color: var(--color-text-secondary);
+    font-size: 0.9rem;
 }
 
 .header-actions {
     display: flex;
     gap: 1rem;
-    flex-shrink: 0;
 }
 
-/* Stats Grid & Progress */
-.stats-grid {
-    display: grid;
-    grid-template-columns: 350px 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-@media (max-width: 1100px) {
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .stat-card.secondary {
-        grid-column: span 2;
-    }
-}
-
-.stat-card {
-    padding: 1.5rem;
-    border-radius: var(--border-radius-lg);
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.stat-card.secondary {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-/* Circular Chart Fix */
-.stat-progress-circle {
+/* Mercedes Style Dashboard Cluster */
+.mercedes-cluster-wrapper {
     position: relative;
-    width: 80px;
-    height: 80px;
-    flex-shrink: 0;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+    overflow: hidden;
 }
 
-.circular-chart {
+.mercedes-dashboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%);
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.7),
+        inset 0 0 40px rgba(0, 0, 0, 0.5);
+    position: relative;
+    backdrop-filter: blur(20px);
+}
+
+.mercedes-gauge-container {
+    flex: 1;
+    max-width: 250px;
+    text-align: center;
+    position: relative;
+}
+
+.gauge-svg {
     width: 100%;
-    height: 100%;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
 }
 
-.circle-bg {
-    fill: none;
+.gauge-track {
     stroke: rgba(255, 255, 255, 0.05);
-    stroke-width: 3;
 }
 
-.circle {
-    fill: none;
-    stroke: var(--color-accent-blue);
-    stroke-width: 3;
+.gauge-segment {
     stroke-linecap: round;
-    transition: stroke-dasharray 1s ease-in-out;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
-.stat-progress-circle .percentage {
+.mercedes-gauge-container:hover .gauge-segment {
+    opacity: 1;
+}
+
+.needle {
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.4));
+}
+
+.needle-cap-inner {
+    filter: drop-shadow(0 0 8px #fff);
+}
+
+.gauge-glow-effect {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.1rem;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.gauge-info {
+    margin-top: -10px;
+}
+
+.gauge-value-box {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.2rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.gauge-percent {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: white;
+    color: #fff;
+    letter-spacing: -1px;
 }
 
-.stat-icon-box {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stat-icon-box.blue {
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--color-accent-blue);
-}
-
-.stat-icon-box.red {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--color-accent-red);
-}
-
-.stat-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-label {
-    font-size: 0.8rem;
+.gauge-title {
+    display: block;
+    font-size: 0.7rem;
     color: var(--color-text-secondary);
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    letter-spacing: 1.5px;
 }
 
-.stat-value {
-    font-size: 1rem;
-    font-weight: 800;
-    color: white;
-}
-
-/* Progress Mini */
-.stat-progress-mini {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.progress-bar-mini {
-    flex: 1;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    overflow: hidden;
-    min-width: 100px;
-}
-
-.progress-bar-mini .fill {
-    height: 100%;
-    background: var(--color-accent-blue);
-    border-radius: 10px;
-}
-
-.progress-bar-mini .fill.red {
-    background: var(--color-accent-red);
-}
-
-/* Content Grid */
 .dashboard-content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -187,59 +148,52 @@
     margin-bottom: 2rem;
 }
 
-@media (max-width: 900px) {
-    .dashboard-content-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 .milestones-section {
-    padding: 1.5rem;
-    border-radius: var(--border-radius-lg);
+    padding: 2.5rem;
 }
 
 .section-title {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
     color: var(--color-accent-blue);
 }
 
 .section-title h2 {
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
 }
 
 .milestone-list {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
 .milestone-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.2rem;
+    border-radius: var(--border-radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .m-info {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    margin-bottom: 0.8rem;
 }
 
 .m-label {
-    font-size: 0.95rem;
     font-weight: 600;
-    color: white;
+    font-size: 0.95rem;
 }
 
 .m-date {
     font-size: 0.75rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-secondary);
 }
 
 .m-progress {
@@ -252,73 +206,223 @@
     flex: 1;
     height: 8px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
-.progress-bar .fill {
+.fill {
     height: 100%;
-    background: var(--grad-blue);
-    border-radius: 10px;
+    background: linear-gradient(90deg, var(--color-accent-blue), #60a5fa);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
 }
 
-.progress-bar .fill.red {
-    background: var(--grad-red);
+.fill.red {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 }
 
 .m-percent {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--color-text-secondary);
-    min-width: 35px;
-    text-align: right;
+    min-width: 40px;
 }
 
-/* Update Reminder Box */
-.update-reminder {
-    padding: 1.5rem;
-    border-radius: var(--border-radius-lg);
+/* Avancement Report Section */
+.avancement-report-section {
+    margin-top: 3rem;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.4);
+    margin-bottom: 2rem;
+}
+
+.section-header-banner {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
+    padding: 1.5rem 2.5rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    border: 1px dashed rgba(59, 130, 246, 0.3);
-    background: rgba(59, 130, 246, 0.03);
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.reminder-icon {
-    color: var(--color-accent-blue);
-    flex-shrink: 0;
-}
-
-.update-reminder p {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
+.section-header-banner h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
     margin: 0;
     flex: 1;
 }
 
-.update-reminder .btn-primary {
+.deadline-badge {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    letter-spacing: 1px;
+}
+
+.report-form-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2.5rem;
+    padding: 2.5rem;
+}
+
+.text-area-box label,
+.upload-box-wrapper label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.textarea-field {
+    width: 100%;
+    min-height: 200px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: none;
+    transition: all 0.3s ease;
+}
+
+.textarea-field:focus {
+    outline: none;
+    border-color: var(--color-accent-blue);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+.upload-zone {
+    height: 200px;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 2rem;
+    text-align: center;
+}
+
+.upload-zone:hover {
+    border-color: var(--color-accent-blue);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.upload-zone.has-file {
+    border-style: solid;
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+}
+
+.upload-icon {
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.upload-placeholder span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.file-preview {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+}
+
+.active-icon {
+    color: #10b981;
+}
+
+.file-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.filename {
+    font-size: 0.85rem;
+    font-weight: 600;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-/* Notifications Overlay */
-.notifications-alert-panel {
-    margin-bottom: 2rem;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
+.filesize {
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
 }
 
-.notes-header {
-    background: rgba(255, 255, 255, 0.02);
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.notes-list {
-    padding: 1.5rem;
+.btn-remove {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: #fff;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.report-actions {
+    padding: 0 2.5rem 2.5rem;
+    display: flex;
+    justify-content: flex-end;
     gap: 1rem;
 }
 
-/* Animations from index.css are inherited but customized here if needed */
+.update-reminder {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2.5rem;
+}
+
+.reminder-icon {
+    color: #f59e0b;
+}
+
+.update-reminder p {
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1024px) {
+
+    .dashboard-content-grid,
+    .report-form-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mercedes-dashboard {
+        flex-direction: column;
+        gap: 3rem;
+    }
+}

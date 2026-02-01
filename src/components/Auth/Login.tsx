@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth, MOCK_STUDENTS } from '../../context/AuthContext';
-import { LogIn, Shield, Users, GraduationCap, ChevronDown } from 'lucide-react';
+import { LogIn, Shield, Users, ChevronDown } from 'lucide-react';
 import type { Role } from '../../types';
 import './Login.css';
 
@@ -50,8 +50,10 @@ const Login = () => {
                                 className={`role-btn ${role === 'student' ? 'active' : ''}`}
                                 onClick={() => setRole('student')}
                             >
-                                <GraduationCap size={20} />
-                                <span>Student</span>
+                                <div className="role-icon-box">
+                                    <Shield size={20} />
+                                </div>
+                                <span>ESPACE OFFICIER ÉLÈVE</span>
                             </button>
                             <button
                                 type="button"
@@ -59,7 +61,7 @@ const Login = () => {
                                 onClick={() => setRole('supervisor')}
                             >
                                 <Users size={20} />
-                                <span>Supervisor</span>
+                                <span>ESPACE ENCADRANT</span>
                             </button>
                         </div>
 
