@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { storageService } from '../../services/storageService';
-import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle, Info } from 'lucide-react';
+import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle, Info, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './BookingManagement.css';
 
 const BookingManagement = () => {
+    const navigate = useNavigate();
     const [appointments, setAppointments] = useState(storageService.getAppointments());
     const [delayingId, setDelayingId] = useState<string | null>(null);
     const [delayTime, setDelayTime] = useState('');
@@ -88,6 +90,9 @@ const BookingManagement = () => {
         <div className="booking-page animate-fade-in">
             <header className="page-header">
                 <div className="header-info">
+                    <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>
+                        <ArrowLeft size={18} /> Retour
+                    </button>
                     <span className="welcome-tag">LOGISTIQUE D'ENCADREMENT</span>
                     <h1>Gestion des Rendez-vous</h1>
                     <p>COORDONNEZ LES SESSIONS DE CONSULTATION AVEC LES ÉLÈVES OFFICERS</p>

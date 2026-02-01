@@ -118,7 +118,7 @@ const FicheInteractivePFE: React.FC<FicheInteractivePFEProps> = ({ project }) =>
                         <div className="sig-block atoui-sig">
                             <p className="sig-label">L'ENCADRANT</p>
                             <p className="sig-name">Dr. Oussama Atoui</p>
-                            <img src="/cachet_dr_atoui.png" alt="Cachet Officiel" className="official-seal" />
+                            <img src="/cachet_signature_dr_atoui.png" alt="Cachet Officiel" className="official-seal" />
                         </div>
                     </div>
                 </div>

@@ -921,6 +921,7 @@
     justify-content: flex-end;
     gap: 1rem;
 }
+
 /* Modal Journal de Suivi Immersif */
 .journal-modal-wide {
     width: 95vw !important;
@@ -945,4 +946,20 @@
     margin: 0;
     font-size: 1.1rem;
     color: white;
+}
+
+.contact-pill.link {
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.contact-pill.link:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: var(--color-accent-blue);
+    transform: translateY(-2px);
+}
+
+.contact-pill.link:hover span {
+    color: var(--color-accent-blue);
 }

@@ -10,7 +10,7 @@ import {
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
     Activity, Shield, FileText, Megaphone, Send, Trash2,
-    Phone, Mail, Info, X
+    Phone, Mail, Info, X, ArrowLeft
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -180,14 +180,10 @@ const SupervisorDashboard = () => {
                                     <span className="info-id">MATRICULE PFE-{selectedStudent.id.split('-')[1]}</span>
                                     <h2>{selectedStudent.nomEtudiant}</h2>
                                     <div className="contact-pills">
-                                        <div className="contact-pill">
+                                        <a href={`mailto:${selectedStudent.emailEtudiant}`} className="contact-pill link">
                                             <Mail size={14} />
-                                            <span>{selectedStudent.idEtudiant === 'std-1' ? 'mohamedhmaidi922@gmail.com' :
-                                                selectedStudent.idEtudiant === 'std-2' ? 'melkiwael36@gmail.com' :
-                                                    selectedStudent.idEtudiant === 'std-3' ? 'fechbej@gmail.com' :
-                                                        selectedStudent.idEtudiant === 'std-4' ? 'karmifedi@gmail.com' :
-                                                            'mohamedaziz@gmail.com'}</span>
-                                        </div>
+                                            <span>{selectedStudent.emailEtudiant}</span>
+                                        </a>
                                         <div className="contact-pill">
                                             <Phone size={14} />
                                             <span>{selectedStudent.telephoneEtudiant || 'Non renseigné'}</span>
@@ -259,6 +255,9 @@ const SupervisorDashboard = () => {
 
             <header className="dashboard-header">
                 <div className="header-info">
+                    <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>
+                        <ArrowLeft size={18} /> Retour
+                    </button>
                     <div className="military-label">
                         <Shield size={16} />
                         <span>ACADÉMIE MILITAIRE DE TUNISIE</span>

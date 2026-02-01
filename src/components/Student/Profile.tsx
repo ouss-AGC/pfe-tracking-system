@@ -58,6 +58,9 @@ const Profile = () => {
                         <h2>{nom}</h2>
                         <span className="badge-role">{user?.role === 'student' ? 'Élève Officier' : 'Encadrant'}</span>
                         <p className="matricule">Matricule: {user?.numeroMatricule || 'N/A'}</p>
+                        <a href={`mailto:${email}`} className="profile-email-link" style={{ fontSize: '0.85rem', color: 'var(--color-accent-blue)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+                            <Mail size={14} /> {email}
+                        </a>
                     </div>
                 </div>
 

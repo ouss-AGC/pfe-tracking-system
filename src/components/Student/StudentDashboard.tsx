@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import BroadcastBanner from '../Layout/BroadcastBanner';
 import type { ProjetPFE } from '../../types';
-import { Download, Clock, BookOpen, FlaskConical, LayoutDashboard, Calendar, Check, AlertCircle } from 'lucide-react';
+import { Download, Clock, BookOpen, FlaskConical, LayoutDashboard, Calendar, Check, AlertCircle, ArrowLeft, Mail } from 'lucide-react';
 import './StudentDashboard.css';
 
 const StudentDashboard = () => {
@@ -64,9 +64,17 @@ const StudentDashboard = () => {
             )}
             <header className="dashboard-header">
                 <div className="header-info">
+                    <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>
+                        <ArrowLeft size={18} /> Retour
+                    </button>
                     <span className="welcome-tag">PORTAIL ÉTUDIANT - {nomAffiche.toUpperCase()}</span>
                     <h1>{project.titre}</h1>
-                    <p>ENCADRÉ PAR {project.nomEncadrant.toUpperCase()}</p>
+                    <div className="encadrant-contact" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}>
+                        <p style={{ margin: 0 }}>ENCADRÉ PAR {project.nomEncadrant.toUpperCase()}</p>
+                        <a href="mailto:08530118@mil.tn" className="contact-pill link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.05)', padding: '4px 10px', borderRadius: '4px', textDecoration: 'none', color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
+                            <Mail size={12} /> Contact Encadrant
+                        </a>
+                    </div>
                 </div>
                 <div className="header-actions">
                     <button className="btn btn-outline btn-pulse" onClick={() => setShowPDF(true)} title="Télécharger la Fiche de Proposition">

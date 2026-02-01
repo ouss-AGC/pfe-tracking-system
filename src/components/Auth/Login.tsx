@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { LogIn, Shield, Users, GraduationCap } from 'lucide-react';
+import { useAuth, MOCK_STUDENTS } from '../../context/AuthContext';
+import { LogIn, Shield, Users, GraduationCap, ChevronDown } from 'lucide-react';
 import type { Role } from '../../types';
 import './Login.css';
 
@@ -64,27 +64,45 @@ const Login = () => {
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="email">{role === 'supervisor' ? 'Identifiant Personnel' : 'Email Address'}</label>
+                            <label htmlFor="email">{role === 'supervisor' ? 'Identifiant Personnel' : 'Sélectionnez votre Email'}</label>
                             <div className="input-wrapper">
-                                <input
-                                    id="email"
-                                    type="text"
-                                    placeholder={role === 'supervisor' ? 'Identifiant' : 'Enter your email'}
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
+                                {role === 'supervisor' ? (
+                                    <input
+                                        id="email"
+                                        type="text"
+                                        placeholder="Identifiant"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                    />
+                                ) : (
+                                    <div className="select-wrapper">
+                                        <select
+                                            id="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            className="select-email-login"
+                                        >
+                                            <option value="" disabled>--- Choisir mon Email ---</option>
+                                            {MOCK_STUDENTS.map(s => (
+                                                <option key={s.id} value={s.email}>{s.nom} ({s.email})</option>
+                                            ))}
+                                        </select>
+                                        <ChevronDown className="select-icon" size={16} />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="password">{role === 'supervisor' ? 'Code PIN' : 'Password'}</label>
+                            <label htmlFor="password">Code PIN {role === 'student' ? '(6 chiffres)' : '(4 chiffres)'}</label>
                             <div className="input-wrapper">
                                 <input
                                     id="password"
                                     type="password"
-                                    maxLength={role === 'supervisor' ? 4 : undefined}
-                                    placeholder="••••"
+                                    maxLength={role === 'supervisor' ? 4 : 6}
+                                    placeholder="••••••"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required

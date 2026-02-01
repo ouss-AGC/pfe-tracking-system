@@ -5,6 +5,11 @@
     margin-top: var(--header-height);
 }
 
+.project-details-page.in-modal {
+    margin-top: 0 !important;
+    padding: 0;
+}
+
 .no-print {
     display: flex;
 }
@@ -549,12 +554,14 @@
     height: 180px;
     border: 1px dashed var(--color-border);
     border-radius: var(--border-radius-md);
-    background: rgba(0, 0, 0, 0.1);
+    background: white !important;
+    /* Fond blanc forcé pour le cachet */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
 .visual-signature {
@@ -569,8 +576,9 @@
 
 .official-signature-img {
     max-height: 80px;
-    filter: invert(1);
-    opacity: 0.9;
+    filter: none !important;
+    /* Pas d'invert pour garder les couleurs originales du cachet */
+    opacity: 1;
 }
 
 .official-stamp-img {

@@ -36,6 +36,7 @@ export interface ProjetPFE {
     titre: string;
     idEtudiant: string;
     nomEtudiant: string;
+    emailEtudiant: string; // Nouveau: Pour communication directe
     avatarEtudiant?: string; // Photo de l'étudiant
     telephoneEtudiant?: string; // GSM de l'étudiant
     nomEncadrant: string;

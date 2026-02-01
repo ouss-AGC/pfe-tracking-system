@@ -22,6 +22,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
     const [project, setProject] = useState<ProjetPFE | null>(null);
     const [isSaving, setIsSaving] = useState(false);
     const [showPresets, setShowPresets] = useState(false);
+    const [showPDF, setShowPDF] = useState(false);
 
     const PRESET_COMMENTS = [
         { label: "Excellent Travail", text: "Le travail présenté est d'une excellente qualité. Les objectifs fixés pour cette période ont été atteints avec brio. Je vous encourage vivement à maintenir ce niveau de rigueur et d'analyse." },
@@ -53,57 +54,44 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
         }
     }, [id, user]);
 
-    if (error) return (
-        <div className="error-container glass animate-fade-in">
-            <Shield size={48} color="var(--color-accent-red)" />
-            <h2>{error}</h2>
-            <button className="btn btn-primary" onClick={() => navigate('/student')}>Retour à mon Dashboard</button>
-        </div>
-    );
-
-    if (!project) return <div className="loader"></div>;
-
     const handleSave = () => {
         if (!project) return;
         setIsSaving(true);
         setTimeout(() => {
             storageService.updateProject(project);
             setIsSaving(false);
-            alert('Progrès enregistré avec succès dans la base de données !');
         }, 800);
     };
 
     const handleSign = () => {
-        if (user?.role !== 'supervisor') return;
-        setSignature('https://api.dicebear.com/7.x/identicon/svg?seed=signature');
-        // Utilisation du cachet officiel final certifié avec signature manuscrite rouge
-        setStamp('file:///C:/Users/Admin/.gemini/antigravity/brain/3bb0080d-015d-4f57-8150-8fd31ee39555/cachet_officiel_avec_signature_rouge_dr_atoui_1769956385950.png');
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('fr-FR');
-        const timeStr = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        if (!project) return;
+        const newStamp = '/cachet_signature_dr_atoui.png';
 
-        setProject(prev => prev ? {
-            ...prev,
-            statut: 'signe',
-            dateSignature: `${dateStr} à ${timeStr}`
-        } : null);
-        alert('Projet officiellement signé et cacheté.');
+        setSignature(null); // La signature est déjà intégrée dans l'image du cachet
+        setStamp(newStamp);
+
+        const updated = {
+            ...project,
+            signatureEncadrant: '',
+            cachetEncadrant: newStamp,
+            dateSignature: new Date().toLocaleDateString('fr-FR'),
+            statut: 'termine' as const
+        };
+
+        setProject(updated);
+        storageService.updateProject(updated);
     };
 
-    const calculateSectionAverage = (milestones: JalonProgres[]) => {
-        return Math.round(milestones.reduce((acc, m) => acc + m.progres, 0) / milestones.length);
-    };
+    if (error) return <div className="error-container glass"><h2>{error}</h2><button className="btn btn-primary" onClick={() => navigate('/dashboard')}>Retour au Dashboard</button></div>;
+    if (!project) return <div className="loader"></div>;
 
-    const expAvg = calculateSectionAverage(project.progres.experimental);
-    const redAvg = calculateSectionAverage(project.progres.redaction);
+    const expAvg = Math.round(project.progres.experimental.reduce((acc, m) => acc + m.progres, 0) / project.progres.experimental.length);
+    const redAvg = Math.round(project.progres.redaction.reduce((acc, m) => acc + m.progres, 0) / project.progres.redaction.length);
 
     const getLastInteractionDate = () => {
-        if (project.journalSuivi.length === 0) return null;
-        const last = project.journalSuivi[project.journalSuivi.length - 1];
-        return last.date;
+        const entries = project.journalSuivi;
+        return entries.length > 0 ? entries[entries.length - 1].date : 'Aucune';
     };
-
-    const [showPDF, setShowPDF] = useState(false);
 
     const isLate = (dateLimite?: string) => {
         if (!dateLimite) return false;
@@ -114,7 +102,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
     };
 
     return (
-        <div className="project-details-page animate-fade-in">
+        <div className={`project-details-page animate-fade-in ${projectId ? 'in-modal' : ''}`}>
             {/* Modal de Visualisation PDF */}
             {showPDF && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setShowPDF(false)}>
@@ -133,28 +121,30 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                 </div>
             )}
 
-            {/* Header d'interface - Caché à l'impression */}
-            <header className="page-header no-print">
-                <div className="header-left">
-                    <button className="btn-back" onClick={() => navigate(-1)}>
-                        <ArrowLeft size={20} /> Retour
-                    </button>
-                    <h1>Fiche de Suivi Interactive</h1>
-                </div>
-                <div className="header-right">
-                    <button className="btn btn-primary btn-pulse" onClick={() => setShowPDF(true)}>
-                        <FileText size={18} /> Voir Fiche PFE (Réf)
-                    </button>
-                    {user?.role === 'student' && (
-                        <button className="btn btn-outline" onClick={handleSave} disabled={isSaving}>
-                            <Save size={18} /> {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+            {/* Header d'interface - Caché à l'impression et en mode modal */}
+            {!projectId && (
+                <header className="page-header no-print">
+                    <div className="header-left">
+                        <button className="btn-back" onClick={() => navigate(-1)}>
+                            <ArrowLeft size={20} /> Retour
                         </button>
-                    )}
-                    <button className="btn btn-outline" onClick={() => window.print()}>
-                        <Printer size={18} /> Imprimer la Fiche
-                    </button>
-                </div>
-            </header>
+                        <h1>Espace de Suivi PFE</h1>
+                    </div>
+                    <div className="header-right">
+                        <button className="btn btn-primary btn-pulse" onClick={() => setShowPDF(true)}>
+                            <FileText size={18} /> Voir Fiche PFE (Réf)
+                        </button>
+                        {user?.role === 'student' && (
+                            <button className="btn btn-outline" onClick={handleSave} disabled={isSaving}>
+                                <Save size={18} /> {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+                            </button>
+                        )}
+                        <button className="btn btn-outline" onClick={() => window.print()}>
+                            <Printer size={18} /> Imprimer la Fiche
+                        </button>
+                    </div>
+                </header>
+            )}
 
             {/* CONTENU DE LA FICHE OFFICIELLE */}
             <div className="official-sheet-container glass">
@@ -239,9 +229,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                             <BookOpen size={20} />
                             <h3>PARTIE II : RÉDACTION DU MÉMOIRE</h3>
                             <span className="section-total">Moyenne: {redAvg}%</span>
-                        </div>
-                        <div className="section-title-official">
-                            <h3>B. PHASE DE RÉDACTION ET SYNTHÈSE</h3>
                         </div>
                         <div className="milestone-list-official">
                             {project.progres.redaction.map(m => (

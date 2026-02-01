@@ -11,9 +11,6 @@ interface AuthContextType extends EtatAuth {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock Users
-const PASSWORD_DEFAULT = 'PFE2026';
-
 const MOCK_SUPERVISOR: Utilisateur = {
     id: 'sup-1',
     nom: 'Dr. Oussama Atoui',
@@ -23,14 +20,14 @@ const MOCK_SUPERVISOR: Utilisateur = {
     avatar: '/dr-atoui.jpg'
 };
 
-const MOCK_STUDENTS: Utilisateur[] = [
+export const MOCK_STUDENTS: Utilisateur[] = [
     {
         id: 'std-1',
         nom: 'Hmaidi Mohamed',
         email: 'mohamedhmaidi922@gmail.com',
         telephone: '22524322',
         role: 'student',
-        motDePasse: PASSWORD_DEFAULT,
+        motDePasse: '842917',
         avatar: '/students/hmaidi-mohamed.png'
     },
     {
@@ -39,7 +36,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'melkiwael36@gmail.com',
         telephone: '99230369',
         role: 'student',
-        motDePasse: PASSWORD_DEFAULT,
+        motDePasse: '395164',
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wael'
     },
     {
@@ -48,7 +45,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'fechbej@gmail.com',
         telephone: '56601931',
         role: 'student',
-        motDePasse: PASSWORD_DEFAULT,
+        motDePasse: '271828',
         avatar: '/students/ghofrane-oueslati.png'
     },
     {
@@ -57,7 +54,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'karmifedi@gmail.com',
         telephone: '53277762',
         role: 'student',
-        motDePasse: PASSWORD_DEFAULT,
+        motDePasse: '618034',
         avatar: '/students/fedi-karmi.png'
     },
     {
@@ -66,7 +63,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'mouahmedaziza12@gmail.com',
         telephone: '23881847',
         role: 'student',
-        motDePasse: PASSWORD_DEFAULT,
+        motDePasse: '502847',
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aziz'
     }
 ];
