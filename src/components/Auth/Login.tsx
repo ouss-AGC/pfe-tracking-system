@@ -107,7 +107,7 @@ const Login = () => {
                     </form>
 
                     <div className="login-footer">
-                        <p>© 2026 MILITARY ACADEMY. ALL RIGHTS RESERVED.</p>
+                        <p>© 2026 DR OUSSAMA ATOUI. ALL RIGHTS RESERVED.</p>
                     </div>
                 </div>
             </div>
