@@ -65,6 +65,15 @@ export interface RendezVous {
     notes?: string;
 }
 
+export interface NotificationGlobale {
+    id: string;
+    message: string;
+    date: string;
+    auteur: string;
+    type: 'info' | 'alerte' | 'urgent';
+    actif: boolean;
+}
+
 export interface EtatAuth {
     user: Utilisateur | null;
     isAuthenticated: boolean;

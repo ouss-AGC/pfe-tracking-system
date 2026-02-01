@@ -3,7 +3,8 @@ import { MOCK_PROJETS, MOCK_RENDEZVOUS } from '../data/mockProjects';
 
 const STORAGE_KEYS = {
     PROJECTS: 'pfe_projects',
-    APPOINTMENTS: 'pfe_appointments'
+    APPOINTMENTS: 'pfe_appointments',
+    NOTIFICATIONS: 'pfe_notifications'
 };
 
 export const storageService = {
@@ -14,6 +15,9 @@ export const storageService = {
         }
         if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+        }
+        if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
+            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
         }
     },
 
@@ -59,5 +63,21 @@ export const storageService = {
             apps[index] = { ...apps[index], ...updates };
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(apps));
         }
+    },
+
+    // NOTIFICATIONS GLOBALES
+    getNotifications(): any[] {
+        const data = localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS);
+        return data ? JSON.parse(data) : [];
+    },
+
+    addNotification(notification: any) {
+        const notes = this.getNotifications();
+        notes.unshift(notification); // Plus récent en haut
+        localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notes.slice(0, 5))); // On garde les 5 dernières
+    },
+
+    clearNotifications() {
+        localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
     }
 };

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { storageService } from '../../services/storageService';
+import BroadcastBanner from '../Layout/BroadcastBanner';
 import type { ProjetPFE } from '../../types';
 import { Download, Clock, BookOpen, FlaskConical, LayoutDashboard, Calendar } from 'lucide-react';
 import './StudentDashboard.css';
@@ -42,6 +43,7 @@ const StudentDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
+            <BroadcastBanner />
             {showPDF && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setShowPDF(false)}>
                     <div className="pdf-viewer-modal glass" onClick={e => e.stopPropagation()}>

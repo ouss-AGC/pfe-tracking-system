@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
+import BroadcastBanner from '../Layout/BroadcastBanner';
 import type { ProjetPFE } from '../../types';
 import {
     Users, ShieldCheck, Clock,
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
-    Activity, Shield, FileText
+    Activity, Shield, FileText, Megaphone, Send, Trash2
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -14,6 +15,9 @@ const SupervisorDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [projects, setProjects] = useState<ProjetPFE[]>([]);
     const [selectedPDF, setSelectedPDF] = useState<string | null>(null);
+    const [showBroadcastModal, setShowBroadcastModal] = useState(false);
+    const [broadcastMsg, setBroadcastMsg] = useState('');
+    const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,6 +44,7 @@ const SupervisorDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
+            <BroadcastBanner />
             {/* Modal de Visualisation PDF */}
             {selectedPDF && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setSelectedPDF(null)}>
@@ -57,6 +62,55 @@ const SupervisorDashboard = () => {
                     </div>
                 </div>
             )}
+            {/* Modal de Diffusion de Message */}
+            {showBroadcastModal && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setShowBroadcastModal(false)}>
+                    <div className="pdf-viewer-modal glass broadcast-modal" onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header">
+                            <h3>DIFFUSION DE MESSAGE GLOBAL</h3>
+                            <button className="btn-close" onClick={() => setShowBroadcastModal(false)}>×</button>
+                        </div>
+                        <div className="broadcast-form-body">
+                            <label>Type de message</label>
+                            <div className="type-selector">
+                                <button className={`type-btn info ${broadcastType === 'info' ? 'active' : ''}`} onClick={() => setBroadcastType('info')}>Information</button>
+                                <button className={`type-btn alerte ${broadcastType === 'alerte' ? 'active' : ''}`} onClick={() => setBroadcastType('alerte')}>Alerte</button>
+                                <button className={`type-btn urgent ${broadcastType === 'urgent' ? 'active' : ''}`} onClick={() => setBroadcastType('urgent')}>Urgent</button>
+                            </div>
+                            <label>Votre Message</label>
+                            <textarea
+                                placeholder="Tapez votre message ici (ex: Rappel : Remise des rapports lundi avant 12h)..."
+                                value={broadcastMsg}
+                                onChange={(e) => setBroadcastMsg(e.target.value)}
+                            ></textarea>
+                            <div className="broadcast-actions">
+                                <button className="btn btn-outline" onClick={() => {
+                                    storageService.clearNotifications();
+                                    setBroadcastMsg('');
+                                    alert('Historique effacé');
+                                }}>
+                                    <Trash2 size={16} /> Effacer Historique
+                                </button>
+                                <button className="btn btn-primary" onClick={() => {
+                                    if (!broadcastMsg) return;
+                                    storageService.addNotification({
+                                        id: `note-${Date.now()}`,
+                                        message: broadcastMsg,
+                                        date: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                                        auteur: 'Dr. Atoui',
+                                        type: broadcastType,
+                                        actif: true
+                                    });
+                                    setBroadcastMsg('');
+                                    setShowBroadcastModal(false);
+                                }}>
+                                    <Send size={16} /> Diffuser le Message
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
             <header className="dashboard-header">
                 <div className="header-info">
                     <div className="military-label">
@@ -67,6 +121,10 @@ const SupervisorDashboard = () => {
                     <p>SUPERVISION ET VALIDATION DES PROJETS DE FIN D'ÉTUDES - GC</p>
                 </div>
                 <div className="header-actions">
+                    <button className="btn btn-outline" onClick={() => setShowBroadcastModal(true)} title="Diffuser un message à tous les étudiants">
+                        <Megaphone size={18} />
+                        <span>Flash Info</span>
+                    </button>
                     <button className="btn btn-outline" onClick={() => navigate('/supervisor/booking')}>
                         <Calendar size={18} />
                         <span>Gestion RDV</span>
