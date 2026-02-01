@@ -20,13 +20,13 @@ const MOTIFS_PREDEFINIS = [
 
 const BookingCalendar = () => {
     const { user } = useAuth();
-    const [selectedDate, setSelectedDate] = useState('2024-02-10');
+    // Prochaine semaine à partir de aujourd'hui (simulé au 01/02/2026)
+    const [selectedDate, setSelectedDate] = useState('2026-02-09');
     const [selectedSlot, setSelectedSlot] = useState('');
     const [selectedMotif, setSelectedMotif] = useState(MOTIFS_PREDEFINIS[0]);
     const [details, setDetails] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
-
     const [appointments, setAppointments] = useState<RendezVous[]>([]);
 
     useEffect(() => {
@@ -40,20 +40,20 @@ const BookingCalendar = () => {
         if (!user || !selectedSlot) return;
 
         setIsSubmitting(true);
+        const userProject = storageService.getProjectByStudent(user.id);
 
         const newApp: RendezVous = {
             id: `rdv-${Date.now()}`,
             idEtudiant: user.id,
             nomEtudiant: user.nom,
-            idProjet: 'proj-1', // Devrait être dynamique mais ok pour démo unifiée
-            titreProjet: 'Projet PFE',
+            idProjet: userProject?.id || 'proj-unknown',
+            titreProjet: userProject?.titre || 'Projet PFE',
             date: selectedDate,
             creneauHoraire: selectedSlot,
-            motif: selectedMotif,
+            motif: `${selectedMotif}${details ? ': ' + details : ''}`,
             statut: 'en-attente'
         };
 
-        // Simulation d'appel API
         setTimeout(() => {
             storageService.addAppointment(newApp);
             setAppointments(prev => [...prev, newApp]);
@@ -67,9 +67,9 @@ const BookingCalendar = () => {
         <div className="booking-page animate-fade-in">
             <header className="page-header">
                 <div className="header-info">
-                    <span className="welcome-tag">PLANIFICATEUR DE RÉUNIONS</span>
+                    <span className="welcome-tag">PLANIFICATEUR ACADÉMIQUE 2026</span>
                     <h1>Prendre Rendez-vous</h1>
-                    <p>RÉSERVEZ UN CRÉNEAU POUR UNE CONSULTATION AVEC VOTRE ENCADRANT</p>
+                    <p>CALENDRIER DISPONIBLE DE FÉVRIER À MAI 2026</p>
                 </div>
             </header>
 
@@ -77,14 +77,15 @@ const BookingCalendar = () => {
                 <div className="booking-form-section glass">
                     <form onSubmit={handleBooking} className="booking-form">
                         <div className="form-group">
-                            <label>Date du Rendez-vous</label>
+                            <label>Date de Consultation (Prochaine semaine au 31 Mai 2026)</label>
                             <div className="date-picker-placeholder glass">
                                 <CalendarIcon size={20} />
                                 <input
                                     type="date"
                                     value={selectedDate}
                                     onChange={(e) => setSelectedDate(e.target.value)}
-                                    min="2024-02-01"
+                                    min="2026-02-09"
+                                    max="2026-05-31"
                                 />
                             </div>
                         </div>
@@ -120,7 +121,7 @@ const BookingCalendar = () => {
                         <div className="form-group">
                             <label>Détails Supplémentaires (Optionnel)</label>
                             <textarea
-                                placeholder="Décrivez brièvement votre besoin d'explication..."
+                                placeholder="Décrivez votre besoin d'explication..."
                                 value={details}
                                 onChange={(e) => setDetails(e.target.value)}
                             ></textarea>
@@ -143,7 +144,7 @@ const BookingCalendar = () => {
                 </div>
 
                 <div className="booking-history-section">
-                    <h2 className="section-subtitle">Mes Demandes</h2>
+                    <h2 className="section-subtitle">Mes Rendez-vous</h2>
                     <div className="requests-list">
                         {appointments.length > 0 ? (
                             appointments.map(app => (
@@ -153,7 +154,7 @@ const BookingCalendar = () => {
                                             <CalendarIcon size={14} />
                                             <span>{app.date}</span>
                                         </div>
-                                        <span className={`status-badge ${app.statut}`}>{app.statut.toUpperCase()}</span>
+                                        <span className={`status-pill ${app.statut}`}>{app.statut.toUpperCase()}</span>
                                     </div>
                                     <div className="request-body">
                                         <div className="request-time">

@@ -6,53 +6,83 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         titre: 'Étude du comportement des bétons fibrés à haute performance',
         idEtudiant: 'std-1',
         nomEtudiant: 'Ahmed Ben Salem',
-        nomEncadrant: 'Prof. Mohamed Dhouibi',
-        description: 'Analyse des propriétés mécaniques du BFHP sous sollicitations dynamiques.',
+        nomEncadrant: 'Dr. Oussama Atoui',
+        description: 'Analyse des propriétés mécaniques du BFHP.',
         statut: 'en-cours',
         progres: {
             experimental: [
-                { id: 'exp-1', label: 'Caractérisation des matériaux', progres: 100, derniereMiseAJour: '2024-01-15', dateLimite: '2024-01-20' },
-                { id: 'exp-2', label: 'Coulage des éprouvettes', progres: 80, derniereMiseAJour: '2024-01-20', dateLimite: '2024-02-15' },
-                { id: 'exp-3', label: 'Essais de compression', progres: 20, derniereMiseAJour: '2024-01-28', dateLimite: '2024-03-01' },
+                { id: 'exp-1', label: 'Caractérisation', progres: 100, derniereMiseAJour: '2024-01-15' },
+                { id: 'exp-2', label: 'Coulage', progres: 80, derniereMiseAJour: '2024-01-20' },
+                { id: 'exp-3', label: 'Essais', progres: 20, derniereMiseAJour: '2024-01-28' },
             ],
             redaction: [
-                { id: 'red-1', label: 'Revue bibliographique', progres: 90, derniereMiseAJour: '2024-01-10', dateLimite: '2024-03-15' },
-                { id: 'red-2', label: 'Partie expérimentale', progres: 40, derniereMiseAJour: '2024-01-25', dateLimite: '2024-04-10' },
-                { id: 'red-3', label: 'Analyse des résultats', progres: 0, derniereMiseAJour: '2024-01-28', dateLimite: '2024-05-01' },
+                { id: 'red-1', label: 'Revue bibliographique', progres: 90, derniereMiseAJour: '2024-01-10' },
+                { id: 'red-2', label: 'Partie expérimentale', progres: 40, derniereMiseAJour: '2024-01-25' },
+                { id: 'red-3', label: 'Analyse', progres: 0, derniereMiseAJour: '2024-01-28' },
             ]
         },
         urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-        journalSuivi: [
-            { date: '15/01/2024', heure: '09:30', commentaire: 'Matériaux prêts pour les tests.', type: 'etudiant' },
-            { date: '20/01/2024', heure: '14:15', commentaire: 'Début du coulage.', type: 'etudiant' },
-            { date: '22/01/2024', heure: '11:00', commentaire: 'Bon avancement du coulage. Attention à la cure.', type: 'superviseur' }
-        ]
+        journalSuivi: []
     },
     {
         id: 'proj-2',
         titre: 'Dimensionnement sismique des structures en zone instable',
         idEtudiant: 'std-2',
         nomEtudiant: 'Leila Toumi',
-        nomEncadrant: 'Prof. Mohamed Dhouibi',
+        nomEncadrant: 'Dr. Oussama Atoui',
         description: 'Calcul des fondations sur sols liquéfiables.',
         statut: 'attente-validation',
         progres: {
-            experimental: [
-                { id: 'exp-1', label: 'Sondages in-situ', progres: 100, derniereMiseAJour: '2024-01-10', dateLimite: '2024-01-15' },
-                { id: 'exp-2', label: 'Modélisation numérique', progres: 100, derniereMiseAJour: '2024-01-22', dateLimite: '2024-02-10' },
-                { id: 'exp-3', label: 'Analyse spectrale', progres: 90, derniereMiseAJour: '2024-01-29', dateLimite: '2024-03-01' },
-            ],
-            redaction: [
-                { id: 'red-1', label: 'Revue bibliographique', progres: 100, derniereMiseAJour: '2024-01-15', dateLimite: '2024-02-15' },
-                { id: 'red-2', label: 'Partie calculs', progres: 100, derniereMiseAJour: '2024-01-25', dateLimite: '2024-04-15' },
-                { id: 'red-3', label: 'Conclusion', progres: 50, derniereMiseAJour: '2024-02-01', dateLimite: '2024-06-01' },
-            ]
+            experimental: [{ id: 'exp-1', label: 'Sondages', progres: 100 }, { id: 'exp-2', label: 'Modélisation', progres: 100 }, { id: 'exp-3', label: 'Analyse', progres: 90 }],
+            redaction: [{ id: 'red-1', label: 'Biblio', progres: 100 }, { id: 'red-2', label: 'Calculs', progres: 100 }, { id: 'red-3', label: 'Conclusion', progres: 50 }]
         },
         urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-        journalSuivi: [
-            { date: '25/01/2024', heure: '10:00', commentaire: 'Modélisation SAP2000 terminée.', type: 'etudiant' },
-            { date: '01/02/2024', heure: '16:00', commentaire: 'Résultats validés. Passez à la rédaction finale.', type: 'superviseur' }
-        ]
+        journalSuivi: []
+    },
+    {
+        id: 'proj-3',
+        titre: 'Analyse de la vulnérabilité des ponts en béton armé',
+        idEtudiant: 'std-3',
+        nomEtudiant: 'Hamdi Mansour',
+        nomEncadrant: 'Dr. Oussama Atoui',
+        description: 'Étude de la dégradation par corrosion.',
+        statut: 'en-cours',
+        progres: {
+            experimental: [{ id: 'exp-1', label: 'Inspections', progres: 100 }, { id: 'exp-2', label: 'Tests chlore', progres: 50 }, { id: 'exp-3', label: 'Mesures', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Biblio', progres: 100 }, { id: 'red-2', label: 'Diagnostic', progres: 20 }, { id: 'red-3', label: 'Réparations', progres: 0 }]
+        },
+        urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+        journalSuivi: []
+    },
+    {
+        id: 'proj-4',
+        titre: 'Valorisation des déchets de construction dans le béton',
+        idEtudiant: 'std-4',
+        nomEtudiant: 'Sonia Ghariani',
+        nomEncadrant: 'Dr. Oussama Atoui',
+        description: 'Recyclage des agrégats pour un béton écologique.',
+        statut: 'en-cours',
+        progres: {
+            experimental: [{ id: 'exp-1', label: 'Tri granulats', progres: 100 }, { id: 'exp-2', label: 'Mélanges', progres: 10 }, { id: 'exp-3', label: 'Écrasement', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Biblio', progres: 80 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Résultats', progres: 0 }]
+        },
+        urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+        journalSuivi: []
+    },
+    {
+        id: 'proj-5',
+        titre: 'Optimisation des structures métalliques par algorithmes',
+        idEtudiant: 'std-5',
+        nomEtudiant: 'Youssef Briki',
+        nomEncadrant: 'Dr. Oussama Atoui',
+        description: 'Réduction de poids des hangars aéronautiques.',
+        statut: 'en-cours',
+        progres: {
+            experimental: [{ id: 'exp-1', label: 'Scripting', progres: 60 }, { id: 'exp-2', label: 'Tests', progres: 0 }, { id: 'exp-3', label: 'Calcul final', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Biblio', progres: 40 }, { id: 'red-2', label: 'Algorithmes', progres: 0 }, { id: 'red-3', label: 'Vérification', progres: 0 }]
+        },
+        urlFichePFE: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+        journalSuivi: []
     }
 ];
 

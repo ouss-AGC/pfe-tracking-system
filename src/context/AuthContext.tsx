@@ -19,7 +19,7 @@ const MOCK_SUPERVISOR: Utilisateur = {
     email: '08530118', // Identifiant spécifique
     role: 'supervisor',
     motDePasse: '0331', // Code PIN fourni
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=atoui'
+    avatar: '/dr-atoui.jpg'
 };
 
 const MOCK_STUDENTS: Utilisateur[] = [
@@ -29,7 +29,6 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'ahmed.bs@student.tn',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
-        numeroMatricule: '2023-GC-001',
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ahmed'
     },
     {
@@ -38,9 +37,11 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'leila.t@student.tn',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
-        numeroMatricule: '2023-GC-002',
         avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=leila'
-    }
+    },
+    { id: 'std-3', nom: 'Hamdi Mansour', email: 'hamdi.m@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=hamdi' },
+    { id: 'std-4', nom: 'Sonia Ghariani', email: 'sonia.g@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sonia' },
+    { id: 'std-5', nom: 'Youssef Briki', email: 'youssef.b@student.tn', role: 'student', motDePasse: PASSWORD_DEFAULT, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=youssef' }
 ];
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
