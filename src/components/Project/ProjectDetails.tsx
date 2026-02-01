@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MOCK_PROJETS } from '../../data/mockProjects';
+import { storageService } from '../../services/storageService';
 import type { ProjetPFE, JalonProgres } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import {
@@ -33,7 +33,7 @@ const ProjectDetails = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const found = MOCK_PROJETS.find(p => p.id === id);
+        const found = storageService.getProjectById(id || '');
 
         if (found) {
             // Vérification de sécurité (Confidentialité)
@@ -59,10 +59,12 @@ const ProjectDetails = () => {
     if (!project) return <div className="loader"></div>;
 
     const handleSave = () => {
+        if (!project) return;
         setIsSaving(true);
         setTimeout(() => {
+            storageService.updateProject(project);
             setIsSaving(false);
-            alert('Progrès enregistré avec succès !');
+            alert('Progrès enregistré avec succès dans la base de données !');
         }, 800);
     };
 

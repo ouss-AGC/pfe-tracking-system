@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_PROJETS } from '../../data/mockProjects';
+import { storageService } from '../../services/storageService';
 import type { ProjetPFE } from '../../types';
 import { Download, Clock, BookOpen, FlaskConical, LayoutDashboard, Calendar } from 'lucide-react';
 import './StudentDashboard.css';
@@ -14,8 +14,10 @@ const StudentDashboard = () => {
 
     useEffect(() => {
         if (user) {
-            const userProject = MOCK_PROJETS.find(p => p.idEtudiant === user.id);
-            if (userProject) setProject(userProject);
+            const userProject = storageService.getProjectByStudent(user.id);
+            if (userProject) {
+                setProject(userProject);
+            }
         }
     }, [user]);
 

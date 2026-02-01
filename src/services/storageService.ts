@@ -1,0 +1,63 @@
+import type { ProjetPFE, RendezVous } from '../types';
+import { MOCK_PROJETS, MOCK_RENDEZVOUS } from '../data/mockProjects';
+
+const STORAGE_KEYS = {
+    PROJECTS: 'pfe_projects',
+    APPOINTMENTS: 'pfe_appointments'
+};
+
+export const storageService = {
+    // INITIALISATION
+    init() {
+        if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
+        }
+        if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
+            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+        }
+    },
+
+    // PROJETS
+    getProjects(): ProjetPFE[] {
+        const data = localStorage.getItem(STORAGE_KEYS.PROJECTS);
+        return data ? JSON.parse(data) : [];
+    },
+
+    getProjectById(id: string): ProjetPFE | undefined {
+        return this.getProjects().find(p => p.id === id);
+    },
+
+    getProjectByStudent(studentId: string): ProjetPFE | undefined {
+        return this.getProjects().find(p => p.idEtudiant === studentId);
+    },
+
+    updateProject(updatedProject: ProjetPFE) {
+        const projects = this.getProjects();
+        const index = projects.findIndex(p => p.id === updatedProject.id);
+        if (index !== -1) {
+            projects[index] = updatedProject;
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+        }
+    },
+
+    // RENDEZ-VOUS
+    getAppointments(): RendezVous[] {
+        const data = localStorage.getItem(STORAGE_KEYS.APPOINTMENTS);
+        return data ? JSON.parse(data) : [];
+    },
+
+    addAppointment(appointment: RendezVous) {
+        const apps = this.getAppointments();
+        apps.push(appointment);
+        localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(apps));
+    },
+
+    updateAppointment(id: string, updates: Partial<RendezVous>) {
+        const apps = this.getAppointments();
+        const index = apps.findIndex(a => a.id === id);
+        if (index !== -1) {
+            apps[index] = { ...apps[index], ...updates };
+            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(apps));
+        }
+    }
+};

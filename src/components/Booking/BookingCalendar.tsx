@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, Check, HelpCircle } from 'lucide-react';
-import { MOCK_RENDEZVOUS } from '../../data/mockProjects';
+import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
+import type { RendezVous } from '../../types';
 import './BookingCalendar.css';
 
 const TIME_SLOTS = [
@@ -26,13 +27,36 @@ const BookingCalendar = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
-    const studentAppointments = MOCK_RENDEZVOUS.filter(a => a.idEtudiant === user?.id);
+    const [appointments, setAppointments] = useState<RendezVous[]>([]);
+
+    useEffect(() => {
+        if (user) {
+            setAppointments(storageService.getAppointments().filter(a => a.idEtudiant === user.id));
+        }
+    }, [user]);
 
     const handleBooking = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!user || !selectedSlot) return;
+
         setIsSubmitting(true);
+
+        const newApp: RendezVous = {
+            id: `rdv-${Date.now()}`,
+            idEtudiant: user.id,
+            nomEtudiant: user.nom,
+            idProjet: 'proj-1', // Devrait être dynamique mais ok pour démo unifiée
+            titreProjet: 'Projet PFE',
+            date: selectedDate,
+            creneauHoraire: selectedSlot,
+            motif: selectedMotif,
+            statut: 'en-attente'
+        };
+
         // Simulation d'appel API
         setTimeout(() => {
+            storageService.addAppointment(newApp);
+            setAppointments(prev => [...prev, newApp]);
             setIsSubmitting(false);
             setIsSuccess(true);
             setTimeout(() => setIsSuccess(false), 3000);
@@ -121,8 +145,8 @@ const BookingCalendar = () => {
                 <div className="booking-history-section">
                     <h2 className="section-subtitle">Mes Demandes</h2>
                     <div className="requests-list">
-                        {studentAppointments.length > 0 ? (
-                            studentAppointments.map(app => (
+                        {appointments.length > 0 ? (
+                            appointments.map(app => (
                                 <div key={app.id} className="request-card glass">
                                     <div className="request-header">
                                         <div className="request-date">

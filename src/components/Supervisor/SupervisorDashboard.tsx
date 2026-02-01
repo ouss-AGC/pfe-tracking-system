@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_PROJETS } from '../../data/mockProjects';
+import { storageService } from '../../services/storageService';
 import type { ProjetPFE } from '../../types';
 import {
     Users, ShieldCheck, Clock,
@@ -17,8 +17,7 @@ const SupervisorDashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Simulation de chargement avec persistante localStorage un jour
-        setProjects(MOCK_PROJETS);
+        setProjects(storageService.getProjects());
     }, []);
 
     const filteredProjects = projects.filter(p =>

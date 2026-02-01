@@ -1,23 +1,22 @@
 import { useState } from 'react';
-import { MOCK_RENDEZVOUS } from '../../data/mockProjects';
+import { storageService } from '../../services/storageService';
 import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle } from 'lucide-react';
 import './BookingManagement.css';
 
 const BookingManagement = () => {
-    const [appointments, setAppointments] = useState(MOCK_RENDEZVOUS);
+    const [appointments, setAppointments] = useState(storageService.getAppointments());
     const [delayingId, setDelayingId] = useState<string | null>(null);
     const [delayTime, setDelayTime] = useState('');
 
     const handleAction = (id: string, statut: 'accepte' | 'annule') => {
-        setAppointments(prev => prev.map(app =>
-            app.id === id ? { ...app, statut } : app
-        ));
+        storageService.updateAppointment(id, { statut });
+        setAppointments(storageService.getAppointments());
     };
 
     const handleDelay = (id: string) => {
-        setAppointments(prev => prev.map(app =>
-            app.id === id ? { ...app, statut: 'reporte', creneauHoraire: delayTime || app.creneauHoraire } : app
-        ));
+        const updates = { statut: 'reporte', creneauHoraire: delayTime };
+        storageService.updateAppointment(id, updates as any);
+        setAppointments(storageService.getAppointments());
         setDelayingId(null);
         setDelayTime('');
     };

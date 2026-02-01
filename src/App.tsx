@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { storageService } from './services/storageService';
 import Login from './components/Auth/Login';
 import SupervisorDashboard from './components/Supervisor/SupervisorDashboard';
 import StudentDashboard from './components/Student/StudentDashboard';
@@ -18,6 +19,9 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode,
 
   return <>{children}</>;
 };
+
+// Initialisation de la base de données locale
+storageService.init();
 
 const AppRoutes = () => {
   const { isAuthenticated, user } = useAuth();
