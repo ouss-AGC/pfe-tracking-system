@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.0_clean'; // Nouvelle version pour forcer le reset
+        const VERSION = 'v2.1_wael'; // Nouvelle version pour Melki Wael
         if (localStorage.getItem('pfe_storage_version') !== VERSION) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
             localStorage.setItem('pfe_storage_version', VERSION);

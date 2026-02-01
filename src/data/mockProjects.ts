@@ -26,15 +26,15 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-2',
-        titre: 'Sujet PFE - En attente d\'affectation',
+        titre: 'Développement d\'un Béton Auto-Compactant Incorporant des Déchets de Pneus Recyclés pour Applications Non-Structurelles',
         idEtudiant: 'std-2',
-        nomEtudiant: 'En attente...',
+        nomEtudiant: 'Melki Wael',
         nomEncadrant: 'Dr. Oussama Atoui',
-        description: 'Poste vacant pour futur étudiant.',
+        description: 'Étude de l\'incorporation de granulats de pneus recyclés dans un béton auto-compactant (BAP).',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Rédaction 1', progres: 0 }, { id: 'red-2', label: 'Rédaction 2', progres: 0 }, { id: 'red-3', label: 'Rédaction 3', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 0 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
         urlFichePFE: '',
         journalSuivi: []
