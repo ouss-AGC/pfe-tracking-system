@@ -35,6 +35,7 @@ export interface ProjetPFE {
     titre: string;
     idEtudiant: string;
     nomEtudiant: string;
+    avatarEtudiant?: string; // Photo de l'étudiant
     nomEncadrant: string;
     description: string;
     urlFicheProposition?: string;

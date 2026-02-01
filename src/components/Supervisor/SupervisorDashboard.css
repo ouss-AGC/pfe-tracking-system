@@ -393,6 +393,21 @@
     color: #34d399;
 }
 
+.student-info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.student-card-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid var(--color-accent-blue);
+}
+
 .v-project-title {
     font-size: 0.95rem;
     font-weight: 600;

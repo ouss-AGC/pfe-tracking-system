@@ -6,6 +6,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         titre: 'Valorisation des déchets de bouteilles de plastique (PET) comme Granulats partiels dans la formulation des bétons légers',
         idEtudiant: 'std-1',
         nomEtudiant: 'Hmaidi Mohamed',
+        avatarEtudiant: '/students/hmaidi-mohamed.png',
         nomEncadrant: 'Dr. Oussama Atoui',
         description: 'Étude de l\'incorporation de granulats PET recyclés pour l\'allègement des structures en béton.',
         statut: 'en-cours',

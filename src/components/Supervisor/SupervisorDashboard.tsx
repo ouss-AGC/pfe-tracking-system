@@ -197,7 +197,12 @@ const SupervisorDashboard = () => {
                             <div key={project.id} className={`project-card glass ${late ? 'border-late' : ''}`} onClick={() => navigate(`/project/${project.id}`)}>
                                 <div className="card-header">
                                     <div className="student-meta">
-                                        <h3>{project.nomEtudiant}</h3>
+                                        <div className="student-info-row">
+                                            {project.avatarEtudiant && (
+                                                <img src={project.avatarEtudiant} alt={project.nomEtudiant} className="student-card-avatar" />
+                                            )}
+                                            <h3>{project.nomEtudiant}</h3>
+                                        </div>
                                         {late && <span className="badge-urgent">RETARD DÉTECTÉ</span>}
                                         <p>{project.titre}</p>
                                     </div>

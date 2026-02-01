@@ -30,7 +30,7 @@ const MOCK_STUDENTS: Utilisateur[] = [
         email: 'mohamedhmaidi922@gmail.com',
         role: 'student',
         motDePasse: PASSWORD_DEFAULT,
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=hmaidi'
+        avatar: '/students/hmaidi-mohamed.png'
     },
     {
         id: 'std-2',
