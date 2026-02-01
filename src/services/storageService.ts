@@ -10,10 +10,11 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const existingProjects = this.getProjects();
-        // Force l'initialisation si pas de projets ou si le premier projet n'est pas Hmaidi Mohamed
-        if (existingProjects.length < MOCK_PROJETS.length || (existingProjects.length > 0 && existingProjects[0].nomEtudiant !== MOCK_PROJETS[0].nomEtudiant)) {
+        const VERSION = 'v2.0_clean'; // Nouvelle version pour forcer le reset
+        if (localStorage.getItem('pfe_storage_version') !== VERSION) {
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
+            localStorage.setItem('pfe_storage_version', VERSION);
+            // On peut garder les notifications et RDV si déjà présents, ou tout reset
         }
 
         if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
