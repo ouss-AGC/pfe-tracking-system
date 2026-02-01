@@ -14,7 +14,7 @@ export interface JalonProgres {
     id: string;
     label: string;
     progres: number; // 0-100
-    derniereMiseAJour: string;
+    derniereMiseAJour?: string;
     dateLimite?: string; // Nouvelle deadline
 }
 
