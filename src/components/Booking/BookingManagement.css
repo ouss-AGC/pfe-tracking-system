@@ -1,0 +1,205 @@
+.booking-mgmt-container {
+    margin-top: 2rem;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.mgmt-header {
+    display: flex;
+    background: var(--color-bg-navy);
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mgmt-header div {
+    padding: 1.25rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.mgmt-header .tab-active {
+    color: var(--color-accent-blue);
+    border-bottom-color: var(--color-accent-blue);
+}
+
+.appointments-table {
+    padding: 1rem;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px 1fr 160px;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table-row.header {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    letter-spacing: 0.1em;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.student-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.mini-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-bg-light);
+    color: var(--color-accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    border: 1px solid var(--color-accent-blue-glow);
+}
+
+.project-ref {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.time-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+}
+
+.time-info.accent {
+    color: var(--color-accent-blue);
+    font-weight: 700;
+    margin-top: 0.25rem;
+}
+
+.reason-text {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.action-btn.accept:hover {
+    background: #10b98115;
+    border-color: #10b981;
+    color: #10b981;
+}
+
+.action-btn.delay:hover {
+    background: var(--color-accent-blue-glow);
+    border-color: var(--color-accent-blue);
+    color: var(--color-accent-blue);
+}
+
+.action-btn.reject:hover {
+    background: var(--color-accent-red-glow);
+    border-color: var(--color-accent-red);
+    color: var(--color-accent-red);
+}
+
+.status-pill {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+}
+
+.status-pill.accepted {
+    background: #10b98120;
+    color: #10b981;
+    border: 1px solid #10b98140;
+}
+
+.status-pill.delayed {
+    background: var(--color-accent-blue-glow);
+    color: var(--color-accent-blue);
+    border: 1px solid var(--color-accent-blue-glow);
+}
+
+.status-pill.cancelled {
+    background: var(--color-accent-red-glow);
+    color: var(--color-accent-red);
+    border: 1px solid var(--color-accent-red-glow);
+}
+
+.appointment-row {
+    position: relative;
+}
+
+.delay-panel {
+    grid-column: 1 / -1;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid var(--color-accent-blue-glow);
+    border-radius: var(--border-radius-md);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.alert-icon {
+    color: var(--color-accent-blue);
+}
+
+.delay-content h4 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.delay-content p {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+}
+
+.delay-form {
+    display: flex;
+    gap: 1rem;
+}
+
+.delay-form select {
+    background: var(--color-bg-navy);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-sm);
+    outline: none;
+}
