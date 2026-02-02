@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import type { ProjetPFE } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
     Calendar, Check, AlertCircle, ArrowLeft, Mail,
-    ChevronRight, Shield, Upload, Paperclip, PenTool, Send, X, Save, Edit3
+    ChevronRight, Shield, Edit3
 } from 'lucide-react';
 import './StudentDashboard.css';
 
@@ -56,13 +56,6 @@ const StudentDashboard = () => {
     const [showPDF, setShowPDF] = useState(false);
     const [notifications, setNotifications] = useState<any[]>([]);
 
-    // Progress Report Local State
-    const [reportContent, setReportContent] = useState('');
-    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
     // Editable Progress State
     const [isEditingProgress, setIsEditingProgress] = useState(false);
     const [tempExperimental, setTempExperimental] = useState<any[]>([]);
@@ -101,25 +94,6 @@ const StudentDashboard = () => {
     const redProgress = calculateSectionProgress(isEditingProgress ? tempRedaction : project.progres.redaction);
     const totalProgress = Math.round((expProgress + redProgress) / 2);
 
-    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.[0]) {
-            setUploadedFile(e.target.files[0]);
-        }
-    };
-
-    const handleSubmitReport = () => {
-        if (!reportContent.trim() && !uploadedFile) return;
-
-        setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setSubmitSuccess(true);
-            setReportContent('');
-            setUploadedFile(null);
-            setTimeout(() => setSubmitSuccess(false), 3000);
-        }, 1500);
-    };
 
     const handleProgressChange = (type: 'experimental' | 'redaction', id: string, newValue: number) => {
         const updater = type === 'experimental' ? setTempExperimental : setTempRedaction;
@@ -213,7 +187,7 @@ const StudentDashboard = () => {
                             Annuler
                         </button>
                         <button className="btn btn-primary" onClick={saveProgress}>
-                            <Save size={16} /> Enregistrer
+                            <Check size={16} /> Enregistrer
                         </button>
                     </div>
                 )}
@@ -295,78 +269,8 @@ const StudentDashboard = () => {
                 </section>
             </div>
 
-            {/* DOCUMENT SUBMISSION SECTION */}
+            {/* DOCUMENT SUBMISSION SECTION - LIVRABLE REQUIS */}
             <DocumentSubmission projectId={project.id} />
-
-            {/* RAPPORT D'AVANCEMENT SECTION */}
-            <section className="avancement-report-section glass animate-slide-up">
-                <div className="section-header-banner">
-                    <PenTool size={20} />
-                    <h2>RAPPORT D'AVANCEMENT PÉRIODIQUE</h2>
-                    <div className="deadline-badge">LIVRABLE REQUIS</div>
-                </div>
-
-                <div className="report-form-layout">
-                    <div className="text-area-box">
-                        <label>Commentaires et Observations Techniques</label>
-                        <textarea
-                            className="textarea-field"
-                            placeholder="Décrivez en détail les travaux réalisés durant cette période, les difficultés rencontrées et les solutions envisagées..."
-                            value={reportContent}
-                            onChange={(e) => setReportContent(e.target.value)}
-                        ></textarea>
-                    </div>
-
-                    <div className="upload-box-wrapper">
-                        <label>Documents Joints (PDF, Word, PPT, Excel)</label>
-                        <div
-                            className={`upload-zone ${uploadedFile ? 'has-file' : ''}`}
-                            onClick={() => fileInputRef.current?.click()}
-                        >
-                            {uploadedFile ? (
-                                <div className="file-preview">
-                                    <div className="file-info">
-                                        <Paperclip size={24} className="active-icon" />
-                                        <div className="file-meta">
-                                            <span className="filename">{uploadedFile.name}</span>
-                                            <span className="filesize">{(uploadedFile.size / 1024).toFixed(1)} KB</span>
-                                        </div>
-                                    </div>
-                                    <button className="btn-remove" onClick={(e) => { e.stopPropagation(); setUploadedFile(null); }}>
-                                        <X size={16} />
-                                    </button>
-                                </div>
-                            ) : (
-                                <div className="upload-placeholder">
-                                    <Upload size={32} className="upload-icon" />
-                                    <span>Déposer le rapport ou cliquer ici</span>
-                                    <span className="sub-text">Formats autorisés : .pdf, .docx, .pptx, .xlsx</span>
-                                </div>
-                            )}
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileUpload}
-                                hidden
-                                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="report-actions">
-                    <button className="btn btn-outline">
-                        <Save size={18} /> Sauvegarder Brouillon
-                    </button>
-                    <button
-                        className={`btn btn-primary ${isSubmitting ? 'loading' : ''}`}
-                        onClick={handleSubmitReport}
-                        disabled={isSubmitting || (!reportContent.trim() && !uploadedFile)}
-                    >
-                        {isSubmitting ? 'Transmission...' : submitSuccess ? <><Check size={18} /> Rapport Transmis</> : <><Send size={18} /> Soumettre à l'Encadrant</>}
-                    </button>
-                </div>
-            </section>
 
             <div className="update-reminder glass animate-slide-up">
                 <Clock size={20} className="reminder-icon" />
