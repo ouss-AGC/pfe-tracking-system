@@ -106,7 +106,7 @@ const SupervisorDashboard = () => {
                         <div className="pdf-header">
                             <div className="header-with-icon">
                                 <FolderOpen size={20} />
-                                <h3>DOCUMENTS DÉPOSÉS - {showDocsModal.nomEtudiant.toUpperCase()}</h3>
+                                <h3 className="modal-title-text">DOCUMENTS DÉPOSÉS - {showDocsModal.nomEtudiant.toUpperCase()}</h3>
                             </div>
                             <button className="btn-close" onClick={() => setShowDocsModal(null)}>×</button>
                         </div>
@@ -469,7 +469,6 @@ const SupervisorDashboard = () => {
                                             <h3>{project.nomEtudiant}</h3>
                                         </div>
                                         {late && <span className="badge-urgent">RETARD DÉTECTÉ</span>}
-                                        <p>{project.titre}</p>
                                     </div>
                                     <div className={`v-status-badge ${project.statut}`}>
                                         {isPending ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}

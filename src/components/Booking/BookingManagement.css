@@ -37,7 +37,7 @@
 
 .table-row {
     display: grid;
-    grid-template-columns: 180px 1fr 180px 1fr 160px;
+    grid-template-columns: 180px 2fr 160px 1.5fr 150px;
     gap: 1.5rem;
     padding: 1.25rem;
     align-items: center;
@@ -78,6 +78,9 @@
     font-size: 0.85rem;
     color: var(--color-text-secondary);
     line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .time-info {
