@@ -31,6 +31,14 @@ export interface EntreeJournal {
     type: 'etudiant' | 'superviseur';
 }
 
+export interface DocumentPFE {
+    id: string;
+    name: string;
+    url: string;
+    date: string;
+    type: 'rapport' | 'presentation' | 'annexe' | 'autre';
+}
+
 export interface ProjetPFE {
     id: string;
     titre: string;
@@ -53,6 +61,7 @@ export interface ProjetPFE {
     dateSignatureChef?: string;
     urlFichePFE?: string; // Lien vers le document de référence
     journalSuivi: EntreeJournal[]; // Nouveau: Preuve de suivi hebdomadaire
+    documents?: DocumentPFE[]; // Nouveau: Documents uploadés
 }
 
 export type StatutRendezVous = 'en-attente' | 'accepte' | 'reporte' | 'annule';

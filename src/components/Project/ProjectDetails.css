@@ -298,6 +298,8 @@
 .track-bar .fill {
     height: 100%;
     background: var(--color-accent-blue);
+    width: 0%;
+    /* Default 0 width if strict */
 }
 
 .track-bar .fill.red {
@@ -579,13 +581,54 @@
     filter: none !important;
     /* Pas d'invert pour garder les couleurs originales du cachet */
     opacity: 1;
+    z-index: 10;
+}
+
+/* STAMP AND DATE LAYOUT */
+.stamp-container {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 5;
 }
 
 .official-stamp-img {
-    position: absolute;
-    max-height: 100px;
-    right: 20px;
-    bottom: 20px;
+    max-height: 90px;
+    width: auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.stamped-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 3px double #1e3a8a;
+    /* Blue ink color */
+    color: #1e3a8a;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transform: rotate(-2deg);
+    font-family: 'Courier New', Courier, monospace;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.stamp-date-label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1e3a8a;
+    margin-bottom: 2px;
+}
+
+.stamp-date-value {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 .signature-info {
@@ -595,6 +638,7 @@
     display: flex;
     flex-direction: column;
     font-size: 0.7rem;
+    color: #111;
 }
 
 .sheet-footer-note {
@@ -645,5 +689,32 @@
     .track-bar {
         background: #eee !important;
         border: 1px solid #ddd;
+    }
+}
+/* Explicit Print Fixes for Comments and Borders */
+@media print {
+    .j-col-comm {
+        color: black !important;
+        font-style: normal !important;
+    }
+
+    .journal-row, .journal-header-row {
+        border-bottom: 1px solid #000 !important;
+        color: black !important;
+    }
+
+    .journal-table {
+        border: 1px solid #000 !important;
+    }
+
+    /* Keep stamp date box visible in print */
+    .stamped-date-box {
+        border: 3px double #1e3a8a !important;
+        color: #1e3a8a !important;
+        background: transparent !important;
+    }
+    
+    .stamp-date-label {
+        border-bottom: 1px solid #1e3a8a !important;
     }
 }

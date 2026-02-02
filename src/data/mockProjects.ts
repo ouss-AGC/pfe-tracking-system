@@ -2,33 +2,6 @@ import type { ProjetPFE, RendezVous } from '../types';
 
 export const MOCK_PROJETS: ProjetPFE[] = [
     {
-        id: 'proj-1',
-        titre: 'Valorisation des déchets de bouteilles de plastique (PET) comme Granulats partiels dans la formulation des bétons légers',
-        idEtudiant: 'std-1',
-        nomEtudiant: 'Ahmed Ben Salah',
-        emailEtudiant: 'mohamedhmaidi922@gmail.com',
-        avatarEtudiant: '/students/hmaidi-mohamed.png',
-        telephoneEtudiant: '22524322',
-        nomEncadrant: 'Dr. Oussama Atoui',
-        emailEncadrant: 'oussmer@hotmail.fr',
-        description: 'Étude de l\'incorporation de granulats PET recyclés pour l\'allègement des structures en béton.',
-        statut: 'en-cours',
-        progres: {
-            experimental: [
-                { id: 'exp-1', label: 'Caractérisation PET', progres: 0 },
-                { id: 'exp-2', label: 'Formulation bétons légers', progres: 0 },
-                { id: 'exp-3', label: 'Essais de compression/traction', progres: 0 },
-            ],
-            redaction: [
-                { id: 'red-1', label: 'Revue bibliographique (Plastiques)', progres: 0 },
-                { id: 'red-2', label: 'Synthèse bibliographique', progres: 0 },
-                { id: 'red-3', label: 'Analyse des résultats', progres: 0 },
-            ]
-        },
-        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
-    },
-    {
         id: 'proj-2',
         titre: 'Développement d\'un Béton Auto-Compactant Incorporant des Déchets de Pneus Recyclés pour Applications Non-Structurelles',
         idEtudiant: 'std-2',
@@ -44,7 +17,11 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
+        journalSuivi: [],
+        documents: [
+            { id: 'doc-1', name: 'Rapport_Avancement_Janvier.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-01', type: 'rapport' },
+            { id: 'doc-2', name: 'Resultats_Compressions_Pneus.xlsx', url: '#', date: '2026-01-28', type: 'annexe' }
+        ]
     },
     {
         id: 'proj-3',

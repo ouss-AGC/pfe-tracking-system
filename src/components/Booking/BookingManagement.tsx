@@ -71,19 +71,18 @@ const BookingManagement = () => {
     // Créneaux occupés
     const confirmedApps = appointments.filter(a => a.statut === 'accepte');
 
-    const getDayFromDate = (dateStr: string) => {
+    const getDDMMFromDate = (dateStr: string) => {
         const date = new Date(dateStr);
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        return days[date.getDay()];
+        return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
     };
 
-    const isSlotOccupied = (day: string, slot: string) => {
-        return confirmedApps.find(a => getDayFromDate(a.date) === day && a.creneauHoraire === slot);
+    const isSlotOccupied = (dateDDMM: string, slot: string) => {
+        return confirmedApps.find(a => getDDMMFromDate(a.date) === dateDDMM && a.creneauHoraire === slot);
     };
 
-    const isHoveredSlot = (day: string, slot: string) => {
+    const isHoveredSlot = (dateDDMM: string, slot: string) => {
         if (!hoveredApp) return false;
-        return getDayFromDate(hoveredApp.date) === day && hoveredApp.creneauHoraire === slot;
+        return getDDMMFromDate(hoveredApp.date) === dateDDMM && hoveredApp.creneauHoraire === slot;
     };
 
     return (
@@ -225,9 +224,10 @@ const BookingManagement = () => {
                         {SLOTS.map(slot => (
                             <div key={slot} className="grid-row">
                                 <div className="slot-time-label">{slot.split(' ')[0]}</div>
-                                {DAYS.map(day => {
-                                    const occupiedBy = isSlotOccupied(day, slot);
-                                    const isHovered = isHoveredSlot(day, slot);
+                                {DAYS.map((day, idx) => {
+                                    const dateDDMM = weekDates[idx];
+                                    const occupiedBy = isSlotOccupied(dateDDMM, slot);
+                                    const isHovered = isHoveredSlot(dateDDMM, slot);
 
                                     return (
                                         <div

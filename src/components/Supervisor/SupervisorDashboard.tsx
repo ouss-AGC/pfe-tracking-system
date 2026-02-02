@@ -10,7 +10,7 @@ import {
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
     Activity, Shield, FileText, Megaphone, Send, Trash2,
-    Phone, Mail, Info, X, ArrowLeft, Edit2, Save
+    Phone, Mail, Info, X, ArrowLeft, Edit2, Save, FolderOpen, Download, AlertCircle
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -28,6 +28,9 @@ const SupervisorDashboard = () => {
     const [studentForValidation, setStudentForValidation] = useState<ProjetPFE | null>(null);
     const [validationExp, setValidationExp] = useState<any[]>([]);
     const [validationRed, setValidationRed] = useState<any[]>([]);
+
+    // NEW: Documents Modal State
+    const [showDocsModal, setShowDocsModal] = useState<ProjetPFE | null>(null);
 
     const navigate = useNavigate();
 
@@ -92,6 +95,46 @@ const SupervisorDashboard = () => {
                             <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
                         <FicheInteractivePFE project={selectedProjectForFiche} />
+                    </div>
+                </div>
+            )}
+
+            {/* Modal de Documents Déposés */}
+            {showDocsModal && (
+                <div className="pdf-viewer-overlay glass" onClick={() => setShowDocsModal(null)}>
+                    <div className="pdf-viewer-modal glass docs-modal animate-scale-up" onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header">
+                            <div className="header-with-icon">
+                                <FolderOpen size={20} />
+                                <h3>DOCUMENTS DÉPOSÉS - {showDocsModal.nomEtudiant.toUpperCase()}</h3>
+                            </div>
+                            <button className="btn-close" onClick={() => setShowDocsModal(null)}>×</button>
+                        </div>
+                        <div className="modal-scroll-body">
+                            {showDocsModal.documents && showDocsModal.documents.length > 0 ? (
+                                <div className="docs-list">
+                                    {showDocsModal.documents.map(doc => (
+                                        <div key={doc.id} className="doc-item glass">
+                                            <div className="doc-icon-wrapper">
+                                                <FileText size={24} />
+                                            </div>
+                                            <div className="doc-info">
+                                                <h4>{doc.name}</h4>
+                                                <span className="doc-meta">{doc.date} • {doc.type.toUpperCase()}</span>
+                                            </div>
+                                            <a href={doc.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" title="Télécharger">
+                                                <Download size={16} />
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="empty-state">
+                                    <AlertCircle size={48} className="empty-icon" />
+                                    <p>Aucun document déposé par cet officier élève pour le moment.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
@@ -455,6 +498,16 @@ const SupervisorDashboard = () => {
                                         <div className="v-total-val">{totalProgress}%</div>
                                     </div>
                                     <div className="v-actions-group">
+                                        <button
+                                            className="v-btn-ref docs"
+                                            title="Voir les Documents Déposés"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowDocsModal(project);
+                                            }}
+                                        >
+                                            <FolderOpen size={16} />
+                                        </button>
                                         <button
                                             className="v-btn-ref info"
                                             title="Éditer et Valider la Progression"

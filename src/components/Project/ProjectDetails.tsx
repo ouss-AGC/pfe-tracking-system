@@ -67,7 +67,9 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
         if (!project) return;
         const newStamp = '/cachet_signature_dr_atoui.png';
 
-        setSignature(null); // La signature est déjà intégrée dans l'image du cachet
+        setSignature('/signature_atoui_simple.png'); // Supposons qu'on a une signature simple aussi, ou on utilise le cachet combiné
+        // Pour l'instant on garde la logique précédente
+        setSignature(null);
         setStamp(newStamp);
 
         const updated = {
@@ -295,18 +297,22 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                             <button className="btn btn-primary" onClick={() => {
                                 const textarea = document.getElementById('new-comment') as HTMLTextAreaElement;
                                 if (textarea.value.trim()) {
-                                    setProject(prev => prev ? ({
-                                        ...prev,
-                                        journalSuivi: [
-                                            ...prev.journalSuivi,
-                                            {
-                                                date: new Date().toLocaleDateString('fr-FR'),
-                                                heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-                                                commentaire: textarea.value.trim(),
-                                                type: 'superviseur'
-                                            }
-                                        ]
-                                    }) : null);
+                                    const newEntry = {
+                                        date: new Date().toLocaleDateString('fr-FR'),
+                                        heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                                        commentaire: textarea.value.trim(),
+                                        type: 'superviseur' as const
+                                    };
+
+                                    setProject(prev => {
+                                        if (!prev) return null;
+                                        const updated = {
+                                            ...prev,
+                                            journalSuivi: [...prev.journalSuivi, newEntry]
+                                        };
+                                        storageService.updateProject(updated); // Save immediately
+                                        return updated;
+                                    });
                                     textarea.value = '';
                                 }
                             }}>
@@ -325,6 +331,7 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                             <div key={idx} className="journal-row animate-fade-in">
                                 <div className="j-col-date">
                                     <span className="j-date">{entry.date}</span>
+                                    <span style={{ margin: '0 5px' }}> </span>
                                     <span className="j-time">{entry.heure || '--:--'}</span>
                                 </div>
                                 <div className="j-col-type">
@@ -351,13 +358,17 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                     <div className="signature-area encadrant">
                         <label>Visa de l'Encadrant (Signature & Cachet)</label>
                         <div className="signature-box-official">
-                            {signature && stamp ? (
+                            {signature || stamp ? (
                                 <div className="visual-signature">
-                                    <img src={signature} alt="Signature" className="official-signature-img" />
-                                    <img src={stamp} alt="Cachet" className="official-stamp-img" />
                                     <div className="signature-info">
                                         <strong>{project.nomEncadrant}</strong>
-                                        <span>Signé le : {project.dateSignature}</span>
+                                    </div>
+                                    <div className="stamp-container">
+                                        <img src={stamp || signature || ''} alt="Cachet" className="official-stamp-img" />
+                                        <div className="stamped-date-box">
+                                            <span className="stamp-date-label">VALIDÉ LE</span>
+                                            <span className="stamp-date-value">{project.dateSignature}</span>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (

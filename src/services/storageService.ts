@@ -10,18 +10,19 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.5_aziz_final'; // Version finale avec les 5 étudiants
-        if (localStorage.getItem('pfe_storage_version') !== VERSION) {
+        const VERSION = 'v2.6_cleanup_ahmed'; // Force cleanup of test data
+        const currentVersion = localStorage.getItem('pfe_storage_version');
+
+        if (currentVersion !== VERSION) {
+            console.log('Resetting storage to version:', VERSION);
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
+            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
             localStorage.setItem('pfe_storage_version', VERSION);
-            // On peut garder les notifications et RDV si déjà présents, ou tout reset
         }
 
         if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
-        }
-        if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
-            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
         }
     },
 
