@@ -84,7 +84,10 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
+        journalSuivi: [],
+        documents: [
+            { id: 'doc-m1', name: 'Caracterisation_Coquilles.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-29', type: 'rapport' }
+        ]
     },
     {
         id: 'proj-6',
@@ -102,7 +105,10 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (PET/Bétons)', progres: 0 }, { id: 'red-2', label: 'Méthodologie expérimentale', progres: 0 }, { id: 'red-3', label: 'Analyse environnementale', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
+        journalSuivi: [],
+        documents: [
+            { id: 'doc-h1', name: 'Etude_Preliminaire_PET.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-31', type: 'rapport' }
+        ]
     }
 ];
 
