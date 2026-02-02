@@ -44,7 +44,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-4',
-        titre: 'Étude Comparative de l'Efficacité de Différents Additifs Naturels(Cactus, Blanc d'Œuf) comme Stabilisants pour Mortiers de Terre',
+        titre: 'Étude Comparative de l\'Efficacité de Différents Additifs Naturels (Cactus, Blanc d\'Œuf) comme Stabilisants pour Mortiers de Terre',
         idEtudiant: 'std-4',
         nomEtudiant: 'Fedi Karmi',
         emailEtudiant: 'karmifedi@gmail.com',
@@ -63,7 +63,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-5',
-        titre: 'Étude de l'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
+        titre: 'Étude de l\'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
         emailEtudiant: 'mouahmedaziza12@gmail.com',
@@ -105,7 +105,7 @@ export const MOCK_RENDEZVOUS: RendezVous[] = [
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
         idProjet: 'proj-5',
-        titreProjet: 'Étude de l'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
+        titreProjet: 'Étude de l\'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         date: '2026-02-10',
         creneauHoraire: '09:00 - 10:00',
         motif: 'Discussion sur le traitement des coquilles',
