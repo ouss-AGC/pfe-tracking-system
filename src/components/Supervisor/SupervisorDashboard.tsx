@@ -111,29 +111,32 @@ const SupervisorDashboard = () => {
                             <button className="btn-close" onClick={() => setShowDocsModal(null)}>×</button>
                         </div>
                         <div className="modal-scroll-body">
-                            {showDocsModal.documents && showDocsModal.documents.length > 0 ? (
-                                <div className="docs-list">
-                                    {showDocsModal.documents.map(doc => (
-                                        <div key={doc.id} className="doc-item glass">
-                                            <div className="doc-icon-wrapper">
-                                                <FileText size={24} />
+                            {(() => {
+                                const docs = storageService.getDocumentsByProject(showDocsModal.id);
+                                return docs && docs.length > 0 ? (
+                                    <div className="docs-list">
+                                        {docs.map(doc => (
+                                            <div key={doc.id} className="doc-item glass">
+                                                <div className="doc-icon-wrapper">
+                                                    <FileText size={24} />
+                                                </div>
+                                                <div className="doc-info">
+                                                    <h4>{doc.name}</h4>
+                                                    <span className="doc-meta">{doc.date} • {doc.type.toUpperCase()}</span>
+                                                </div>
+                                                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" title="Ouvrir le lien">
+                                                    <Download size={16} />
+                                                </a>
                                             </div>
-                                            <div className="doc-info">
-                                                <h4>{doc.name}</h4>
-                                                <span className="doc-meta">{doc.date} • {doc.type.toUpperCase()}</span>
-                                            </div>
-                                            <a href={doc.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" title="Télécharger">
-                                                <Download size={16} />
-                                            </a>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="empty-state">
-                                    <AlertCircle size={48} className="empty-icon" />
-                                    <p>Aucun document déposé par cet officier élève pour le moment.</p>
-                                </div>
-                            )}
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="empty-state">
+                                        <AlertCircle size={48} className="empty-icon" />
+                                        <p>Aucun document déposé par cet officier élève pour le moment.</p>
+                                    </div>
+                                );
+                            })()}
                         </div>
                     </div>
                 </div>

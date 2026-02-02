@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.13_all_documents'; // Force cleanup of test data
+        const VERSION = 'v2.14_document_links'; // Force cleanup of test data
         const currentVersion = localStorage.getItem('pfe_storage_version');
 
         if (currentVersion !== VERSION) {
@@ -93,5 +93,49 @@ export const storageService = {
 
     clearNotifications() {
         localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
+    },
+
+    // GESTION DES DOCUMENTS
+    addDocumentToProject(projectId: string, document: { name: string; url: string; type: 'rapport' | 'presentation' | 'annexe' | 'autre' }) {
+        const projects = this.getProjects();
+        const projectIndex = projects.findIndex(p => p.id === projectId);
+
+        if (projectIndex !== -1) {
+            const newDoc = {
+                id: `doc-${Date.now()}`,
+                name: document.name,
+                url: document.url,
+                date: new Date().toISOString().split('T')[0],
+                type: document.type
+            };
+
+            if (!projects[projectIndex].documents) {
+                projects[projectIndex].documents = [];
+            }
+
+            projects[projectIndex].documents!.push(newDoc);
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+            return newDoc;
+        }
+        return null;
+    },
+
+    deleteDocumentFromProject(projectId: string, documentId: string) {
+        const projects = this.getProjects();
+        const projectIndex = projects.findIndex(p => p.id === projectId);
+
+        if (projectIndex !== -1 && projects[projectIndex].documents) {
+            projects[projectIndex].documents = projects[projectIndex].documents!.filter(
+                doc => doc.id !== documentId
+            );
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+            return true;
+        }
+        return false;
+    },
+
+    getDocumentsByProject(projectId: string) {
+        const project = this.getProjectById(projectId);
+        return project?.documents || [];
     }
 };

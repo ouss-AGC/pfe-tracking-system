@@ -17,11 +17,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: [],
-        documents: [
-            { id: 'doc-1', name: 'Rapport_Avancement_Janvier.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-01', type: 'rapport' },
-            { id: 'doc-2', name: 'Resultats_Compressions_Pneus.xlsx', url: '#', date: '2026-01-28', type: 'annexe' }
-        ]
+        journalSuivi: []
     },
     {
         id: 'proj-3',
@@ -40,11 +36,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 0 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: [],
-        documents: [
-            { id: 'doc-g1', name: 'Rapport_Fibres_Vegetales.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-02', type: 'rapport' },
-            { id: 'doc-g2', name: 'Analyse_Thermique_Preliminaire.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-30', type: 'annexe' }
-        ]
+        journalSuivi: []
     },
     {
         id: 'proj-4',
@@ -63,10 +55,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 0 }, { id: 'red-2', label: 'Protocole expérimental', progres: 0 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: [],
-        documents: [
-            { id: 'doc-f1', name: 'Tests_Cactus_Blanc_Oeuf.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-01', type: 'rapport' }
-        ]
+        journalSuivi: []
     },
     {
         id: 'proj-5',
@@ -84,10 +73,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: [],
-        documents: [
-            { id: 'doc-m1', name: 'Caracterisation_Coquilles.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-29', type: 'rapport' }
-        ]
+        journalSuivi: []
     },
     {
         id: 'proj-6',
@@ -95,6 +81,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         idEtudiant: 'std-6',
         nomEtudiant: 'Hmaidi Mohamed',
         emailEtudiant: 'mohamedhmaidi922@gmail.com',
+        avatarEtudiant: '/students/hmaidi-mohamed.png',
         telephoneEtudiant: '22524322',
         nomEncadrant: 'Dr. Oussama Atoui',
         emailEncadrant: 'oussmer@hotmail.fr',
@@ -105,10 +92,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (PET/Bétons)', progres: 0 }, { id: 'red-2', label: 'Méthodologie expérimentale', progres: 0 }, { id: 'red-3', label: 'Analyse environnementale', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: [],
-        documents: [
-            { id: 'doc-h1', name: 'Etude_Preliminaire_PET.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-31', type: 'rapport' }
-        ]
+        journalSuivi: []
     }
 ];
 
