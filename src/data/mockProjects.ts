@@ -44,7 +44,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-4',
-        titre: 'Étude Comparative de l’Efficacité de Différents Additifs Naturels (Cactus, Blanc d’Œuf) comme Stabilisants pour Mortiers de Terre',
+        titre: 'Étude Comparative de l'Efficacité de Différents Additifs Naturels(Cactus, Blanc d'Œuf) comme Stabilisants pour Mortiers de Terre',
         idEtudiant: 'std-4',
         nomEtudiant: 'Fedi Karmi',
         emailEtudiant: 'karmifedi@gmail.com',
@@ -63,7 +63,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-5',
-        titre: 'Étude de l’Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
+        titre: 'Étude de l'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
         emailEtudiant: 'mouahmedaziza12@gmail.com',
@@ -81,18 +81,18 @@ export const MOCK_PROJETS: ProjetPFE[] = [
     },
     {
         id: 'proj-6',
-        titre: 'Titre du Projet à Définir',
+        titre: 'Valorisation des déchets de bouteilles de plastique (PET) comme Granulats partiels dans la formulation des bétons légers',
         idEtudiant: 'std-6',
         nomEtudiant: 'Hmaidi Mohamed',
         emailEtudiant: 'mohamedhmaidi922@gmail.com',
-        telephoneEtudiant: '50123456',
+        telephoneEtudiant: '22524322',
         nomEncadrant: 'Dr. Oussama Atoui',
         emailEncadrant: 'oussmer@hotmail.fr',
-        description: 'Sujet de PFE à mettre à jour par l\'officier encadrant.',
+        description: 'Étude de la valorisation des déchets plastiques PET comme substitut partiel des granulats dans la formulation de bétons légers.',
         statut: 'attente-validation',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Revue bibliographique', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Préparation granulats PET', progres: 0 }, { id: 'exp-2', label: 'Formulation bétons', progres: 0 }, { id: 'exp-3', label: 'Tests mécaniques', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (PET/Bétons)', progres: 0 }, { id: 'red-2', label: 'Méthodologie expérimentale', progres: 0 }, { id: 'red-3', label: 'Analyse environnementale', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
@@ -105,7 +105,7 @@ export const MOCK_RENDEZVOUS: RendezVous[] = [
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
         idProjet: 'proj-5',
-        titreProjet: 'Étude de l’Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
+        titreProjet: 'Étude de l'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         date: '2026-02-10',
         creneauHoraire: '09:00 - 10:00',
         motif: 'Discussion sur le traitement des coquilles',
