@@ -71,8 +71,8 @@ const Login = () => {
                                 {role === 'supervisor' ? (
                                     <input
                                         id="email"
-                                        type="text"
-                                        placeholder="Identifiant"
+                                        type="password"
+                                        placeholder="••••••••"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
