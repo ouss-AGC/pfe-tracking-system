@@ -13,8 +13,8 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         description: 'Étude de l\'incorporation de granulats de pneus recyclés dans un béton auto-compactant (BAP).',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 0 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 80 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 40 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 90 }, { id: 'red-2', label: 'Méthodologie', progres: 50 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: [],
@@ -27,7 +27,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         id: 'proj-3',
         titre: 'Amélioration des propriétés thermiques et mécaniques de briques en terre crue par l\'incorporation de fibres végétales locales',
         idEtudiant: 'std-3',
-        nomEtudiant: 'Jihed Fechichi',
+        nomEtudiant: 'Ghofrane Oueslati',
         emailEtudiant: 'fechbej@gmail.com',
         avatarEtudiant: '/students/ghofrane-oueslati.png',
         telephoneEtudiant: '56601931',
@@ -36,8 +36,8 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         description: 'Étude de l\'amélioration des caractéristiques des briques de terre crue via des fibres locales (thèrmique et mécanique).',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Sélection fibres', progres: 0 }, { id: 'exp-2', label: 'Pressage briques', progres: 0 }, { id: 'exp-3', label: 'Tests conductivité', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 0 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Sélection fibres', progres: 20 }, { id: 'exp-2', label: 'Pressage briques', progres: 0 }, { id: 'exp-3', label: 'Tests conductivité', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 40 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
@@ -55,8 +55,8 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         description: 'Comparaison de l\'impact du cactus et du blanc d\'œuf sur la stabilisation et la performance des mortiers de terre.',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Préparation additifs', progres: 0 }, { id: 'exp-2', label: 'Confection éprouvettes', progres: 0 }, { id: 'exp-3', label: 'Essais de durabilité', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 0 }, { id: 'red-2', label: 'Protocole expérimental', progres: 0 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Préparation additifs', progres: 30 }, { id: 'exp-2', label: 'Confection éprouvettes', progres: 10 }, { id: 'exp-3', label: 'Essais de durabilité', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 60 }, { id: 'red-2', label: 'Protocole expérimental', progres: 20 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []
@@ -66,15 +66,33 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         titre: 'Étude de l’Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
-        emailEtudiant: 'mohamedaziz@gmail.com',
+        emailEtudiant: 'mouahmedaziza12@gmail.com',
         telephoneEtudiant: '23881847',
         nomEncadrant: 'Dr. Oussama Atoui',
         emailEncadrant: 'oussmer@hotmail.fr',
         description: 'Évaluation des performances mécaniques et de durabilité des mortiers incorporant des déchets de mollusques.',
         statut: 'en-cours',
         progres: {
-            experimental: [{ id: 'exp-1', label: 'Traitement coquilles', progres: 0 }, { id: 'exp-2', label: 'Formulation mortiers', progres: 0 }, { id: 'exp-3', label: 'Essais de flexion', progres: 0 }],
-            redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
+            experimental: [{ id: 'exp-1', label: 'Traitement coquilles', progres: 15 }, { id: 'exp-2', label: 'Formulation mortiers', progres: 0 }, { id: 'exp-3', label: 'Essais de flexion', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 25 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
+        },
+        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
+        journalSuivi: []
+    },
+    {
+        id: 'proj-6',
+        titre: 'Titre du Projet à Définir',
+        idEtudiant: 'std-6',
+        nomEtudiant: 'Hmaidi Mohamed',
+        emailEtudiant: 'mohamedhmaidi922@gmail.com',
+        telephoneEtudiant: '50123456',
+        nomEncadrant: 'Dr. Oussama Atoui',
+        emailEncadrant: 'oussmer@hotmail.fr',
+        description: 'Sujet de PFE à mettre à jour par l\'officier encadrant.',
+        statut: 'attente-validation',
+        progres: {
+            experimental: [{ id: 'exp-1', label: 'Tâche 1', progres: 0 }, { id: 'exp-2', label: 'Tâche 2', progres: 0 }, { id: 'exp-3', label: 'Tâche 3', progres: 0 }],
+            redaction: [{ id: 'red-1', label: 'Revue bibliographique', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
         journalSuivi: []

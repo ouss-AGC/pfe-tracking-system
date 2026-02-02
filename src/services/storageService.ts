@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.7_consistency_fix'; // Force cleanup of test data
+        const VERSION = 'v2.9_verified'; // Force cleanup of test data
         const currentVersion = localStorage.getItem('pfe_storage_version');
 
         if (currentVersion !== VERSION) {
