@@ -22,7 +22,7 @@ const MOCK_SUPERVISOR: Utilisateur = {
 
 export const MOCK_STUDENTS: Utilisateur[] = [
     {
-        id: 'std-1',
+        id: 'std-6',
         nom: 'Hmaidi Mohamed',
         email: 'mohamedhmaidi922@gmail.com',
         telephone: '22524322',
