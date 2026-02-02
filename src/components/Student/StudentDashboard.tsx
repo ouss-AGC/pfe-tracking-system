@@ -3,6 +3,7 @@ import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import BroadcastBanner from '../Layout/BroadcastBanner';
+import DocumentSubmission from './DocumentSubmission';
 import type { ProjetPFE } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
@@ -293,6 +294,9 @@ const StudentDashboard = () => {
                     </div>
                 </section>
             </div>
+
+            {/* DOCUMENT SUBMISSION SECTION */}
+            <DocumentSubmission projectId={project.id} />
 
             {/* RAPPORT D'AVANCEMENT SECTION */}
             <section className="avancement-report-section glass animate-slide-up">
