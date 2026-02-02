@@ -40,7 +40,11 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Terre/Fibres)', progres: 0 }, { id: 'red-2', label: 'Analyse thermique', progres: 0 }, { id: 'red-3', label: 'Conclusion', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
+        journalSuivi: [],
+        documents: [
+            { id: 'doc-g1', name: 'Rapport_Fibres_Vegetales.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-02', type: 'rapport' },
+            { id: 'doc-g2', name: 'Analyse_Thermique_Preliminaire.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-01-30', type: 'annexe' }
+        ]
     },
     {
         id: 'proj-4',
@@ -59,7 +63,10 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Stabilisants)', progres: 0 }, { id: 'red-2', label: 'Protocole expérimental', progres: 0 }, { id: 'red-3', label: 'Analyse comparative', progres: 0 }]
         },
         urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
-        journalSuivi: []
+        journalSuivi: [],
+        documents: [
+            { id: 'doc-f1', name: 'Tests_Cactus_Blanc_Oeuf.pdf', url: 'https://pdfobject.com/pdf/sample.pdf', date: '2026-02-01', type: 'rapport' }
+        ]
     },
     {
         id: 'proj-5',
