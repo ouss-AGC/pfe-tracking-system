@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { storageService } from '../../services/storageService';
 import {
     Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle,
-    Info, ArrowLeft, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
+    ArrowLeft, ChevronLeft, ChevronRight,
     Users, CalendarDays, Sparkles, Target
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,6 @@ const BookingManagement = () => {
 
     // 7 days including weekends
     const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-    const DAYS_FULL = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
     // Time slots - reduced on weekends
     const WEEKDAY_SLOTS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'];
@@ -231,7 +230,7 @@ const BookingManagement = () => {
 
                             {/* Mini Calendar Grid */}
                             <div className="mini-calendar">
-                                {getFilteredWeeks().map((week, idx) => {
+                                {getFilteredWeeks().map((week) => {
                                     const occupancy = getWeekOccupancy(week);
                                     const isActive = semesterWeeks.indexOf(week) === currentWeekIndex;
 
