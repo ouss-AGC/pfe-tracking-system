@@ -7,6 +7,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         idEtudiant: 'std-2',
         nomEtudiant: 'Wael Melki',
         emailEtudiant: 'melkiwael36@gmail.com',
+        avatarEtudiant: '/students/melki-wael.png',
         telephoneEtudiant: '99230369',
         nomEncadrant: 'Dr. Oussama Atoui',
         emailEncadrant: 'oussmer@hotmail.fr',
