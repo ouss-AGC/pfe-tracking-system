@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { storageService } from '../../services/storageService';
-import { Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle, Info, ArrowLeft } from 'lucide-react';
+import {
+    Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle,
+    Info, ArrowLeft, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
+    Users, CalendarDays, Sparkles, Target
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './BookingManagement.css';
+
+// Semester configuration
+const SEMESTER_START = new Date('2026-02-09');
+const SEMESTER_END = new Date('2026-05-31');
 
 const BookingManagement = () => {
     const navigate = useNavigate();
@@ -10,27 +18,109 @@ const BookingManagement = () => {
     const [delayingId, setDelayingId] = useState<string | null>(null);
     const [delayTime, setDelayTime] = useState('');
     const [hoveredApp, setHoveredApp] = useState<any>(null);
+    const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [selectedMonth, setSelectedMonth] = useState<string>('all');
 
-    const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-    const SLOTS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'];
+    // 7 days including weekends
+    const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    const DAYS_FULL = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
-    // Calcul des dates de la semaine actuelle
-    const getWeekDates = () => {
-        const now = new Date();
-        const day = now.getDay(); // 0 (Sun) to 6 (Sat)
-        const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
-        const monday = new Date(now.setDate(diff));
+    // Time slots - reduced on weekends
+    const WEEKDAY_SLOTS = ['08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00', '14:00 - 15:00', '15:00 - 16:00', '16:00 - 17:00'];
+    const WEEKEND_SLOTS = ['09:00 - 10:00', '10:00 - 11:00', '11:00 - 12:00'];
 
-        return DAYS.map((_, i) => {
-            const d = new Date(monday);
-            d.setDate(monday.getDate() + i);
-            return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
-        });
+    // Generate all weeks of the semester
+    const getSemesterWeeks = () => {
+        const weeks: Array<{
+            weekNumber: number;
+            startDate: Date;
+            endDate: Date;
+            month: string;
+            monthShort: string;
+            dates: Date[];
+        }> = [];
+
+        let current = new Date(SEMESTER_START);
+
+        while (current <= SEMESTER_END) {
+            const weekStart = new Date(current);
+            const weekDates: Date[] = [];
+
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(weekStart);
+                d.setDate(weekStart.getDate() + i);
+                weekDates.push(d);
+            }
+
+            weeks.push({
+                weekNumber: weeks.length + 1,
+                startDate: weekStart,
+                endDate: weekDates[6],
+                month: weekStart.toLocaleDateString('fr-FR', { month: 'long' }),
+                monthShort: weekStart.toLocaleDateString('fr-FR', { month: 'short' }),
+                dates: weekDates
+            });
+
+            current.setDate(current.getDate() + 7);
+        }
+        return weeks;
     };
 
-    const weekDates = getWeekDates();
-    const currentYear = new Date().getFullYear();
+    const semesterWeeks = getSemesterWeeks();
+    const currentWeek = semesterWeeks[currentWeekIndex];
+    const totalWeeks = semesterWeeks.length;
 
+    // Get unique months for tabs
+    const months = [...new Set(semesterWeeks.map(w => w.month))];
+
+    // Filter weeks by selected month
+    const getFilteredWeeks = () => {
+        if (selectedMonth === 'all') return semesterWeeks;
+        return semesterWeeks.filter(w => w.month === selectedMonth);
+    };
+
+    // Calculate week occupancy for mini-calendar
+    const getWeekOccupancy = (week: typeof semesterWeeks[0]) => {
+        const confirmedInWeek = appointments.filter(a => {
+            const appDate = new Date(a.date);
+            return appDate >= week.startDate && appDate <= week.endDate && a.statut === 'accepte';
+        });
+        const totalSlots = 5 * 7 + 2 * 3; // 5 weekdays × 7 slots + 2 weekend days × 3 slots
+        const occupancy = (confirmedInWeek.length / totalSlots) * 100;
+        if (occupancy > 60) return 'high';
+        if (occupancy > 30) return 'medium';
+        return 'low';
+    };
+
+    // Navigate weeks
+    const goToPrevWeek = () => {
+        if (currentWeekIndex > 0) setCurrentWeekIndex(currentWeekIndex - 1);
+    };
+
+    const goToNextWeek = () => {
+        if (currentWeekIndex < totalWeeks - 1) setCurrentWeekIndex(currentWeekIndex + 1);
+    };
+
+    const jumpToWeek = (index: number) => {
+        setCurrentWeekIndex(index);
+    };
+
+    // Check slot status
+    const getSlotStatus = (date: Date, slot: string) => {
+        const dateStr = date.toISOString().split('T')[0];
+        const app = appointments.find(a => a.date === dateStr && a.creneauHoraire === slot);
+        if (!app) return { status: 'free', app: null };
+        return { status: app.statut, app };
+    };
+
+    const isHoveredSlot = (date: Date, slot: string) => {
+        if (!hoveredApp) return false;
+        const dateStr = date.toISOString().split('T')[0];
+        return hoveredApp.date === dateStr && hoveredApp.creneauHoraire === slot;
+    };
+
+    // Actions
     const handleAction = (id: string, statut: 'accepte' | 'annule') => {
         const app = appointments.find(a => a.id === id);
         storageService.updateAppointment(id, { statut });
@@ -44,7 +134,6 @@ const BookingManagement = () => {
                 idEtudiant: app.idEtudiant
             });
         }
-
         setAppointments(storageService.getAppointments());
     };
 
@@ -62,102 +151,308 @@ const BookingManagement = () => {
                 idEtudiant: app.idEtudiant
             });
         }
-
         setAppointments(storageService.getAppointments());
         setDelayingId(null);
         setDelayTime('');
     };
 
-    // Créneaux occupés
-    const confirmedApps = appointments.filter(a => a.statut === 'accepte');
-
-    const getDDMMFromDate = (dateStr: string) => {
-        const date = new Date(dateStr);
-        return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
-    };
-
-    const isSlotOccupied = (dateDDMM: string, slot: string) => {
-        return confirmedApps.find(a => getDDMMFromDate(a.date) === dateDDMM && a.creneauHoraire === slot);
-    };
-
-    const isHoveredSlot = (dateDDMM: string, slot: string) => {
-        if (!hoveredApp) return false;
-        return getDDMMFromDate(hoveredApp.date) === dateDDMM && hoveredApp.creneauHoraire === slot;
+    // Statistics
+    const stats = {
+        total: appointments.length,
+        pending: appointments.filter(a => a.statut === 'en-attente').length,
+        confirmed: appointments.filter(a => a.statut === 'accepte').length,
+        thisWeek: appointments.filter(a => {
+            const appDate = new Date(a.date);
+            return currentWeek && appDate >= currentWeek.startDate && appDate <= currentWeek.endDate;
+        }).length
     };
 
     return (
-        <div className="booking-page animate-fade-in">
+        <div className="booking-page semester-view animate-fade-in">
             <header className="page-header">
                 <div className="header-info">
-                    <button className="btn-back" onClick={() => navigate(-1)} style={{ marginBottom: '1rem' }}>
+                    <button className="btn-back" onClick={() => navigate(-1)}>
                         <ArrowLeft size={18} /> Retour
                     </button>
-                    <span className="welcome-tag">LOGISTIQUE D'ENCADREMENT</span>
-                    <h1>Gestion des Rendez-vous</h1>
-                    <p>COORDONNEZ LES SESSIONS DE CONSULTATION AVEC LES ÉLÈVES OFFICERS</p>
+                    <span className="welcome-tag">
+                        <Sparkles size={14} /> AGENDA SEMESTRIEL 2026
+                    </span>
+                    <h1>Gestion des Consultations</h1>
+                    <p>FÉVRIER → MAI 2026 • PLANIFICATION AVANCÉE</p>
+                </div>
+                <div className="header-stats">
+                    <div className="stat-pill">
+                        <Users size={16} />
+                        <span>{stats.total} Total</span>
+                    </div>
+                    <div className="stat-pill pending">
+                        <Clock size={16} />
+                        <span>{stats.pending} En attente</span>
+                    </div>
+                    <div className="stat-pill confirmed">
+                        <Check size={16} />
+                        <span>{stats.confirmed} Confirmés</span>
+                    </div>
                 </div>
             </header>
 
-            <div className="booking-mgmt-layout">
-                <div className="booking-mgmt-container glass">
-                    <div className="mgmt-header">
-                        <div className="tab-active">Demandes en Attente ({appointments.filter(a => a.statut === 'en-attente').length})</div>
-                        <div>Historique</div>
-                    </div>
+            <div className="semester-layout">
+                {/* Collapsible Sidebar - Mini Calendar */}
+                <aside className={`semester-sidebar glass ${sidebarOpen ? 'open' : 'collapsed'}`}>
+                    <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                        {sidebarOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+                    </button>
 
-                    <div className="appointments-table">
-                        <div className="table-row header">
-                            <div className="col-student">Officier Élève</div>
-                            <div className="col-project">Projet</div>
-                            <div className="col-date">Créneau Demandé</div>
-                            <div className="col-reason">Motif / Besoin d'explications</div>
-                            <div className="col-actions">Actions</div>
+                    {sidebarOpen && (
+                        <>
+                            <div className="sidebar-header">
+                                <CalendarDays size={20} />
+                                <h3>Vue Semestre</h3>
+                            </div>
+
+                            {/* Month Tabs */}
+                            <div className="month-tabs">
+                                <button
+                                    className={`month-tab ${selectedMonth === 'all' ? 'active' : ''}`}
+                                    onClick={() => setSelectedMonth('all')}
+                                >
+                                    Tout
+                                </button>
+                                {months.map(month => (
+                                    <button
+                                        key={month}
+                                        className={`month-tab ${selectedMonth === month ? 'active' : ''}`}
+                                        onClick={() => setSelectedMonth(month)}
+                                    >
+                                        {month.charAt(0).toUpperCase() + month.slice(1, 3)}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Mini Calendar Grid */}
+                            <div className="mini-calendar">
+                                {getFilteredWeeks().map((week, idx) => {
+                                    const occupancy = getWeekOccupancy(week);
+                                    const isActive = semesterWeeks.indexOf(week) === currentWeekIndex;
+
+                                    return (
+                                        <button
+                                            key={week.weekNumber}
+                                            className={`week-cell ${occupancy} ${isActive ? 'active' : ''}`}
+                                            onClick={() => jumpToWeek(semesterWeeks.indexOf(week))}
+                                            title={`Semaine ${week.weekNumber}: ${week.startDate.toLocaleDateString('fr-FR')} - ${week.endDate.toLocaleDateString('fr-FR')}`}
+                                        >
+                                            <span className="week-num">S{week.weekNumber}</span>
+                                            <span className="week-range">
+                                                {week.startDate.getDate()}-{week.endDate.getDate()}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            {/* Legend */}
+                            <div className="calendar-legend">
+                                <div className="legend-item"><span className="dot low"></span> Disponible</div>
+                                <div className="legend-item"><span className="dot medium"></span> Modéré</div>
+                                <div className="legend-item"><span className="dot high"></span> Chargé</div>
+                            </div>
+
+                            {/* Semester Progress */}
+                            <div className="semester-progress">
+                                <div className="progress-label">
+                                    <Target size={14} />
+                                    <span>Progression Semestre</span>
+                                </div>
+                                <div className="progress-bar">
+                                    <div
+                                        className="progress-fill"
+                                        style={{ width: `${((currentWeekIndex + 1) / totalWeeks) * 100}%` }}
+                                    ></div>
+                                </div>
+                                <span className="progress-text">Semaine {currentWeekIndex + 1} / {totalWeeks}</span>
+                            </div>
+                        </>
+                    )}
+                </aside>
+
+                {/* Main Content Area */}
+                <div className="main-content-area">
+                    {/* Week Navigation Bar */}
+                    <div className="week-nav-bar glass">
+                        <button
+                            className="nav-arrow"
+                            onClick={goToPrevWeek}
+                            disabled={currentWeekIndex === 0}
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+
+                        <div className="week-indicator">
+                            <span className="week-label">Semaine {currentWeek?.weekNumber}</span>
+                            <span className="week-dates">
+                                {currentWeek?.startDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                                {' → '}
+                                {currentWeek?.endDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </span>
                         </div>
 
-                        {appointments.filter(a => a.statut === 'en-attente').map(app => (
-                            <div
-                                key={app.id}
-                                className="table-row appointment-row animate-fade-in"
-                                onMouseEnter={() => setHoveredApp(app)}
-                                onMouseLeave={() => setHoveredApp(null)}
-                            >
-                                <div className="col-student">
-                                    <div className="student-profile">
-                                        <div className="mini-avatar">{app.nomEtudiant[0]}</div>
-                                        <span>{app.nomEtudiant}</span>
-                                    </div>
+                        <button
+                            className="nav-arrow"
+                            onClick={goToNextWeek}
+                            disabled={currentWeekIndex === totalWeeks - 1}
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </div>
+
+                    {/* Weekly Calendar Grid */}
+                    <div className="weekly-grid-container glass">
+                        <div className="grid-scroll">
+                            <div className="calendar-grid-7days">
+                                {/* Header Row */}
+                                <div className="grid-header-row">
+                                    <div className="time-column-header"></div>
+                                    {currentWeek?.dates.map((date, idx) => {
+                                        const isWeekend = idx >= 5;
+                                        const isToday = date.toDateString() === new Date().toDateString();
+                                        return (
+                                            <div
+                                                key={idx}
+                                                className={`day-header ${isWeekend ? 'weekend' : ''} ${isToday ? 'today' : ''}`}
+                                            >
+                                                <span className="day-name">{DAYS[idx]}</span>
+                                                <span className="day-date">{date.getDate()}</span>
+                                                {isToday && <span className="today-badge">Aujourd'hui</span>}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                                <div className="col-project">
-                                    <span className="project-ref">{app.titreProjet}</span>
-                                </div>
-                                <div className="col-date">
-                                    <div className="time-info">
-                                        <Calendar size={14} /> <span>{app.date}</span>
+
+                                {/* Time Slots */}
+                                {WEEKDAY_SLOTS.map(slot => (
+                                    <div key={slot} className="grid-row">
+                                        <div className="time-cell">
+                                            <Clock size={12} />
+                                            <span>{slot.split(' - ')[0]}</span>
+                                        </div>
+                                        {currentWeek?.dates.map((date, idx) => {
+                                            const isWeekend = idx >= 5;
+                                            // Skip afternoon slots on weekends
+                                            if (isWeekend && !WEEKEND_SLOTS.includes(slot)) {
+                                                return (
+                                                    <div key={idx} className="slot-cell unavailable">
+                                                        <span className="unavailable-mark">—</span>
+                                                    </div>
+                                                );
+                                            }
+
+                                            const { status, app } = getSlotStatus(date, slot);
+                                            const isHovered = isHoveredSlot(date, slot);
+
+                                            return (
+                                                <div
+                                                    key={idx}
+                                                    className={`slot-cell ${status} ${isHovered ? 'highlight' : ''} ${isWeekend ? 'weekend' : ''}`}
+                                                    title={app ? `${app.nomEtudiant} - ${app.motif}` : 'Disponible'}
+                                                >
+                                                    {status === 'accepte' && (
+                                                        <div className="slot-content confirmed">
+                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            <Check size={10} className="status-icon" />
+                                                        </div>
+                                                    )}
+                                                    {status === 'en-attente' && (
+                                                        <div className="slot-content pending pulse">
+                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            <Clock size={10} className="status-icon" />
+                                                        </div>
+                                                    )}
+                                                    {status === 'reporte' && (
+                                                        <div className="slot-content rescheduled">
+                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            <RefreshCw size={10} className="status-icon" />
+                                                        </div>
+                                                    )}
+                                                    {isHovered && <div className="hover-pulse"></div>}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                    <div className="time-info accent">
-                                        <Clock size={14} /> <span>{app.creneauHoraire}</span>
-                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Grid Legend */}
+                        <div className="grid-legend">
+                            <div className="legend-item"><span className="box free"></span> Libre</div>
+                            <div className="legend-item"><span className="box confirmed"></span> Confirmé</div>
+                            <div className="legend-item"><span className="box pending"></span> En attente</div>
+                            <div className="legend-item"><span className="box rescheduled"></span> Reporté</div>
+                            <div className="legend-item"><span className="box unavailable"></span> Non disponible</div>
+                        </div>
+                    </div>
+
+                    {/* Pending Requests Section */}
+                    <div className="requests-section glass">
+                        <div className="section-header" onClick={() => { }}>
+                            <div className="section-title">
+                                <AlertCircle size={20} />
+                                <h2>Demandes en Attente</h2>
+                                <span className="count-badge">{stats.pending}</span>
+                            </div>
+                        </div>
+
+                        <div className="requests-list">
+                            {appointments.filter(a => a.statut === 'en-attente').length === 0 ? (
+                                <div className="empty-state">
+                                    <Check size={32} />
+                                    <p>Aucune demande en attente</p>
                                 </div>
-                                <div className="col-reason">
-                                    <div className="reason-container">
-                                        <MessageCircle size={14} className="reason-icon" />
-                                        <p className="reason-text">{app.motif}</p>
-                                    </div>
-                                </div>
-                                <div className="col-actions">
-                                    {app.statut === 'en-attente' ? (
-                                        <div className="action-buttons">
+                            ) : (
+                                appointments.filter(a => a.statut === 'en-attente').map(app => (
+                                    <div
+                                        key={app.id}
+                                        className="request-card animate-slide-up"
+                                        onMouseEnter={() => setHoveredApp(app)}
+                                        onMouseLeave={() => setHoveredApp(null)}
+                                    >
+                                        <div className="request-student">
+                                            <div className="avatar">{app.nomEtudiant[0]}</div>
+                                            <div className="student-info">
+                                                <h4>{app.nomEtudiant}</h4>
+                                                <span className="project-title">{app.titreProjet}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="request-details">
+                                            <div className="detail-item">
+                                                <Calendar size={14} />
+                                                <span>{new Date(app.date).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}</span>
+                                            </div>
+                                            <div className="detail-item highlight">
+                                                <Clock size={14} />
+                                                <span>{app.creneauHoraire}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="request-motif">
+                                            <MessageCircle size={14} />
+                                            <p>{app.motif}</p>
+                                        </div>
+
+                                        <div className="request-actions">
                                             <button
                                                 className="action-btn accept"
                                                 onClick={() => handleAction(app.id, 'accepte')}
-                                                title="Accepter le RDV"
+                                                title="Accepter"
                                             >
                                                 <Check size={18} />
                                             </button>
                                             <button
                                                 className="action-btn delay"
                                                 onClick={() => setDelayingId(app.id)}
-                                                title="Proposer de reporter"
+                                                title="Reporter"
                                             >
                                                 <RefreshCw size={18} />
                                             </button>
@@ -169,91 +464,26 @@ const BookingManagement = () => {
                                                 <X size={18} />
                                             </button>
                                         </div>
-                                    ) : (
-                                        <span className={`status-pill ${app.statut}`}>
-                                            {app.statut.toUpperCase()}
-                                        </span>
-                                    )}
-                                </div>
 
-                                {delayingId === app.id && (
-                                    <div className="delay-panel glass animate-fade-in">
-                                        <AlertCircle size={20} className="alert-icon" />
-                                        <div className="delay-content">
-                                            <h4>Proposer un Report</h4>
-                                            <p>Suggérez un créneau alternatif à l'élève officier.</p>
-                                            <div className="delay-form">
-                                                <select className="glass" value={delayTime} onChange={(e) => setDelayTime(e.target.value)}>
-                                                    <option value="">Sélectionner Nouveau Créneau</option>
-                                                    <option value="08:00 - 09:00">08:00 - 09:00</option>
-                                                    <option value="11:00 - 12:00">11:00 - 12:00</option>
-                                                    <option value="15:00 - 16:00">15:00 - 16:00</option>
+                                        {delayingId === app.id && (
+                                            <div className="delay-panel animate-fade-in">
+                                                <h4>Proposer un nouveau créneau</h4>
+                                                <select value={delayTime} onChange={(e) => setDelayTime(e.target.value)}>
+                                                    <option value="">Choisir...</option>
+                                                    {WEEKDAY_SLOTS.map(s => <option key={s} value={s}>{s}</option>)}
                                                 </select>
-                                                <button className="btn btn-primary" onClick={() => handleDelay(app.id)}>Confirmer Report</button>
-                                                <button className="btn btn-outline" onClick={() => setDelayingId(null)}>Annuler</button>
+                                                <div className="delay-actions">
+                                                    <button className="btn btn-outline btn-sm" onClick={() => setDelayingId(null)}>Annuler</button>
+                                                    <button className="btn btn-primary btn-sm" onClick={() => handleDelay(app.id)}>Confirmer</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        ))}
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
-
-                {/* Calendrier Graphique (Teams Style) */}
-                <aside className="booking-decision-helper glass animate-slide-in-right">
-                    <div className="helper-header">
-                        <Calendar size={18} />
-                        <div>
-                            <h3>AGENDA SEMAINE</h3>
-                            <span className="week-range">Février {currentYear}</span>
-                        </div>
-                    </div>
-
-                    <div className="calendar-grid-container">
-                        <div className="grid-header-row">
-                            <div className="slot-label-empty"></div>
-                            {DAYS.map((d, i) => (
-                                <div key={d} className="day-label">
-                                    <span className="d-name">{d}</span>
-                                    <span className="d-date">{weekDates[i]}</span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {SLOTS.map(slot => (
-                            <div key={slot} className="grid-row">
-                                <div className="slot-time-label">{slot.split(' ')[0]}</div>
-                                {DAYS.map((day, idx) => {
-                                    const dateDDMM = weekDates[idx];
-                                    const occupiedBy = isSlotOccupied(dateDDMM, slot);
-                                    const isHovered = isHoveredSlot(dateDDMM, slot);
-
-                                    return (
-                                        <div
-                                            key={`${day}-${slot}`}
-                                            className={`grid-cell ${occupiedBy ? 'occupied' : ''} ${isHovered ? 'highlight-hover' : ''}`}
-                                            title={occupiedBy ? `Occupé par ${occupiedBy.nomEtudiant}` : 'Libre'}
-                                        >
-                                            {occupiedBy && <span className="occ-name">{occupiedBy.nomEtudiant[0]}</span>}
-                                            {isHovered && <div className="pulse-spot"></div>}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="decision-legend-refined">
-                        <div className="leg-item"><span className="box confirmed"></span> Confirmé</div>
-                        <div className="leg-item"><span className="box requested pulse-anim"></span> Demande survolée</div>
-                    </div>
-
-                    <div className="helper-tip">
-                        <Info size={14} />
-                        <p>Survolez une demande à gauche pour visualiser l'impact sur votre agenda.</p>
-                    </div>
-                </aside>
             </div>
         </div>
     );
