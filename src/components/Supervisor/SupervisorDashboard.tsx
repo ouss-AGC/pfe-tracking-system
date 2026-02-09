@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
 import BroadcastBanner from '../Layout/BroadcastBanner';
-import FicheInteractivePFE from '../Project/FicheInteractivePFE';
+import FicheSuiviPFE from '../Project/FicheSuiviPFE';
+import CharteAgreement from '../Project/CharteAgreement';
 import ProjectDetails from '../Project/ProjectDetails';
 import type { ProjetPFE } from '../../types';
 import {
@@ -21,6 +22,7 @@ const SupervisorDashboard = () => {
     const [selectedProjectForJournal, setSelectedProjectForJournal] = useState<ProjetPFE | null>(null);
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
+    const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte'>('fiche');
     const [broadcastMsg, setBroadcastMsg] = useState('');
     const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
 
@@ -86,15 +88,39 @@ const SupervisorDashboard = () => {
     return (
         <div className="dashboard-page animate-fade-in">
             <BroadcastBanner />
-            {/* Modal de Visualisation de Fiche INTERACTIVE */}
+            {/* Modal de Visualisation des DOSSIERS ACADÉMIQUES */}
             {selectedProjectForFiche && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setSelectedProjectForFiche(null)}>
-                    <div className="pdf-viewer-modal glass" style={{ width: '90%', maxWidth: '900px', height: '90vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
-                        <div className="pdf-header">
-                            <h3>RÉFÉRENTIEL ACADÉMIQUE : FICHE DE PROPOSITION</h3>
+                    <div className="pdf-viewer-modal glass" style={{ width: '95%', maxWidth: '1000px', height: '90vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+                        <div className="pdf-header" style={{ marginBottom: '1rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <Shield size={20} color="var(--color-accent-blue)" />
+                                <h3>DOSSIER ACADÉMIQUE : {selectedProjectForFiche.nomEtudiant.toUpperCase()}</h3>
+                            </div>
+                            <div className="academic-tabs" style={{ marginBottom: 0, marginLeft: '2rem' }}>
+                                <button
+                                    className={`tab-btn ${activeDocTab === 'fiche' ? 'active' : ''}`}
+                                    onClick={() => setActiveDocTab('fiche')}
+                                >
+                                    Fiche de Suivi
+                                </button>
+                                <button
+                                    className={`tab-btn ${activeDocTab === 'charte' ? 'active' : ''}`}
+                                    onClick={() => setActiveDocTab('charte')}
+                                >
+                                    Charte PFE
+                                </button>
+                            </div>
                             <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
-                        <FicheInteractivePFE project={selectedProjectForFiche} />
+                        <div className="academic-modal-content" style={{ padding: '1rem' }}>
+                            {activeDocTab === 'fiche' && (
+                                <FicheSuiviPFE project={selectedProjectForFiche} isStudentView={false} />
+                            )}
+                            {activeDocTab === 'charte' && (
+                                <CharteAgreement project={selectedProjectForFiche} isStudentView={false} />
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

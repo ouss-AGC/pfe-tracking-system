@@ -1,0 +1,208 @@
+.charte-container {
+    padding: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.charte-actions-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.charte-document {
+    background: #fff;
+    color: #1e293b;
+    padding: 3rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.charte-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-bottom: 2px solid #1e3a5f;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.charte-logo {
+    width: 80px;
+    height: 80px;
+}
+
+.header-text h1 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: #1e3a5f;
+    font-weight: 700;
+}
+
+.header-text p {
+    margin: 0.5rem 0 0 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.charte-intro {
+    margin-bottom: 2rem;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.charte-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+
+.detail-row label {
+    font-weight: 700;
+    color: #64748b;
+}
+
+.detail-row span {
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+.charte-rules {
+    margin-bottom: 3rem;
+}
+
+.charte-rules h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    color: #1e3a5f;
+    margin-bottom: 1rem;
+}
+
+.charte-rules ul {
+    list-style: none;
+    padding: 0;
+}
+
+.charte-rules li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.charte-rules li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #c9a227;
+    font-weight: bold;
+}
+
+.charte-signatures {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+.sig-block h4 {
+    text-align: center;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: #64748b;
+}
+
+.sig-area {
+    height: 120px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.sig-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.signed-stamp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.signed-stamp .mention {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 1.2rem;
+    color: #1e3a5f;
+}
+
+.signed-stamp .name {
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.signed-stamp .date {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+.supervisor-stamp-img {
+    width: 80px;
+    height: auto;
+}
+
+.director-stamp {
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.check-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #10b981;
+}
+
+/* Custom Checkbox */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+@media print {
+    .charte-actions-top {
+        display: none;
+    }
+
+    .charte-document {
+        box-shadow: none;
+        padding: 0;
+    }
+}

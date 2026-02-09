@@ -4,11 +4,13 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import BroadcastBanner from '../Layout/BroadcastBanner';
 import DocumentSubmission from './DocumentSubmission';
+import FicheSuiviPFE from '../Project/FicheSuiviPFE';
+import CharteAgreement from '../Project/CharteAgreement';
 import type { ProjetPFE } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
     Calendar, Check, AlertCircle, ArrowLeft, Mail,
-    ChevronRight, Shield, Edit3
+    ChevronRight, Shield, Edit3, FileCheck
 } from 'lucide-react';
 import './StudentDashboard.css';
 
@@ -60,6 +62,7 @@ const StudentDashboard = () => {
     const [isEditingProgress, setIsEditingProgress] = useState(false);
     const [tempExperimental, setTempExperimental] = useState<any[]>([]);
     const [tempRedaction, setTempRedaction] = useState<any[]>([]);
+    const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte' | 'docs'>('fiche');
 
     useEffect(() => {
         if (user) {
@@ -271,6 +274,42 @@ const StudentDashboard = () => {
 
             {/* DOCUMENT SUBMISSION SECTION - LIVRABLE REQUIS */}
             <DocumentSubmission projectId={project.id} />
+
+            {/* NEW: DOSSIER ACADÉMIQUE OFFICIEL Section */}
+            <section className="academic-dossier-section glass animate-slide-up">
+                <div className="section-header-academic">
+                    <div className="title-group">
+                        <Shield size={24} className="shield-icon" />
+                        <div>
+                            <h2>DOSSIER ACADÉMIQUE OFFICIEL</h2>
+                            <p>Documents administratifs et suivi réglementaire</p>
+                        </div>
+                    </div>
+                    <div className="academic-tabs">
+                        <button
+                            className={`tab-btn ${activeDocTab === 'fiche' ? 'active' : ''}`}
+                            onClick={() => setActiveDocTab('fiche')}
+                        >
+                            <FileCheck size={16} /> Fiche de Suivi
+                        </button>
+                        <button
+                            className={`tab-btn ${activeDocTab === 'charte' ? 'active' : ''}`}
+                            onClick={() => setActiveDocTab('charte')}
+                        >
+                            <BookOpen size={16} /> Charte PFE
+                        </button>
+                    </div>
+                </div>
+
+                <div className="academic-content">
+                    {activeDocTab === 'fiche' && (
+                        <FicheSuiviPFE project={project} isStudentView={true} />
+                    )}
+                    {activeDocTab === 'charte' && (
+                        <CharteAgreement project={project} isStudentView={true} />
+                    )}
+                </div>
+            </section>
 
             <div className="update-reminder glass animate-slide-up">
                 <Clock size={20} className="reminder-icon" />

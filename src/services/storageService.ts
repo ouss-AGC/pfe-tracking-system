@@ -4,7 +4,8 @@ import { MOCK_PROJETS, MOCK_RENDEZVOUS } from '../data/mockProjects';
 const STORAGE_KEYS = {
     PROJECTS: 'pfe_projects',
     APPOINTMENTS: 'pfe_appointments',
-    NOTIFICATIONS: 'pfe_notifications'
+    NOTIFICATIONS: 'pfe_notifications',
+    FICHES: 'pfe_fiches_suivi'
 };
 
 export const storageService = {
@@ -137,5 +138,19 @@ export const storageService = {
     getDocumentsByProject(projectId: string) {
         const project = this.getProjectById(projectId);
         return project?.documents || [];
+    },
+
+    // FICHE SUIVI PFE
+    getFicheSuivi(projectId: string): any | null {
+        const data = localStorage.getItem(STORAGE_KEYS.FICHES);
+        const fiches = data ? JSON.parse(data) : {};
+        return fiches[projectId] || null;
+    },
+
+    saveFicheSuivi(fiche: any) {
+        const data = localStorage.getItem(STORAGE_KEYS.FICHES);
+        const fiches = data ? JSON.parse(data) : {};
+        fiches[fiche.projectId] = fiche;
+        localStorage.setItem(STORAGE_KEYS.FICHES, JSON.stringify(fiches));
     }
 };

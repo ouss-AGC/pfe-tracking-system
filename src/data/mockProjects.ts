@@ -63,6 +63,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
         emailEtudiant: 'mouahmedaziza12@gmail.com',
+        avatarEtudiant: '/students/mohamed-aziz-elayed.png',
         telephoneEtudiant: '23881847',
         nomEncadrant: 'Dr. Oussama Atoui',
         emailEncadrant: 'oussmer@hotmail.fr',
