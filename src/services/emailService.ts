@@ -8,7 +8,7 @@ const EMAILJS_CONFIG = {
     SERVICE_ID: 'service_2da0pjn', // Your active Outlook service
     TEMPLATE_BOOKING: '4e5b0vl', // Student -> Supervisor template
     TEMPLATE_RESPONSE: 'nrbytzi', // Supervisor -> Student template
-    PUBLIC_KEY: '-6qYfuo6UFFaK_jCf', // Your active Public Key
+    PUBLIC_KEY: '-6qYfuo6UFFAK_jCf', // Your active Public Key
     SUPERVISOR_EMAIL: 'oussmer@hotmail.fr'
 };
 
