@@ -103,6 +103,7 @@ export const MOCK_RENDEZVOUS: RendezVous[] = [
         id: 'rdv-1',
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
+        avatarEtudiant: '/students/mohamed-aziz-elayed.png',
         idProjet: 'proj-5',
         titreProjet: 'Étude de l\'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         date: '2026-02-10',
