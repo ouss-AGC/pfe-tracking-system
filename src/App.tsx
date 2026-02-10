@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { storageService } from './services/storageService';
@@ -11,6 +11,7 @@ import BookingCalendar from './components/Booking/BookingCalendar';
 import BookingManagement from './components/Booking/BookingManagement';
 import Profile from './components/Student/Profile';
 import SplashScreen from './components/Layout/SplashScreen';
+import UserGuide from './components/Guide/UserGuide';
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles: string[] }) => {
   const { isAuthenticated, user } = useAuth();
@@ -82,9 +83,32 @@ const AppRoutes = () => {
 };
 
 function App() {
+  const [showGuide, setShowGuide] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    // Check if user has seen guide before (per session or persistent)
+    const hasSeenGuide = localStorage.getItem('pfe_guide_seen');
+
+    // Show after splash screen (5s) + some delay
+    const timer = setTimeout(() => {
+      if (!hasSeenGuide) {
+        setShowGuide(true);
+      }
+    }, 8500); // 8s splash + 0.5s buffer
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCloseGuide = () => {
+    setShowGuide(false);
+    localStorage.setItem('pfe_guide_seen', 'true');
+  };
+
   return (
     <AuthProvider>
       <SplashScreen />
+      {showGuide && <UserGuide role={user?.role} onClose={handleCloseGuide} />}
       <Router>
         <AppRoutes />
       </Router>

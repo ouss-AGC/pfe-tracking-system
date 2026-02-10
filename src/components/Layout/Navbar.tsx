@@ -1,11 +1,14 @@
-import { LogOut, Calendar, LayoutDashboard } from 'lucide-react';
+import { useState } from 'react';
+import { LogOut, Calendar, LayoutDashboard, HelpCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
+import UserGuide from '../Guide/UserGuide';
 import './Navbar.css';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const location = useLocation();
+    const [showGuide, setShowGuide] = useState(false);
 
     return (
         <nav className="navbar glass">
@@ -47,6 +50,13 @@ const Navbar = () => {
             <div className="navbar-actions">
                 {user && (
                     <div className="user-profile">
+                        <button
+                            className="nav-action-btn"
+                            onClick={() => setShowGuide(true)}
+                            title="Guide d'utilisation"
+                        >
+                            <HelpCircle size={20} />
+                        </button>
                         <Link to="/profile" className="user-profile-link" title="Mon Profil">
                             <div className="user-info">
                                 <span className="user-name">{user.nom}</span>
@@ -60,6 +70,7 @@ const Navbar = () => {
                     </div>
                 )}
             </div>
+            {showGuide && <UserGuide role={user?.role} onClose={() => setShowGuide(false)} />}
         </nav>
     );
 };
