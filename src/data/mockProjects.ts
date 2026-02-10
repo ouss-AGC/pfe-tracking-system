@@ -17,7 +17,6 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 0 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
-        urlFichePFE: '/proposals/fiche-wael-melki.pdf',
         journalSuivi: []
     },
     {

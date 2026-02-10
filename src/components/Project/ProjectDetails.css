@@ -213,6 +213,14 @@
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--color-bg-dark);
+}
+
+.pdf-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .pdf-header {

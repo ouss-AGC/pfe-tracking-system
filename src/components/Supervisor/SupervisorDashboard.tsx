@@ -4,6 +4,7 @@ import { storageService } from '../../services/storageService';
 import BroadcastBanner from '../Layout/BroadcastBanner';
 import FicheSuiviPFE from '../Project/FicheSuiviPFE';
 import CharteAgreement from '../Project/CharteAgreement';
+import FicheInteractivePFE from '../Project/FicheInteractivePFE';
 import ProjectDetails from '../Project/ProjectDetails';
 import type { ProjetPFE } from '../../types';
 import {
@@ -22,7 +23,7 @@ const SupervisorDashboard = () => {
     const [selectedProjectForJournal, setSelectedProjectForJournal] = useState<ProjetPFE | null>(null);
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
-    const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte'>('fiche');
+    const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte' | 'proposition'>('proposition');
     const [broadcastMsg, setBroadcastMsg] = useState('');
     const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
 
@@ -99,6 +100,12 @@ const SupervisorDashboard = () => {
                             </div>
                             <div className="academic-tabs" style={{ marginBottom: 0, marginLeft: '2rem' }}>
                                 <button
+                                    className={`tab-btn ${activeDocTab === 'proposition' ? 'active' : ''}`}
+                                    onClick={() => setActiveDocTab('proposition')}
+                                >
+                                    Fiche Proposition
+                                </button>
+                                <button
                                     className={`tab-btn ${activeDocTab === 'fiche' ? 'active' : ''}`}
                                     onClick={() => setActiveDocTab('fiche')}
                                 >
@@ -114,6 +121,9 @@ const SupervisorDashboard = () => {
                             <button className="btn-close" onClick={() => setSelectedProjectForFiche(null)}>×</button>
                         </div>
                         <div className="academic-modal-content" style={{ padding: '1rem' }}>
+                            {activeDocTab === 'proposition' && (
+                                <FicheInteractivePFE project={selectedProjectForFiche} />
+                            )}
                             {activeDocTab === 'fiche' && (
                                 <FicheSuiviPFE project={selectedProjectForFiche} isStudentView={false} />
                             )}

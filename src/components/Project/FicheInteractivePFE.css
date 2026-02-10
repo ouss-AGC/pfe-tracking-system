@@ -1,3 +1,15 @@
+.fiche-pfe-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fiche-export-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 2rem;
+}
+
 .fiche-pfe-container {
     width: 100%;
     background: rgba(0, 0, 0, 0.4);

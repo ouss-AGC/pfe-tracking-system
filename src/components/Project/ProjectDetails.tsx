@@ -6,8 +6,9 @@ import { useAuth } from '../../context/AuthContext';
 import {
     ArrowLeft, FlaskConical, BookOpen, Save,
     Printer, ShieldCheck, PenTool,
-    MessageSquare, Shield, List, FileText
+    MessageSquare, Shield, List, FileText, X
 } from 'lucide-react';
+import FicheInteractivePFE from './FicheInteractivePFE';
 import './ProjectDetails.css';
 
 interface ProjectDetailsProps {
@@ -111,14 +112,11 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                     <div className="pdf-viewer-modal glass" onClick={e => e.stopPropagation()}>
                         <div className="pdf-header">
                             <h3>RÉFÉRENTIEL : FICHE DE PROPOSITION PFE</h3>
-                            <button className="btn-close" onClick={() => setShowPDF(false)}>×</button>
+                            <button className="btn-close" onClick={() => setShowPDF(false)}><X size={24} /></button>
                         </div>
-                        <iframe
-                            src={project.urlFichePFE}
-                            title="Fiche PFE"
-                            width="100%"
-                            height="100%"
-                        ></iframe>
+                        <div className="pdf-modal-body">
+                            <FicheInteractivePFE project={project} />
+                        </div>
                     </div>
                 </div>
             )}
