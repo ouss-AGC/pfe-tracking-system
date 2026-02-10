@@ -691,6 +691,7 @@
         border: 1px solid #ddd;
     }
 }
+
 /* Explicit Print Fixes for Comments and Borders */
 @media print {
     .j-col-comm {
@@ -698,7 +699,8 @@
         font-style: normal !important;
     }
 
-    .journal-row, .journal-header-row {
+    .journal-row,
+    .journal-header-row {
         border-bottom: 1px solid #000 !important;
         color: black !important;
     }
@@ -713,8 +715,29 @@
         color: #1e3a8a !important;
         background: transparent !important;
     }
-    
+
     .stamp-date-label {
         border-bottom: 1px solid #1e3a8a !important;
     }
+}
+
+/* Enhanced Journal Contrast */
+.journal-row.superviseur {
+    border-left: 4px solid var(--color-accent-blue) !important;
+}
+
+.journal-row.etudiant {
+    border-left: 4px solid #10b981 !important;
+}
+
+.comm-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    margin: 0;
+    font-weight: 400;
+}
+
+.j-date strong {
+    color: var(--color-accent-blue);
 }

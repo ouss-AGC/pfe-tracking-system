@@ -17,7 +17,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Caractérisation pneus', progres: 0 }, { id: 'exp-2', label: 'Formulation BAP', progres: 0 }, { id: 'exp-3', label: 'Tests rhéologiques', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (Pneus/BAP)', progres: 0 }, { id: 'red-2', label: 'Méthodologie', progres: 0 }, { id: 'red-3', label: 'Analyse', progres: 0 }]
         },
-        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
+        urlFichePFE: '/proposals/fiche-wael-melki.pdf',
         journalSuivi: []
     },
     {
@@ -74,7 +74,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Traitement coquilles', progres: 0 }, { id: 'exp-2', label: 'Formulation mortiers', progres: 0 }, { id: 'exp-3', label: 'Essais de flexion', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'État de l\'art', progres: 0 }, { id: 'red-2', label: 'Analyse des résultats', progres: 0 }, { id: 'red-3', label: 'Perspectives', progres: 0 }]
         },
-        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
+        urlFichePFE: '/proposals/fiche-mohamed-aziz.pdf',
         journalSuivi: []
     },
     {
@@ -93,7 +93,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
             experimental: [{ id: 'exp-1', label: 'Préparation granulats PET', progres: 0 }, { id: 'exp-2', label: 'Formulation bétons', progres: 0 }, { id: 'exp-3', label: 'Tests mécaniques', progres: 0 }],
             redaction: [{ id: 'red-1', label: 'Revue bibliographique (PET/Bétons)', progres: 0 }, { id: 'red-2', label: 'Méthodologie expérimentale', progres: 0 }, { id: 'red-3', label: 'Analyse environnementale', progres: 0 }]
         },
-        urlFichePFE: 'https://pdfobject.com/pdf/sample.pdf',
+        urlFichePFE: '/proposals/fiche-pfe.pdf',
         journalSuivi: []
     }
 ];

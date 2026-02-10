@@ -357,19 +357,31 @@ const BookingManagement = () => {
                                                 >
                                                     {status === 'accepte' && (
                                                         <div className="slot-content confirmed">
-                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            {app?.avatarEtudiant ? (
+                                                                <img src={app.avatarEtudiant} alt="" className="student-initial-img" />
+                                                            ) : (
+                                                                <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            )}
                                                             <Check size={10} className="status-icon" />
                                                         </div>
                                                     )}
                                                     {status === 'en-attente' && (
                                                         <div className="slot-content pending pulse">
-                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            {app?.avatarEtudiant ? (
+                                                                <img src={app.avatarEtudiant} alt="" className="student-initial-img" />
+                                                            ) : (
+                                                                <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            )}
                                                             <Clock size={10} className="status-icon" />
                                                         </div>
                                                     )}
                                                     {status === 'reporte' && (
                                                         <div className="slot-content rescheduled">
-                                                            <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            {app?.avatarEtudiant ? (
+                                                                <img src={app.avatarEtudiant} alt="" className="student-initial-img" />
+                                                            ) : (
+                                                                <span className="student-initial">{app?.nomEtudiant[0]}</span>
+                                                            )}
                                                             <RefreshCw size={10} className="status-icon" />
                                                         </div>
                                                     )}
@@ -417,7 +429,11 @@ const BookingManagement = () => {
                                         onMouseLeave={() => setHoveredApp(null)}
                                     >
                                         <div className="request-student">
-                                            <div className="avatar">{app.nomEtudiant[0]}</div>
+                                            {app.avatarEtudiant ? (
+                                                <img src={app.avatarEtudiant} alt={app.nomEtudiant} className="request-avatar" />
+                                            ) : (
+                                                <div className="avatar">{app.nomEtudiant[0]}</div>
+                                            )}
                                             <div className="student-info">
                                                 <h4>{app.nomEtudiant}</h4>
                                                 <span className="project-title">{app.titreProjet}</span>

@@ -328,10 +328,10 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                             <div className="j-col-comm">Commentaires / Observations</div>
                         </div>
                         {project.journalSuivi.map((entry, idx) => (
-                            <div key={idx} className="journal-row animate-fade-in">
+                            <div key={idx} className={`journal-row animate-fade-in ${entry.type}`}>
                                 <div className="j-col-date">
-                                    <span className="j-date">{entry.date}</span>
-                                    <span style={{ margin: '0 5px' }}> </span>
+                                    <span className="j-date"><strong>{entry.date}</strong></span>
+                                    <span style={{ margin: '0 5px' }}> • </span>
                                     <span className="j-time">{entry.heure || '--:--'}</span>
                                 </div>
                                 <div className="j-col-type">
@@ -339,7 +339,9 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectId }) => {
                                         {entry.type === 'superviseur' ? 'ENCADRANT' : 'OFFICIER ÉLÈVE'}
                                     </span>
                                 </div>
-                                <div className="j-col-comm">{entry.commentaire}</div>
+                                <div className="j-col-comm">
+                                    <p className="comm-text">{entry.commentaire}</p>
+                                </div>
                             </div>
                         ))}
                     </div>

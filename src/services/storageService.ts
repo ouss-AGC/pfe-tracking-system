@@ -11,7 +11,7 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.14_document_links'; // Force cleanup of test data
+        const VERSION = 'v2.15_student_avatars'; // Force cleanup of test data
         const currentVersion = localStorage.getItem('pfe_storage_version');
 
         if (currentVersion !== VERSION) {
@@ -67,7 +67,13 @@ export const storageService = {
 
     addAppointment(appointment: RendezVous) {
         const apps = this.getAppointments();
-        apps.push(appointment);
+        const projects = this.getProjects();
+        const project = projects.find(p => p.idEtudiant === appointment.idEtudiant);
+
+        apps.push({
+            ...appointment,
+            avatarEtudiant: project?.avatarEtudiant
+        });
         localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(apps));
     },
 

@@ -70,6 +70,7 @@ export interface RendezVous {
     id: string;
     idEtudiant: string;
     nomEtudiant: string;
+    avatarEtudiant?: string; // Photo for supervisor recognition
     idProjet: string;
     titreProjet: string;
     date: string;
