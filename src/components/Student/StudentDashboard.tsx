@@ -7,6 +7,7 @@ import DocumentSubmission from './DocumentSubmission';
 import FicheSuiviPFE from '../Project/FicheSuiviPFE';
 import CharteAgreement from '../Project/CharteAgreement';
 import type { ProjetPFE } from '../../types';
+import { RDV_SCHEDULE_2026 } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
     Calendar, Check, AlertCircle, ArrowLeft, Mail,
@@ -72,6 +73,11 @@ const StudentDashboard = () => {
                 setProject(userProject);
                 setTempExperimental(userProject.progres.experimental);
                 setTempRedaction(userProject.progres.redaction);
+
+                // Run RDV reminder check
+                storageService.checkAndGenerateRDVReminders(user.id, RDV_SCHEDULE_2026);
+                // Refresh notifications after check
+                setNotifications(storageService.getNotifications().filter(n => n.idEtudiant === user.id));
             }
         }
     }, [user]);

@@ -100,6 +100,7 @@ export interface StudentRDVInput {
     difficultes: string;
     signature: boolean;
     signatureDate?: string;
+    signatureData?: string; // Base64 image data
 }
 
 export interface SupervisorRDVInput {
@@ -117,6 +118,8 @@ export interface RendezVousFiche {
     studentInput: StudentRDVInput;
     supervisorInput: SupervisorRDVInput;
     visaDirecteur: boolean;
+    directorSignature?: boolean;
+    directorStamp?: boolean;
 }
 
 export interface EvaluationFinale {

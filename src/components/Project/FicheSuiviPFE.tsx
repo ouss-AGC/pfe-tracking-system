@@ -4,10 +4,11 @@ import type { FicheSuiviPFEData, RendezVousFiche, ProjetPFE } from '../../types'
 import { RDV_SCHEDULE_2026 } from '../../types';
 import {
     Calendar, Check, ChevronDown, ChevronUp,
-    Stamp, Download, User, BookOpen, Award, Shield
+    Stamp, Download, User, BookOpen, Award, Shield, PenTool, ShieldCheck
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import SignatureCanvas from './SignatureCanvas';
 import './FicheSuiviPFE.css';
 
 interface Props {
@@ -19,7 +20,8 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
     const formRef = useRef<HTMLDivElement>(null);
     const [fiche, setFiche] = useState<FicheSuiviPFEData | null>(null);
     const [expandedRDV, setExpandedRDV] = useState<number | null>(null);
-    const [exporting, setExporting] = useState(false);
+    const [exporting, setExporting] = useState<boolean>(false);
+    const [showSignatureModal, setShowSignatureModal] = useState<{ numero: number; title: string } | null>(null);
 
     // Initialize or load fiche
     useEffect(() => {
@@ -145,7 +147,7 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
         });
     };
 
-    const signStudent = (numero: number) => {
+    const signStudent = (numero: number, signatureData: string) => {
         if (!fiche) return;
         const rdv = fiche.rendezVous.find(r => r.numero === numero);
         if (!rdv) return;
@@ -154,8 +156,17 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
             studentInput: {
                 ...rdv.studentInput,
                 signature: true,
-                signatureDate: new Date().toISOString()
+                signatureDate: new Date().toISOString(),
+                signatureData: signatureData // Store the actual image data
             }
+        });
+        setShowSignatureModal(null);
+    };
+
+    const applyDirectorVisa = (numero: number) => {
+        if (!fiche) return;
+        updateRDV(numero, {
+            visaDirecteur: true
         });
     };
 
@@ -353,16 +364,20 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
                                                 <div className="signature-row">
                                                     {rdv.studentInput.signature ? (
                                                         <div className="signed-indicator">
-                                                            <Check size={16} />
+                                                            {rdv.studentInput.signatureData ? (
+                                                                <img src={rdv.studentInput.signatureData} alt="Signature" className="student-signature-preview" />
+                                                            ) : (
+                                                                <Check size={16} />
+                                                            )}
                                                             <span>Signé le {rdv.studentInput.signatureDate ? new Date(rdv.studentInput.signatureDate).toLocaleDateString('fr-FR') : ''}</span>
                                                         </div>
                                                     ) : isStudentView ? (
                                                         <button
                                                             className="btn btn-outline sign-btn"
-                                                            onClick={() => signStudent(rdv.numero)}
+                                                            onClick={() => setShowSignatureModal({ numero: rdv.numero, title: `Signature de l'Officier Élève - RDV N°${rdv.numero}` })}
                                                             disabled={!rdv.studentInput.travailRealise}
                                                         >
-                                                            <Check size={16} /> Signer
+                                                            <PenTool size={16} /> Signer Autographié
                                                         </button>
                                                     ) : (
                                                         <span className="pending-signature">En attente de signature étudiant</span>
@@ -419,6 +434,28 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
                                                         <span className="pending-signature">En attente de validation encadrant</span>
                                                     )}
                                                 </div>
+
+                                                {/* Director Visa Section (Only after supervisor validation) */}
+                                                {rdv.supervisorInput.stampApplied && (
+                                                    <div className="director-visa-row">
+                                                        {rdv.visaDirecteur ? (
+                                                            <div className="visa-applied">
+                                                                <img src="/stamps/director-visa.png" alt="Visa Directeur" className="director-stamp-image" />
+                                                                <span>Visa du Chef de Département apposé</span>
+                                                            </div>
+                                                        ) : (
+                                                            /* We show a simple visa button for the supervisor as well for simulation if they have the role */
+                                                            !isStudentView && (
+                                                                <button
+                                                                    className="btn btn-outline visa-btn"
+                                                                    onClick={() => applyDirectorVisa(rdv.numero)}
+                                                                >
+                                                                    <ShieldCheck size={18} /> Apposer Visa Direction (Simulation)
+                                                                </button>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     )}
@@ -544,6 +581,15 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
                     <p className="footer-date">Document généré le {new Date().toLocaleDateString('fr-FR')}</p>
                 </footer>
             </div>
+
+            {/* Signature Modal */}
+            {showSignatureModal && (
+                <SignatureCanvas
+                    onSave={(data) => signStudent(showSignatureModal.numero, data)}
+                    onCancel={() => setShowSignatureModal(null)}
+                    title={showSignatureModal.title}
+                />
+            )}
         </div>
     );
 };

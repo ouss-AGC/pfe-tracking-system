@@ -96,6 +96,35 @@ export const storageService = {
         localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
     },
 
+    hasNotification(idEtudiant: string, message: string): boolean {
+        const notes = this.getNotifications();
+        return notes.some(n => n.idEtudiant === idEtudiant && n.message === message);
+    },
+
+    checkAndGenerateRDVReminders(studentId: string, schedule: any[]) {
+        const today = new Date();
+        const threeDaysFromNow = new Date();
+        threeDaysFromNow.setDate(today.getDate() + 3);
+
+        // Actually, better to pass the fiche or projectId
+
+        schedule.forEach(rdv => {
+            const rdvDate = new Date(rdv.weekOf);
+            if (rdvDate > today && rdvDate <= threeDaysFromNow) {
+                const message = `RAPPEL : Votre RDV N°${rdv.numero} est prévu pour la semaine du ${new Date(rdv.weekOf).toLocaleDateString()}. Pensez à préparer votre travail.`;
+                if (!this.hasNotification(studentId, message)) {
+                    this.addNotification({
+                        id: `rem-rdv-${rdv.numero}-${Date.now()}`,
+                        type: 'info',
+                        message,
+                        date: new Date().toISOString(),
+                        idEtudiant: studentId
+                    });
+                }
+            }
+        });
+    },
+
     // GESTION DES DOCUMENTS
     addDocumentToProject(projectId: string, document: { name: string; url: string; type: 'rapport' | 'presentation' | 'annexe' | 'autre' }) {
         const projects = this.getProjects();
