@@ -22,12 +22,12 @@ const CharteAgreement = ({ project, isStudentView = false }: Props) => {
     const [agreedToRules, setAgreedToRules] = useState(false);
 
     const rules = [
-        "Le projet de fin d'études est un travail personnel à réaliser par l'officier élève.",
-        "Le rapport doit être remis en versions papier et électronique avant la date limite.",
-        "Toute modification du sujet doit faire l'objet d'une justification écrite des encadrants.",
-        "Le non-respect des délais peut entraîner le report de la soutenance.",
-        "L'officier élève s'engage à respecter les consignes de sécurité et de confidentialité de l'Académie.",
-        "L'encadrant assure le suivi scientifique et technique du projet."
+        "Le projet de fin d’études est un travail personnel à réaliser par le(s) officier(s) élève(s) conformément au cahier de charges formulé par l’encadrant d’une part et ses orientations et conseils d’autre part ;",
+        "L’encadrant doit spécifier de manière claire et précise le travail demandé de(s) officier(s) élève(s) sous forme d’un cahier de charges détaillé délivré au(x) officier(s) élève(s) au démarrage du projet d’une part et sous forme d’entretiens périodiques tout au long du projet d’autre part ;",
+        "L’avancement du PFE est contrôlé par des entretiens avec le directeur de département de la spécialité selon un calendrier planifié à l’avance par la direction de l’enseignement universitaire. Durant chaque entretien, le(s) officier(s) élève(s) doivent présenter leur journal de suivi de PFE validé par le(s) encadrant(s) ;",
+        "Le projet de fin d’études doit être clôturé par un rapport rédigé par le(s) officier(s) élève(s) et faisant la synthèse de l’ensemble des travaux réalisés dans le cadre du projet. Le contenu du rapport doit être lu et validé par le(s) encadrant(s) ;",
+        "Le rapport est un travail de synthèse personnel et ne doit en aucun cas contenir du plagiat. A cet effet, le(s) officier(s) élève(s) sont tenus de référencer toute source d’information et de s’engager à n’approprier aucune information ou résultat appartenant à un autre travail sans la moindre notification de sa provenance. L’encadrant est tenu à attirer l’attention de(s) officier(s) élève(s) face à tout dérapage dans ce sens. Le(s) officier(s) élève(s) sont dans l’obligation de délivrer une version électronique du contenu du rapport à la direction de l’enseignement universitaire avec les copies en papier du rapport ;",
+        "Les copies en papier du rapport ainsi que la version électronique doivent être remises en nombre et au délai fixés par la direction de l’enseignement universitaire. Aucun retard de remise des rapports n'est accepté sans une justification écrite de(s) encadrant(s) et avisée par le directeur de département de la spécialité."
     ];
 
     const exportToPDF = async () => {
