@@ -6,14 +6,14 @@ const SplashScreen: React.FC = () => {
     const [fade, setFade] = useState(false);
 
     useEffect(() => {
-        // Start fade out after 4.5s to finish by 5s
+        // Start fade out after 7.5s to finish by 8s
         const fadeTimer = setTimeout(() => {
             setFade(true);
-        }, 4500);
+        }, 7500);
 
         const removeTimer = setTimeout(() => {
             setVisible(false);
-        }, 5000);
+        }, 8000);
 
         return () => {
             clearTimeout(fadeTimer);
