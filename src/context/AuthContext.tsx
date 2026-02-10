@@ -70,17 +70,23 @@ export const MOCK_STUDENTS: Utilisateur[] = [
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, setState] = useState<EtatAuth>(() => {
+        // Initialiser les utilisateurs dans le storage s'ils n'existent pas
+        if (storageService.getUsers().length === 0) {
+            storageService.saveUsers([MOCK_SUPERVISOR, ...MOCK_STUDENTS]);
+        }
+
         const saved = localStorage.getItem('pfe_auth');
         return saved ? JSON.parse(saved) : { user: null, isAuthenticated: false };
     });
 
     const login = async (email: string, password: string, role: Role) => {
+        const allUsers = storageService.getUsers();
         let foundUser: Utilisateur | undefined;
 
         if (role === 'supervisor' && email === MOCK_SUPERVISOR.email) {
-            foundUser = MOCK_SUPERVISOR;
+            foundUser = allUsers.find(u => u.id === MOCK_SUPERVISOR.id);
         } else {
-            foundUser = MOCK_STUDENTS.find(s => s.email === email);
+            foundUser = allUsers.find(s => s.email === email && s.role === 'student');
         }
 
         if (foundUser && foundUser.motDePasse === password) {
@@ -104,9 +110,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setState(newState);
         localStorage.setItem('pfe_auth', JSON.stringify(newState));
 
-        // Synchroniser avec le projet si c'est un étudiant et que le nom a changé
-        if (newUser.role === 'student' && updatedUser.nom) {
-            storageService.syncStudentName(newUser.id, updatedUser.nom);
+        // Synchroniser avec le storage (persiste après déconnexion)
+        storageService.updateUser(newUser);
+
+        // Synchroniser avec le projet si c'est un étudiant
+        if (newUser.role === 'student') {
+            storageService.syncStudentProfile(newUser.id, {
+                nom: updatedUser.nom,
+                avatar: updatedUser.avatar
+            });
         }
 
         // Optionnel: Mettre à jour MOCK_STUDENTS en mémoire

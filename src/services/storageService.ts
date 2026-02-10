@@ -1,11 +1,12 @@
 import type { ProjetPFE, RendezVous } from '../types';
-import { MOCK_PROJETS, MOCK_RENDEZVOUS } from '../data/mockProjects';
+import { MOCK_RENDEZVOUS } from '../data/mockProjects';
 
 const STORAGE_KEYS = {
     PROJECTS: 'pfe_projects',
     APPOINTMENTS: 'pfe_appointments',
     NOTIFICATIONS: 'pfe_notifications',
-    FICHES: 'pfe_fiches_suivi'
+    FICHES: 'pfe_fiches_suivi',
+    USERS: 'pfe_users'
 };
 
 export const storageService = {
@@ -16,14 +17,16 @@ export const storageService = {
 
         if (currentVersion !== VERSION) {
             console.log('Resetting storage to version:', VERSION);
-            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
             localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
             localStorage.setItem('pfe_storage_version', VERSION);
+
+            // Note: Users are handled in AuthContext or here. Let's seed them here if missing.
         }
 
-        if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
-            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+        if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
+            // We'll trust AuthContext to provide initial users if we can't import them here
+            // or we'll define them. For safety, let's keep them in AuthContext but provide sync methods.
         }
     },
 
@@ -33,11 +36,12 @@ export const storageService = {
         return data ? JSON.parse(data) : [];
     },
 
-    syncStudentName(studentId: string, newName: string) {
+    syncStudentProfile(studentId: string, updates: { nom?: string; avatar?: string }) {
         const projects = this.getProjects();
         const index = projects.findIndex(p => p.idEtudiant === studentId);
         if (index !== -1) {
-            projects[index].nomEtudiant = newName;
+            if (updates.nom) projects[index].nomEtudiant = updates.nom;
+            if (updates.avatar) projects[index].avatarEtudiant = updates.avatar;
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
         }
     },
@@ -57,6 +61,27 @@ export const storageService = {
             projects[index] = updatedProject;
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
         }
+    },
+
+    // USERS (Persisted in storage for lifecycle across logins)
+    getUsers(): any[] {
+        const data = localStorage.getItem(STORAGE_KEYS.USERS);
+        return data ? JSON.parse(data) : [];
+    },
+
+    saveUsers(users: any[]) {
+        localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    },
+
+    updateUser(updatedUser: any) {
+        const users = this.getUsers();
+        const index = users.findIndex(u => u.id === updatedUser.id);
+        if (index !== -1) {
+            users[index] = updatedUser;
+        } else {
+            users.push(updatedUser);
+        }
+        this.saveUsers(users);
     },
 
     // RENDEZ-VOUS
