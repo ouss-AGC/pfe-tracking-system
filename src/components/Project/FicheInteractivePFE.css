@@ -43,15 +43,25 @@
     pointer-events: none;
 }
 
+.fiche-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
 .republique-header {
-    text-align: center;
+    text-align: left;
     font-weight: 700;
     font-size: 0.9rem;
     line-height: 1.4;
-    margin-bottom: 3rem;
     letter-spacing: 0.5px;
-    border-bottom: 2px double #1a1a1a;
-    padding-bottom: 1rem;
+}
+
+.fiche-app-logo {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
 }
 
 .fiche-title-box {

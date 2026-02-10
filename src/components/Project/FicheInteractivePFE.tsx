@@ -59,6 +59,9 @@ const FicheInteractivePFE: React.FC<FicheInteractivePFEProps> = ({ project }) =>
                             <p>MINISTÈRE DE LA DÉFENSE NATIONALE</p>
                             <p>ACADÉMIE MILITAIRE DE TUNISIE</p>
                         </div>
+                        <div className="fiche-header-right">
+                            <img src="/pfe-tracker-logo.png" alt="Emblem" className="fiche-app-logo" />
+                        </div>
                     </div>
 
                     <div className="fiche-content">

@@ -10,6 +10,7 @@ import Navbar from './components/Layout/Navbar';
 import BookingCalendar from './components/Booking/BookingCalendar';
 import BookingManagement from './components/Booking/BookingManagement';
 import Profile from './components/Student/Profile';
+import SplashScreen from './components/Layout/SplashScreen';
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles: string[] }) => {
   const { isAuthenticated, user } = useAuth();
@@ -83,6 +84,7 @@ const AppRoutes = () => {
 function App() {
   return (
     <AuthProvider>
+      <SplashScreen />
       <Router>
         <AppRoutes />
       </Router>

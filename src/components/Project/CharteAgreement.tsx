@@ -80,6 +80,9 @@ const CharteAgreement = ({ project, isStudentView = false }: Props) => {
                         <h1>CHARTE DE RÉALISATION DU PROJET DE FIN D'ÉTUDES</h1>
                         <p className="univ-year">Année Universitaire 2025-2026</p>
                     </div>
+                    <div className="charte-header-right">
+                        <img src="/pfe-tracker-logo.png" alt="PFE Tracker" className="charte-app-logo" />
+                    </div>
                 </header>
 
                 <section className="charte-intro">

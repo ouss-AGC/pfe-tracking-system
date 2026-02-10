@@ -51,6 +51,13 @@
     filter: drop-shadow(0 0 10px var(--color-accent-blue-glow));
 }
 
+.logo-img-small {
+    height: 44px;
+    width: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+}
+
 .logo-text {
     display: flex;
     flex-direction: column;

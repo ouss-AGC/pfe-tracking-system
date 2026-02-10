@@ -297,6 +297,7 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
                             </div>
                         </div>
                         <div className="header-badge-container">
+                            <img src="/pfe-tracker-logo.png" alt="PFE Tracker" className="header-app-logo" />
                             <div className="official-badge">
                                 <Shield size={24} />
                                 <span className="pfe-ref">N° {fiche.pfeNumber}</span>

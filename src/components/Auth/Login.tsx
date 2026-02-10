@@ -37,7 +37,7 @@ const Login = () => {
                 <div className="login-card glass">
                     <div className="login-header">
                         <div className="logo-wrapper">
-                            <Shield className="logo-icon" size={48} />
+                            <img src="/pfe-tracker-logo.png" alt="PFE Tracker Logo" className="login-logo-img" />
                         </div>
                         <h1>PFE TRACKING SYSTEM</h1>
                         <p>MILITARY ACADEMY CIVIL ENGINEERING DEPARTMENT</p>

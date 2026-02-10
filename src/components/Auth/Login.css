@@ -72,6 +72,13 @@
     color: var(--color-accent-blue);
 }
 
+.login-logo-img {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6));
+}
+
 .login-header h1 {
     font-size: 1.75rem;
     margin-bottom: 0.5rem;

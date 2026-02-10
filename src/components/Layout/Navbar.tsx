@@ -1,4 +1,4 @@
-import { LogOut, Shield, Calendar, LayoutDashboard } from 'lucide-react';
+import { LogOut, Calendar, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
@@ -10,7 +10,7 @@ const Navbar = () => {
     return (
         <nav className="navbar glass">
             <div className="navbar-logo">
-                <Shield className="logo-icon" size={32} />
+                <img src="/pfe-tracker-logo.png" alt="Logo" className="logo-img-small" />
                 <div className="logo-text">
                     <span className="logo-title">PFE TRACKER</span>
                     <span className="logo-subtitle">MILITARY ACADEMY</span>
