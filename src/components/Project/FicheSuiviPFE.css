@@ -675,6 +675,83 @@
 }
 
 /* Print Styles for PDF */
+/* PDF Export Mode - Force maximum clarity */
+.pdf-export-mode {
+    background: #ffffff !important;
+    box-shadow: none !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.pdf-export-mode * {
+    color: #000000 !important;
+    /* Pitch black text */
+    text-shadow: none !important;
+    font-family: 'Times New Roman', serif !important;
+}
+
+.pdf-export-mode .official-header {
+    background: #ffffff !important;
+    border-bottom: 2px solid #000000 !important;
+}
+
+.pdf-export-mode .inst-ar,
+.pdf-export-mode .inst-fr,
+.pdf-export-mode .dept-name,
+.pdf-export-mode .header-text h1,
+.pdf-export-mode .pfe-ref {
+    color: #000000 !important;
+}
+
+.pdf-export-mode .official-badge {
+    border-color: #000000 !important;
+    background: #ffffff !important;
+}
+
+.pdf-export-mode .info-section,
+.pdf-export-mode .rdv-timeline-section,
+.pdf-export-mode .evaluation-section {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    margin: 10px 0 !important;
+}
+
+.pdf-export-mode .rdv-card {
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    margin-bottom: 15px !important;
+}
+
+.pdf-export-mode .rdv-status-badge {
+    border: 1px solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.pdf-export-mode .input-section {
+    background: #ffffff !important;
+    border-top: 1px solid #000000 !important;
+}
+
+.pdf-export-mode .form-group textarea,
+.pdf-export-mode .form-group select {
+    border: 1px solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.pdf-export-mode .stamp-image,
+.pdf-export-mode .director-stamp-image,
+.pdf-export-mode .student-signature-preview {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.pdf-export-mode .timeline-connector {
+    background: #000000 !important;
+}
+
 @media print {
     .fiche-suivi-container {
         padding: 0;

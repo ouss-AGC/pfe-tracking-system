@@ -33,15 +33,30 @@ const CharteAgreement = ({ project, isStudentView = false }: Props) => {
     const exportToPDF = async () => {
         if (!charteRef.current) return;
         setExporting(true);
+
+        // Add a class to force high contrast styles
+        const element = charteRef.current;
+        element.classList.add('pdf-export-mode');
+
         try {
-            const canvas = await html2canvas(charteRef.current, { scale: 2 });
-            const imgData = canvas.toDataURL('image/png');
+            const canvas = await html2canvas(element, {
+                scale: 3, // Higher scale for maximum clarity
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            });
+
+            const imgData = canvas.toDataURL('image/png', 1.0);
             const pdf = new jsPDF('p', 'mm', 'a4');
-            pdf.addImage(imgData, 'PNG', 0, 0, 210, (canvas.height * 210) / canvas.width);
+            const pdfWidth = 210;
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
             pdf.save(`Charte_PFE_${project.nomEtudiant.replace(/\s+/g, '_')}.pdf`);
         } catch (error) {
             console.error('PDF export failed:', error);
         } finally {
+            element.classList.remove('pdf-export-mode');
             setExporting(false);
         }
     };
@@ -56,10 +71,14 @@ const CharteAgreement = ({ project, isStudentView = false }: Props) => {
 
             <div className="charte-document glass" ref={charteRef}>
                 <header className="charte-header">
-                    <img src="/logo-am.png" alt="AM Logo" className="charte-logo" />
+                    <img src="/logo-military.png" alt="Académie Militaire" className="charte-logo" />
                     <div className="header-text">
+                        <div className="institution-names-charte">
+                            <p className="inst-ar">الأكاديمية العسكرية بفندق الجديد</p>
+                            <p className="inst-fr">ACADÉMIE MILITAIRE DE FONDOUCK JEDID</p>
+                        </div>
                         <h1>CHARTE DE RÉALISATION DU PROJET DE FIN D'ÉTUDES</h1>
-                        <p>Année Universitaire 2025-2026</p>
+                        <p className="univ-year">Année Universitaire 2025-2026</p>
                     </div>
                 </header>
 

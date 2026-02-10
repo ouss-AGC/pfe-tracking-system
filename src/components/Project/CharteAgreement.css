@@ -29,21 +29,46 @@
 }
 
 .charte-logo {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.institution-names-charte {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.institution-names-charte .inst-ar {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: 'Amiri', serif;
+    color: #1e3a5f;
+}
+
+.institution-names-charte .inst-fr {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.5px;
+    color: #475569;
 }
 
 .header-text h1 {
-    font-size: 1.4rem;
-    margin: 0;
+    font-size: 1.35rem;
+    margin: 0.75rem 0;
     color: #1e3a5f;
-    font-weight: 700;
+    font-weight: 800;
+    text-align: center;
 }
 
-.header-text p {
-    margin: 0.5rem 0 0 0;
-    font-size: 1rem;
-    font-weight: 600;
+.header-text .univ-year {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #64748b;
+    text-align: center;
 }
 
 .charte-intro {
@@ -194,6 +219,35 @@
     gap: 0.5rem;
     cursor: pointer;
     font-size: 0.8rem;
+}
+
+/* PDF Export Mode - Force maximum clarity */
+.pdf-export-mode {
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+}
+
+.pdf-export-mode * {
+    color: #000000 !important;
+    /* Pure black text */
+    text-shadow: none !important;
+    font-family: 'Times New Roman', serif !important;
+}
+
+.pdf-export-mode .charte-logo,
+.pdf-export-mode .supervisor-stamp-img {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.pdf-export-mode .charte-rules li::before {
+    color: #000000 !important;
+}
+
+.pdf-export-mode .detail-row {
+    background: #f8fafc !important;
+    border: 1px solid #000000 !important;
 }
 
 @media print {

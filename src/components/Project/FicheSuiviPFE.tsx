@@ -179,30 +179,43 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
     const exportToPDF = async () => {
         if (!formRef.current || !fiche) return;
 
+        const previousExpanded = expandedRDV;
         setExporting(true);
+
+        // 1. Force all RDVs to expand for export
+        setExpandedRDV(-1);
+
+        // 2. Add class for high contrast styles
+        const element = formRef.current;
+        element.classList.add('pdf-export-mode');
+
         try {
-            const canvas = await html2canvas(formRef.current, {
-                scale: 2,
+            // A small delay to ensure React has rendered all expanded sections
+            await new Promise(resolve => setTimeout(resolve, 600));
+
+            const canvas = await html2canvas(element, {
+                scale: 3,
                 useCORS: true,
                 logging: false,
                 backgroundColor: '#ffffff'
             });
 
-            const imgData = canvas.toDataURL('image/png');
+            const imgData = canvas.toDataURL('image/png', 1.0);
             const pdf = new jsPDF('p', 'mm', 'a4');
+
             const imgWidth = 210;
-            const pageHeight = 297;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
             let heightLeft = imgHeight;
             let position = 0;
+            const pageHeight = 295; // A4 height approx
 
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
             heightLeft -= pageHeight;
 
             while (heightLeft >= 0) {
                 position = heightLeft - imgHeight;
                 pdf.addPage();
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
                 heightLeft -= pageHeight;
             }
 
@@ -210,6 +223,8 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
         } catch (error) {
             console.error('PDF export failed:', error);
         } finally {
+            element.classList.remove('pdf-export-mode');
+            setExpandedRDV(previousExpanded);
             setExporting(false);
         }
     };
@@ -328,7 +343,7 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
                     <div className="rdv-timeline">
                         {fiche.rendezVous.map((rdv, index) => {
                             const status = getRDVStatus(rdv);
-                            const isExpanded = expandedRDV === rdv.numero;
+                            const isExpanded = expandedRDV === rdv.numero || expandedRDV === -1;
                             const rdvLabel = RDV_SCHEDULE_2026.find(r => r.numero === rdv.numero)?.label;
 
                             return (
