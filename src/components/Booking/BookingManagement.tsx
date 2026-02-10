@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { storageService } from '../../services/storageService';
+import { emailService } from '../../services/emailService';
 import {
     Calendar, Clock, Check, X, AlertCircle, RefreshCw, MessageCircle,
     ArrowLeft, ChevronLeft, ChevronRight,
@@ -125,12 +126,24 @@ const BookingManagement = () => {
         storageService.updateAppointment(id, { statut });
 
         if (app) {
+            const projects = storageService.getProjects();
+            const studentProject = projects.find(p => p.idEtudiant === app.idEtudiant);
+
             storageService.addNotification({
                 id: `note-${Date.now()}`,
                 type: statut === 'accepte' ? 'success' : 'error',
                 message: `Votre demande de RDV du ${app.date} a été ${statut === 'accepte' ? 'acceptée' : 'refusée'}.`,
                 date: new Date().toISOString(),
                 idEtudiant: app.idEtudiant
+            });
+
+            // Send Email to Student
+            emailService.sendResponseNotification({
+                studentEmail: studentProject?.emailEtudiant || '',
+                studentName: app.nomEtudiant,
+                status: statut === 'accepte' ? 'ACCEPTÉE' : 'REFUSÉE',
+                date: app.date,
+                time: app.creneauHoraire
             });
         }
         setAppointments(storageService.getAppointments());
@@ -142,12 +155,25 @@ const BookingManagement = () => {
         storageService.updateAppointment(id, updates as any);
 
         if (app) {
+            const projects = storageService.getProjects();
+            const studentProject = projects.find(p => p.idEtudiant === app.idEtudiant);
+
             storageService.addNotification({
                 id: `note-${Date.now()}`,
                 type: 'warning',
                 message: `L'encadrant propose de reporter votre RDV du ${app.date} à ${delayTime}.`,
                 date: new Date().toISOString(),
                 idEtudiant: app.idEtudiant
+            });
+
+            // Send Email to Student
+            emailService.sendResponseNotification({
+                studentEmail: studentProject?.emailEtudiant || '',
+                studentName: app.nomEtudiant,
+                status: 'REPORTÉE',
+                date: app.date,
+                time: delayTime,
+                details: `Nouvelle proposition d'horaire : ${delayTime}`
             });
         }
         setAppointments(storageService.getAppointments());

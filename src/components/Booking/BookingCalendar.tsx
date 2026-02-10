@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, Clock, Check, HelpCircle } from 'lucide-react';
 import { storageService } from '../../services/storageService';
+import { emailService } from '../../services/emailService';
 import { useAuth } from '../../context/AuthContext';
 import type { RendezVous } from '../../types';
 import './BookingCalendar.css';
@@ -54,8 +55,18 @@ const BookingCalendar = () => {
             statut: 'en-attente'
         };
 
-        setTimeout(() => {
+        setTimeout(async () => {
             storageService.addAppointment(newApp);
+
+            // Send Email Notification to Supervisor
+            await emailService.sendBookingNotification({
+                nomEtudiant: newApp.nomEtudiant,
+                titreProjet: newApp.titreProjet,
+                date: newApp.date,
+                creneauHoraire: newApp.creneauHoraire,
+                motif: newApp.motif
+            });
+
             setAppointments(prev => [...prev, newApp]);
             setIsSubmitting(false);
             setIsSuccess(true);
