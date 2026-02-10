@@ -5,10 +5,10 @@ import emailjs from '@emailjs/browser';
 // Replace these with your actual EmailJS credentials
 // =========================================================================
 const EMAILJS_CONFIG = {
-    SERVICE_ID: 'service_pfe_tracking', // Replace with your Service ID
-    TEMPLATE_BOOKING: 'template_new_booking', // Replace with Student -> Supervisor template
-    TEMPLATE_RESPONSE: 'template_response', // Replace with Supervisor -> Student template
-    PUBLIC_KEY: 'YOUR_PUBLIC_KEY', // Replace with your Public Key
+    SERVICE_ID: 'service_2da0pjn', // Your active Outlook service
+    TEMPLATE_BOOKING: '4e5b0vl', // Student -> Supervisor template
+    TEMPLATE_RESPONSE: 'nrbytzi', // Supervisor -> Student template
+    PUBLIC_KEY: '-6qYfuo6UFFaK_jCf', // Your active Public Key
     SUPERVISOR_EMAIL: 'oussmer@hotmail.fr'
 };
 
