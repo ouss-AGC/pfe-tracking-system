@@ -5,8 +5,8 @@ import emailjs from '@emailjs/browser';
 // =========================================================================
 const EMAILJS_CONFIG = {
     SERVICE_ID: 'service_2da0pjn',
-    TEMPLATE_BOOKING: '4e5b0vl',
-    TEMPLATE_RESPONSE: 'nrbytzi',
+    TEMPLATE_BOOKING: 'template_b0dwf2q', // Student -> Supervisor template
+    TEMPLATE_RESPONSE: 'template_2zrf42q', // Supervisor -> Student template
     PUBLIC_KEY: '-6qYfuo6UFFAK_jCf',
     SUPERVISOR_EMAIL: 'oussmer@hotmail.fr'
 };
