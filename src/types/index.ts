@@ -105,6 +105,7 @@ export interface StudentRDVInput {
 
 export interface SupervisorRDVInput {
     avisAvancement: 'excellent' | 'satisfaisant' | 'insuffisant' | '';
+    remarksText?: string;
     etapeSuivante: string;
     signature: boolean;
     signatureDate?: string;

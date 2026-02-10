@@ -86,59 +86,84 @@
 }
 
 /* Official Header */
-.fiche-header {
+.official-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+    color: #1e293b !important;
+    border-bottom: 2px solid #1e3a5f !important;
+    padding: 2rem !important;
+}
+
+.header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
-    color: #fff;
-    border-bottom: 4px solid #c9a227;
+    width: 100%;
 }
 
-.header-logo .am-logo {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
+.official-logo.large {
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.header-title {
+.institution-names {
     text-align: center;
-    flex: 1;
+    margin-bottom: 1rem;
 }
 
-.header-title h1 {
-    font-size: 1.25rem;
+.inst-ar {
+    font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0 0 0.5rem 0;
-    text-transform: uppercase;
-}
-
-.header-title .ref-number {
-    font-size: 0.85rem;
-    opacity: 0.8;
     margin: 0;
+    font-family: 'Amiri', serif;
 }
 
-.header-badge {
+.inst-fr {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.dept-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-top: 5px;
+}
+
+.header-text h1 {
+    font-size: 1.6rem !important;
+    color: #1e3a5f;
+    margin: 1rem 0 !important;
+    text-shadow: none !important;
+}
+
+.ref-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.official-badge {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.75rem 1rem;
-    background: rgba(201, 162, 39, 0.2);
-    border: 1px solid #c9a227;
-    border-radius: 8px;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    background: #fff;
+    border: 2px solid #1e3a5f;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.header-badge svg {
-    color: #c9a227;
-}
-
-.header-badge span {
-    font-size: 0.75rem;
-    font-weight: 600;
+.pfe-ref {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e3a5f;
 }
 
 /* Info Section */
@@ -165,17 +190,18 @@
 }
 
 .info-item label {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #64748b;
+    color: #334155;
+    margin-bottom: 5px;
 }
 
 .info-item span {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e293b;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f172a;
 }
 
 .deadline-banner {
@@ -391,21 +417,28 @@
 .form-group textarea,
 .form-group select {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #cbd5e1;
+    padding: 1rem;
+    border: 2px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    font-weight: 500;
     background: #fff;
-    color: #1e293b;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    color: #0f172a;
+    transition: all 0.2s;
     resize: vertical;
+    line-height: 1.5;
 }
 
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
     border-color: #1e3a5f;
-    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+    box-shadow: 0 0 0 4px rgba(30, 58, 95, 0.1);
+}
+
+.remarks-textarea {
+    border-color: #1e3a5f44 !important;
+    background: #f8fafc !important;
 }
 
 .form-group textarea:disabled,
@@ -469,10 +502,11 @@
 }
 
 .stamp-image {
-    width: 100px;
+    width: 200px !important;
     height: auto;
     object-fit: contain;
-    opacity: 0.9;
+    opacity: 1;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
 }
 
 .stamp-image.large {
@@ -502,9 +536,9 @@
 }
 
 .director-stamp-image {
-    width: 80px;
+    width: 160px !important;
     height: auto;
-    opacity: 0.8;
+    opacity: 1;
 }
 
 .visa-applied span {

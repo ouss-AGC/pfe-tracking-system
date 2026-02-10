@@ -16,6 +16,12 @@ interface Props {
     isStudentView?: boolean;
 }
 
+const PREDEFINED_REMARKS = {
+    excellent: "L'officier élève fait preuve d'une grande autonomie et d'une rigueur exemplaire dans ses travaux. L'avancement est conforme au calendrier prévisionnel, avec une excellente maîtrise des concepts techniques et une approche méthodologique pertinente.",
+    satisfaisant: "Le travail progresse de manière régulière et satisfaisante. Les objectifs fixés lors du dernier rendez-vous ont été globalement atteints. L'officier élève doit maintenir cet effort pour garantir le respect des échéances finales.",
+    insuffisant: "L'avancement actuel est jugé insuffisant par rapport aux attentes et au calendrier du projet. Des lacunes méthodologiques ont été identifiées et nécessitent une réaction immédiate de la part de l'officier élève pour combler le retard."
+};
+
 const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
     const formRef = useRef<HTMLDivElement>(null);
     const [fiche, setFiche] = useState<FicheSuiviPFEData | null>(null);
@@ -257,17 +263,30 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
             {/* Main Form - For PDF Export */}
             <div className="fiche-suivi-form" ref={formRef}>
                 {/* Official Header */}
-                <header className="fiche-header">
-                    <div className="header-logo">
-                        <img src="/logo-am.png" alt="Académie Militaire" className="am-logo" />
-                    </div>
-                    <div className="header-title">
-                        <h1>FICHE DE SUIVI DE PROJET DE FIN D'ÉTUDES</h1>
-                        <p className="ref-number">ENQ-REF-32 • Année Universitaire {fiche.year}</p>
-                    </div>
-                    <div className="header-badge">
-                        <Shield size={32} />
-                        <span>N° {fiche.pfeNumber}</span>
+                <header className="fiche-header official-header">
+                    <div className="header-top">
+                        <div className="left-logo">
+                            <img src="/logo-military.png" alt="Military Academy Logo" className="official-logo large" />
+                        </div>
+                        <div className="header-text">
+                            <div className="institution-names">
+                                <p className="inst-ar">الأكاديمية العسكرية بفندق الجديد</p>
+                                <p className="inst-fr">ACADÉMIE MILITAIRE DE FONDOUCK JEDID</p>
+                                <p className="dept-name">DÉPARTEMENT GÉNIE CIVIL</p>
+                            </div>
+                            <h1>FICHE DE SUIVI DE PROJET DE FIN D'ÉTUDES</h1>
+                            <div className="ref-line">
+                                <span className="ref-item">ENQ-REF-32</span>
+                                <span className="separator">•</span>
+                                <span className="ref-item">Année Universitaire {fiche.year}</span>
+                            </div>
+                        </div>
+                        <div className="header-badge-container">
+                            <div className="official-badge">
+                                <Shield size={24} />
+                                <span className="pfe-ref">N° {fiche.pfeNumber}</span>
+                            </div>
+                        </div>
                     </div>
                 </header>
 
@@ -391,26 +410,67 @@ const FicheSuiviPFE = ({ project, isStudentView = false }: Props) => {
 
                                                 <div className="form-group">
                                                     <label>Avis sur l'avancement</label>
-                                                    <select
-                                                        value={rdv.supervisorInput.avisAvancement}
-                                                        onChange={(e) => updateSupervisorInput(rdv.numero, 'avisAvancement', e.target.value)}
-                                                        disabled={isStudentView || rdv.supervisorInput.stampApplied}
-                                                    >
-                                                        <option value="">-- Sélectionner --</option>
-                                                        <option value="excellent">Excellent</option>
-                                                        <option value="satisfaisant">Satisfaisant</option>
-                                                        <option value="insuffisant">Insuffisant</option>
-                                                    </select>
+                                                    <div className="remark-selector-row">
+                                                        <select
+                                                            value={rdv.supervisorInput.avisAvancement}
+                                                            onChange={(e) => {
+                                                                const val = e.target.value as any;
+                                                                updateSupervisorInput(rdv.numero, 'avisAvancement', val);
+                                                                // If user picks a status, we can auto-fill if the text is empty
+                                                                if (val && !rdv.supervisorInput.etapeSuivante && !isStudentView) {
+                                                                    // We use etapeSuivante or a new field?
+                                                                    // Let's use predefined text for specific avis
+                                                                }
+                                                            }}
+                                                            disabled={isStudentView || rdv.supervisorInput.stampApplied}
+                                                            className="avis-select"
+                                                        >
+                                                            <option value="">-- Évaluation --</option>
+                                                            <option value="excellent">Excellent</option>
+                                                            <option value="satisfaisant">Satisfaisant</option>
+                                                            <option value="insuffisant">Insuffisant</option>
+                                                        </select>
+
+                                                        {!isStudentView && !rdv.supervisorInput.stampApplied && (
+                                                            <div className="template-actions">
+                                                                <button
+                                                                    className="btn btn-template"
+                                                                    onClick={() => {
+                                                                        const status = rdv.supervisorInput.avisAvancement as keyof typeof PREDEFINED_REMARKS;
+                                                                        if (status && PREDEFINED_REMARKS[status]) {
+                                                                            updateSupervisorInput(rdv.numero, 'remarksText' as any, PREDEFINED_REMARKS[status]);
+                                                                        }
+                                                                    }}
+                                                                    disabled={!rdv.supervisorInput.avisAvancement}
+                                                                >
+                                                                    Appliquer Modèle Professionnel
+                                                                </button>
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <label>Étape suivante</label>
+                                                    <label>Commentaires et Instructions</label>
+                                                    <textarea
+                                                        value={(rdv.supervisorInput as any).remarksText || ''}
+                                                        onChange={(e) => updateSupervisorInput(rdv.numero, 'remarksText' as any, e.target.value)}
+                                                        placeholder="Saisissez vos commentaires ou utilisez un modèle..."
+                                                        disabled={isStudentView || rdv.supervisorInput.stampApplied}
+                                                        rows={4}
+                                                        className="remarks-textarea"
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Étape suivante (Objectif du prochain RDV)</label>
                                                     <textarea
                                                         value={rdv.supervisorInput.etapeSuivante}
                                                         onChange={(e) => updateSupervisorInput(rdv.numero, 'etapeSuivante', e.target.value)}
                                                         placeholder="Décrivez la prochaine étape..."
                                                         disabled={isStudentView || rdv.supervisorInput.stampApplied}
                                                         rows={2}
+                                                        className="next-step-textarea"
                                                     />
                                                 </div>
 
