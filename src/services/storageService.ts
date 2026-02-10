@@ -62,7 +62,19 @@ export const storageService = {
     // RENDEZ-VOUS
     getAppointments(): RendezVous[] {
         const data = localStorage.getItem(STORAGE_KEYS.APPOINTMENTS);
-        return data ? JSON.parse(data) : [];
+        const apps: RendezVous[] = data ? JSON.parse(data) : [];
+
+        // Ensure avatars are present by linking with project data if missing
+        const projects = this.getProjects();
+        return apps.map(app => {
+            if (!app.avatarEtudiant) {
+                const project = projects.find(p => p.idEtudiant === app.idEtudiant);
+                if (project?.avatarEtudiant) {
+                    return { ...app, avatarEtudiant: project.avatarEtudiant };
+                }
+            }
+            return app;
+        });
     },
 
     addAppointment(appointment: RendezVous) {
