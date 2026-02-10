@@ -82,7 +82,7 @@ const AppRoutes = () => {
   );
 };
 
-function App() {
+const MainApp = () => {
   const [showGuide, setShowGuide] = useState(false);
   const { user } = useAuth();
 
@@ -90,7 +90,7 @@ function App() {
     // Check if user has seen guide before (per session or persistent)
     const hasSeenGuide = localStorage.getItem('pfe_guide_seen');
 
-    // Show after splash screen (5s) + some delay
+    // Show after splash screen (8s) + some delay
     const timer = setTimeout(() => {
       if (!hasSeenGuide) {
         setShowGuide(true);
@@ -106,12 +106,20 @@ function App() {
   };
 
   return (
-    <AuthProvider>
+    <>
       <SplashScreen />
       {showGuide && <UserGuide role={user?.role} onClose={handleCloseGuide} />}
       <Router>
         <AppRoutes />
       </Router>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
     </AuthProvider>
   );
 }
