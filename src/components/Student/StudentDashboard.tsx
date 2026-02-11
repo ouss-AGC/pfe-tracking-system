@@ -11,7 +11,7 @@ import { RDV_SCHEDULE_2026 } from '../../types';
 import {
     Download, Clock, BookOpen, FlaskConical, LayoutDashboard,
     Calendar, Check, AlertCircle, ArrowLeft, Mail,
-    ChevronRight, Shield, Edit3, FileCheck
+    ChevronRight, Shield, Edit3, FileCheck, Award, Globe, FileText
 } from 'lucide-react';
 import './StudentDashboard.css';
 
@@ -201,6 +201,32 @@ const StudentDashboard = () => {
                     </div>
                 )}
             </div>
+
+            {/* SCIENTIFIC REQUIREMENT HIGHLIGHT */}
+            <section className="scientific-requirement-dashboard glass animate-slide-up">
+                <div className="sci-header">
+                    <Award size={28} className="sci-icon-gold" />
+                    <div className="sci-title-group">
+                        <h3>EXCELLENCE SCIENTIFIQUE : PUBLICATION REQUISE</h3>
+                        <p>Condition sine qua non pour l'obtention du visa de soutenance</p>
+                    </div>
+                    <div className="sci-status-badge draft">EN RÉDACTION (ANGLAIS)</div>
+                </div>
+                <div className="sci-dashboard-content">
+                    <div className="sci-info-item">
+                        <Globe size={18} />
+                        <span>Langue : <strong>ENGLISH ONLY</strong></span>
+                    </div>
+                    <div className="sci-info-item">
+                        <FileText size={18} />
+                        <span>Volume : <strong>MIN 12 PAGES</strong></span>
+                    </div>
+                    <div className="sci-info-item">
+                        <AlertCircle size={18} />
+                        <span>Style : <strong>HIGH-IMPACT JOURNAL</strong></span>
+                    </div>
+                </div>
+            </section>
 
             <div className="dashboard-content-grid">
                 <section className={`milestones-section glass ${isEditingProgress ? 'editing-mode' : ''}`}>

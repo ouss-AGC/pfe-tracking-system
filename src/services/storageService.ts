@@ -132,7 +132,7 @@ export const storageService = {
     addNotification(notification: any) {
         const notes = this.getNotifications();
         notes.unshift(notification); // Plus récent en haut
-        localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notes.slice(0, 5))); // On garde les 5 dernières
+        localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notes.slice(0, 15))); // Augmenté à 15 pour l'historique
     },
 
     clearNotifications() {
@@ -169,7 +169,7 @@ export const storageService = {
     },
 
     // GESTION DES DOCUMENTS
-    addDocumentToProject(projectId: string, document: { name: string; url: string; type: 'rapport' | 'presentation' | 'annexe' | 'autre' }) {
+    addDocumentToProject(projectId: string, document: { name: string; url: string; type: 'rapport' | 'presentation' | 'annexe' | 'article' | 'autre' }) {
         const projects = this.getProjects();
         const projectIndex = projects.findIndex(p => p.id === projectId);
 

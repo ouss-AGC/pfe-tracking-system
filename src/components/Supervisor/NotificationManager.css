@@ -1,0 +1,215 @@
+.notif-manager-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.notif-manager-modal {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(17, 24, 39, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+}
+
+.notif-header {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.notif-header .title-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bell-icon {
+    color: var(--color-accent-blue);
+}
+
+.notif-header h2 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.notif-composer {
+    padding: 25px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.notif-composer h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.composer-input {
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    color: #fff;
+    resize: none;
+    font-family: inherit;
+    margin-bottom: 20px;
+}
+
+.composer-row.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.type-selector {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.type-btn {
+    padding: 6px 16px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.type-btn.active.info {
+    background: var(--color-accent-blue);
+    color: #fff;
+}
+
+.type-btn.active.alerte {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.type-btn.active.urgent {
+    background: var(--color-accent-red);
+    color: #fff;
+}
+
+.btn-send {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--color-accent-blue);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-send:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.notif-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px 30px;
+}
+
+.notif-history h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 15px;
+}
+
+.notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notif-hist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border-left: 4px solid #ccc;
+}
+
+.notif-hist-item.info {
+    border-left-color: var(--color-accent-blue);
+}
+
+.notif-hist-item.alerte {
+    border-left-color: #f59e0b;
+}
+
+.notif-hist-item.urgent {
+    border-left-color: var(--color-accent-red);
+}
+
+.notif-hist-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 5px;
+}
+
+.notif-hist-type {
+    font-size: 0.65rem;
+    font-weight: 800;
+    opacity: 0.5;
+}
+
+.notif-hist-date {
+    font-size: 0.65rem;
+    opacity: 0.3;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.notif-hist-msg {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-delete {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    color: var(--color-accent-red);
+}
+
+.empty-notifs {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+    padding: 40px;
+}

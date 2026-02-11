@@ -12,6 +12,8 @@ import BookingManagement from './components/Booking/BookingManagement';
 import Profile from './components/Student/Profile';
 import SplashScreen from './components/Layout/SplashScreen';
 import UserGuide from './components/Guide/UserGuide';
+import ScientificPaperAlert from './components/Student/ScientificPaperAlert';
+import BroadcastBanner from './components/Layout/BroadcastBanner';
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles: string[] }) => {
   const { isAuthenticated, user } = useAuth();
@@ -31,6 +33,8 @@ const AppRoutes = () => {
   return (
     <div className="app-container">
       {isAuthenticated && <Navbar />}
+      {isAuthenticated && <BroadcastBanner />}
+      {isAuthenticated && user?.role === 'student' && <ScientificPaperAlert />}
       <main className="main-content">
         <Routes>
           <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />

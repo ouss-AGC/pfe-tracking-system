@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
 import BroadcastBanner from '../Layout/BroadcastBanner';
+import NotificationManager from './NotificationManager';
 import FicheSuiviPFE from '../Project/FicheSuiviPFE';
 import CharteAgreement from '../Project/CharteAgreement';
 import FicheInteractivePFE from '../Project/FicheInteractivePFE';
@@ -11,8 +12,8 @@ import {
     Users, ShieldCheck, Clock,
     Search, Calendar, TrendingUp,
     CheckCircle2, AlertTriangle, ChevronRight,
-    Activity, Shield, FileText, Megaphone, Send, Trash2,
-    Phone, Mail, Info, X, ArrowLeft, Edit2, Save, FolderOpen, Download, AlertCircle
+    Activity, Shield, FileText, Megaphone,
+    Phone, Mail, ArrowLeft, Edit2, Save, FolderOpen, Download, AlertCircle
 } from 'lucide-react';
 import './SupervisorDashboard.css';
 
@@ -24,8 +25,6 @@ const SupervisorDashboard = () => {
     const [showBroadcastModal, setShowBroadcastModal] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<ProjetPFE | null>(null);
     const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte' | 'proposition'>('proposition');
-    const [broadcastMsg, setBroadcastMsg] = useState('');
-    const [broadcastType, setBroadcastType] = useState<'info' | 'alerte' | 'urgent'>('info');
 
     // NEW: Validation Modal State
     const [studentForValidation, setStudentForValidation] = useState<ProjetPFE | null>(null);
@@ -256,82 +255,7 @@ const SupervisorDashboard = () => {
             )}
             {/* Modal de Diffusion de Message (Flash Info) */}
             {showBroadcastModal && (
-                <div className="pdf-viewer-overlay glass" onClick={() => setShowBroadcastModal(false)}>
-                    <div className="pdf-viewer-modal glass broadcast-modal animate-scale-up" onClick={e => e.stopPropagation()}>
-                        <div className="modal-military-header">
-                            <div className="header-title">
-                                <Megaphone className="title-icon" size={24} />
-                                <h3>DIFFUSION FLASH INFO COLLECTIVE</h3>
-                            </div>
-                            <button className="btn-close-military" onClick={() => setShowBroadcastModal(false)}>
-                                <X size={20} />
-                            </button>
-                        </div>
-
-                        <div className="broadcast-form-body-refined">
-                            <div className="priority-section">
-                                <label className="military-sublabel">NIVEAU D'URGENCE / PRIORITÉ</label>
-                                <div className="type-selector-military">
-                                    <button
-                                        className={`type-btn-mil info ${broadcastType === 'info' ? 'active' : ''}`}
-                                        onClick={() => setBroadcastType('info')}
-                                    >
-                                        <Info size={16} /> INFO
-                                    </button>
-                                    <button
-                                        className={`type-btn-mil alerte ${broadcastType === 'alerte' ? 'active' : ''}`}
-                                        onClick={() => setBroadcastType('alerte')}
-                                    >
-                                        <AlertTriangle size={16} /> ALERTE
-                                    </button>
-                                    <button
-                                        className={`type-btn-mil urgent ${broadcastType === 'urgent' ? 'active' : ''}`}
-                                        onClick={() => setBroadcastType('urgent')}
-                                    >
-                                        <Activity size={16} /> CRITIQUE
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="message-section">
-                                <label className="military-sublabel">CORPS DU MESSAGE (ORDRES ET CONSIGNES)</label>
-                                <div className="textarea-wrapper-military">
-                                    <textarea
-                                        placeholder="Tapez votre message ici (ex: Rappel : Remise des rapports lundi avant 12h)..."
-                                        value={broadcastMsg}
-                                        onChange={(e) => setBroadcastMsg(e.target.value)}
-                                        className="military-textarea"
-                                    ></textarea>
-                                    <div className="textarea-focus-border"></div>
-                                </div>
-                            </div>
-
-                            <div className="broadcast-actions-refined">
-                                <button className="btn-mil-outline" onClick={() => {
-                                    storageService.clearNotifications();
-                                    setBroadcastMsg('');
-                                }}>
-                                    <Trash2 size={16} /> EFFACER L'HISTORIQUE
-                                </button>
-                                <button className="btn-mil-primary" onClick={() => {
-                                    if (!broadcastMsg) return;
-                                    storageService.addNotification({
-                                        id: `note-${Date.now()}`,
-                                        message: broadcastMsg,
-                                        date: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-                                        auteur: 'Dr. Atoui',
-                                        type: broadcastType,
-                                        actif: true
-                                    });
-                                    setBroadcastMsg('');
-                                    setShowBroadcastModal(false);
-                                }}>
-                                    <Send size={18} /> TRANSMETTRE L'ORDRE
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <NotificationManager onClose={() => setShowBroadcastModal(false)} />
             )}
             {/* Modal Détails Étudiant Académique */}
             {selectedStudent && (

@@ -36,7 +36,7 @@ export interface DocumentPFE {
     name: string;
     url: string;
     date: string;
-    type: 'rapport' | 'presentation' | 'annexe' | 'autre';
+    type: 'rapport' | 'presentation' | 'annexe' | 'article' | 'autre';
 }
 
 export interface ProjetPFE {
@@ -62,6 +62,7 @@ export interface ProjetPFE {
     urlFichePFE?: string; // Lien vers le document de référence
     journalSuivi: EntreeJournal[]; // Nouveau: Preuve de suivi hebdomadaire
     documents?: DocumentPFE[]; // Nouveau: Documents uploadés
+    scientificPaperStatus?: 'not-started' | 'draft' | 'submitted' | 'validated'; // Requirement for Visa
 }
 
 export type StatutRendezVous = 'en-attente' | 'accepte' | 'reporte' | 'annule';
@@ -151,6 +152,7 @@ export interface FicheSuiviPFEData {
 
     createdAt: string;
     updatedAt: string;
+    scientificPaperRequirementMet?: boolean; // Visa Condition
 }
 
 // RDV Schedule for 2026

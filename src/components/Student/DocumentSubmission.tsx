@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { storageService } from '../../services/storageService';
 import type { DocumentPFE } from '../../types';
-import { FileText, Link as LinkIcon, Trash2, ExternalLink, Plus } from 'lucide-react';
+import { FileText, Link as LinkIcon, Trash2, ExternalLink, Plus, Award } from 'lucide-react';
 import './DocumentSubmission.css';
 
 interface DocumentSubmissionProps {
@@ -16,7 +16,7 @@ const DocumentSubmission = ({ projectId }: DocumentSubmissionProps) => {
     const [formData, setFormData] = useState({
         name: '',
         url: '',
-        type: 'rapport' as 'rapport' | 'presentation' | 'annexe' | 'autre'
+        type: 'rapport' as 'rapport' | 'presentation' | 'annexe' | 'article' | 'autre'
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -97,6 +97,7 @@ const DocumentSubmission = ({ projectId }: DocumentSubmissionProps) => {
                             <option value="rapport">Rapport</option>
                             <option value="presentation">Présentation</option>
                             <option value="annexe">Annexe</option>
+                            <option value="article">Article Scientifique (Anglais)</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>
@@ -118,8 +119,8 @@ const DocumentSubmission = ({ projectId }: DocumentSubmissionProps) => {
                 ) : (
                     documents.map(doc => (
                         <div key={doc.id} className="document-item glass">
-                            <div className="doc-icon">
-                                <FileText size={24} />
+                            <div className={`doc-icon ${doc.type === 'article' ? 'science' : ''}`}>
+                                {doc.type === 'article' ? <Award size={24} /> : <FileText size={24} />}
                             </div>
                             <div className="doc-info">
                                 <h4>{doc.name}</h4>

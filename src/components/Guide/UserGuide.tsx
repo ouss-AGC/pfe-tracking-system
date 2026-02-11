@@ -10,7 +10,8 @@ import {
     X,
     Download,
     ExternalLink,
-    Clock
+    Clock,
+    Award
 } from 'lucide-react';
 import './UserGuide.css';
 
@@ -20,7 +21,7 @@ interface UserGuideProps {
 }
 
 const UserGuide: React.FC<UserGuideProps> = ({ role, onClose }) => {
-    const [activeTab, setActiveTab] = useState<'welcome' | 'process' | 'features'>('welcome');
+    const [activeTab, setActiveTab] = useState<'welcome' | 'process' | 'features' | 'science'>('welcome');
 
     return (
         <div className="user-guide-overlay animate-fade-in">
@@ -55,6 +56,13 @@ const UserGuide: React.FC<UserGuideProps> = ({ role, onClose }) => {
                         >
                             <Shield size={18} />
                             <span>Fonctionnalités</span>
+                        </button>
+                        <button
+                            className={`nav-item ${activeTab === 'science' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('science')}
+                        >
+                            <Award size={18} />
+                            <span>Excellence Scientifique</span>
                         </button>
                     </nav>
                     <div className="sidebar-footer">
@@ -170,6 +178,46 @@ const UserGuide: React.FC<UserGuideProps> = ({ role, onClose }) => {
                                     <span>Accéder à mon espace</span>
                                     <ArrowRight size={18} />
                                 </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'science' && (
+                        <div className="guide-pane animate-slide-up">
+                            <div className="science-guide-header">
+                                <Award size={48} className="gold-icon" />
+                                <h2>Standard de Publication Scientifique</h2>
+                                <p>Pour l'obtention du visa de soutenance, un article de haut niveau est requis.</p>
+                            </div>
+
+                            <div className="science-content-grid">
+                                <div className="sci-guide-card">
+                                    <h3>Objectif Doctoral</h3>
+                                    <p>
+                                        L'encadrant soumettra les meilleurs travaux aux revues internationales indexées.
+                                        Votre contribution doit être originale et rigoureuse.
+                                    </p>
+                                </div>
+                                <div className="sci-guide-card">
+                                    <h3>Critéres de Forme</h3>
+                                    <ul>
+                                        <li><strong>Langue :</strong> Anglais académique uniquement.</li>
+                                        <li><strong>Volume :</strong> Minimum 12 pages (format IEEE/Springer).</li>
+                                        <li><strong>Style :</strong> Basé sur les "Highly Cited Papers" du domaine.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="sci-structure-block">
+                                <h3>Structure Type de l'Article</h3>
+                                <div className="structure-steps">
+                                    <span>Abstract</span>
+                                    <span>State of the Art</span>
+                                    <span>Experimental</span>
+                                    <span>Analytical</span>
+                                    <span>Results & Discussion</span>
+                                    <span>Conclusion</span>
+                                </div>
                             </div>
                         </div>
                     )}
