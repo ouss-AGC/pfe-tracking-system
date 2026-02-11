@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageService } from '../../services/storageService';
-import BroadcastBanner from '../Layout/BroadcastBanner';
 import NotificationManager from './NotificationManager';
 import FicheSuiviPFE from '../Project/FicheSuiviPFE';
 import CharteAgreement from '../Project/CharteAgreement';
@@ -87,7 +86,6 @@ const SupervisorDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
-            <BroadcastBanner />
             {/* Modal de Visualisation des DOSSIERS ACADÉMIQUES */}
             {selectedProjectForFiche && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setSelectedProjectForFiche(null)}>

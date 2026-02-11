@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { storageService } from '../../services/storageService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import BroadcastBanner from '../Layout/BroadcastBanner';
 import DocumentSubmission from './DocumentSubmission';
 import FicheSuiviPFE from '../Project/FicheSuiviPFE';
 import CharteAgreement from '../Project/CharteAgreement';
@@ -138,8 +137,6 @@ const StudentDashboard = () => {
 
     return (
         <div className="dashboard-page animate-fade-in">
-            <BroadcastBanner />
-
             {showPDF && (
                 <div className="pdf-viewer-overlay glass" onClick={() => setShowPDF(false)}>
                     <div className="pdf-viewer-modal glass" style={{ width: '90%', height: '90vh' }} onClick={e => e.stopPropagation()}>
@@ -355,33 +352,35 @@ const StudentDashboard = () => {
                 </button>
             </div>
 
-            {notifications.length > 0 && (
-                <div className="notifications-alert-panel glass animate-slide-in-up" style={{ marginTop: '2rem' }}>
-                    <div className="notes-header">
-                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <Shield size={16} /> ORDRES ET INSTRUCTIONS DE L'ENCADRANT
-                        </h3>
-                        <button className="btn-clear" onClick={() => {
-                            storageService.clearNotifications();
-                            setNotifications([]);
-                        }}>DÉCLASSÉ / LU</button>
-                    </div>
-                    <div className="notes-list">
-                        {notifications.map(note => (
-                            <div key={note.id} className={`note-item glass ${note.type}`}>
-                                <div className="note-icon">
-                                    {note.type === 'success' ? <Check size={16} /> : <AlertCircle size={16} />}
+            {
+                notifications.length > 0 && (
+                    <div className="notifications-alert-panel glass animate-slide-in-up" style={{ marginTop: '2rem' }}>
+                        <div className="notes-header">
+                            <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Shield size={16} /> ORDRES ET INSTRUCTIONS DE L'ENCADRANT
+                            </h3>
+                            <button className="btn-clear" onClick={() => {
+                                storageService.clearNotifications();
+                                setNotifications([]);
+                            }}>DÉCLASSÉ / LU</button>
+                        </div>
+                        <div className="notes-list">
+                            {notifications.map(note => (
+                                <div key={note.id} className={`note-item glass ${note.type}`}>
+                                    <div className="note-icon">
+                                        {note.type === 'success' ? <Check size={16} /> : <AlertCircle size={16} />}
+                                    </div>
+                                    <div className="note-content">
+                                        <p>{note.message}</p>
+                                        <span className="note-date">{new Date(note.date).toLocaleDateString()} - {new Date(note.date).toLocaleTimeString()}</span>
+                                    </div>
                                 </div>
-                                <div className="note-content">
-                                    <p>{note.message}</p>
-                                    <span className="note-date">{new Date(note.date).toLocaleDateString()} - {new Date(note.date).toLocaleTimeString()}</span>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
