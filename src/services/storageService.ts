@@ -139,6 +139,21 @@ export const storageService = {
         localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
     },
 
+    deactivateNotification(id: string) {
+        const notes = this.getNotifications();
+        const index = notes.findIndex(n => n.id === id);
+        if (index !== -1) {
+            notes[index].actif = false;
+            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notes));
+        }
+    },
+
+    deleteNotification(id: string) {
+        const notes = this.getNotifications();
+        const updated = notes.filter(n => n.id !== id);
+        localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(updated));
+    },
+
     hasNotification(idEtudiant: string, message: string): boolean {
         const notes = this.getNotifications();
         return notes.some(n => n.idEtudiant === idEtudiant && n.message === message);

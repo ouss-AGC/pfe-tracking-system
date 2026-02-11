@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { storageService } from '../../services/storageService';
+import { useAuth } from '../../context/AuthContext';
 import type { NotificationGlobale } from '../../types';
-import { X, Clock, Info, AlertTriangle, Zap } from 'lucide-react';
+import { X, Clock, Info, AlertTriangle, Zap, Trash2 } from 'lucide-react';
 import './BroadcastBanner.css';
 
 const BroadcastBanner = () => {
+    const { user } = useAuth();
     const [notifications, setNotifications] = useState<NotificationGlobale[]>([]);
 
     useEffect(() => {
@@ -43,11 +45,17 @@ const BroadcastBanner = () => {
                         </div>
                         <p className="broadcast-message">{note.message}</p>
                     </div>
-                    <button className="broadcast-close" onClick={() => {
-                        // Pour cette démo, on cache juste localement
-                        setNotifications(prev => prev.filter(n => n.id !== note.id));
-                    }}>
-                        <X size={16} />
+                    <button
+                        className="broadcast-close"
+                        title={user?.role === 'supervisor' ? "Omettre pour tous les étudiants (Action Globale)" : "Masquer"}
+                        onClick={() => {
+                            if (user?.role === 'supervisor') {
+                                storageService.deactivateNotification(note.id);
+                            }
+                            setNotifications(prev => prev.filter(n => n.id !== note.id));
+                        }}
+                    >
+                        {user?.role === 'supervisor' ? <Trash2 size={16} /> : <X size={16} />}
                     </button>
                 </div>
             ))}

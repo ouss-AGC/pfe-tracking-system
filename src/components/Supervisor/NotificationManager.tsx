@@ -30,10 +30,8 @@ const NotificationManager = ({ onClose }: { onClose: () => void }) => {
     };
 
     const handleDelete = (id: string) => {
-        // Simple filter for demo
-        const updated = notifications.filter(n => n.id !== id);
-        localStorage.setItem('pfe_notifications', JSON.stringify(updated));
-        setNotifications(updated);
+        storageService.deleteNotification(id);
+        setNotifications(storageService.getNotifications());
     };
 
     return (
