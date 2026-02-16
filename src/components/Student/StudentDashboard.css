@@ -414,16 +414,43 @@
     font-size: 0.9rem;
 }
 
+/* Apply mobile styles ONLY if NOT in force-desktop mode */
 @media (max-width: 1024px) {
 
-    .dashboard-content-grid,
-    .report-form-layout {
+    :not(.force-desktop) .dashboard-page {
+        margin-top: 5rem;
+        /* Reduce top margin for mobile */
+        padding: 0 1rem;
+    }
+
+    :not(.force-desktop) .dashboard-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    :not(.force-desktop) .header-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    :not(.force-desktop) .dashboard-content-grid,
+    :not(.force-desktop) .report-form-layout {
         grid-template-columns: 1fr;
     }
 
-    .mercedes-dashboard {
+    :not(.force-desktop) .mercedes-dashboard {
         flex-direction: column;
         gap: 3rem;
+        padding: 2rem 1rem;
+    }
+
+    :not(.force-desktop) .dashboard-subheader {
+        justify-content: center !important;
+        padding-right: 0 !important;
     }
 }
 

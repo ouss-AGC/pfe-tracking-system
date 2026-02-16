@@ -139,3 +139,68 @@
     background: rgba(239, 68, 68, 0.1);
     color: var(--color-accent-red);
 }
+
+/* MOBILE STYLES */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Apply mobile styles ONLY if NOT in force-desktop mode */
+@media (max-width: 1024px) {
+    :not(.force-desktop) .navbar {
+        padding: 0 1.5rem;
+    }
+
+    :not(.force-desktop) .mobile-menu-toggle {
+        display: block;
+    }
+
+    :not(.force-desktop) .navbar-nav {
+        display: none;
+        /* Hidden by default */
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        background: rgba(10, 25, 47, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    :not(.force-desktop) .navbar-nav.mobile-open {
+        display: flex;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    :not(.force-desktop) .navbar-actions .user-profile .user-info {
+        display: none;
+        /* Hide name/role to save space on mobile header */
+    }
+
+    :not(.force-desktop) .navbar-actions .user-profile {
+        padding: 0;
+        border: none;
+        background: transparent;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

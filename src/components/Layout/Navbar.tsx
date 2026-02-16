@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { LogOut, Calendar, LayoutDashboard, HelpCircle } from 'lucide-react';
+import { LogOut, Calendar, LayoutDashboard, HelpCircle, Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import UserGuide from '../Guide/UserGuide';
@@ -9,6 +9,9 @@ const Navbar = () => {
     const { user, logout } = useAuth();
     const location = useLocation();
     const [showGuide, setShowGuide] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     return (
         <nav className="navbar glass">
@@ -20,14 +23,19 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div className="navbar-nav">
+            {/* Mobile Menu Toggle */}
+            <button className="mobile-menu-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
+            <div className={`navbar-nav ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
                 {user?.role === 'supervisor' && (
                     <>
-                        <Link to="/supervisor" className={`nav-link ${location.pathname === '/supervisor' ? 'active' : ''}`}>
+                        <Link to="/supervisor" className={`nav-link ${location.pathname === '/supervisor' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             <LayoutDashboard size={18} />
                             <span>Dashboard</span>
                         </Link>
-                        <Link to="/supervisor/booking" className={`nav-link ${location.pathname === '/supervisor/booking' ? 'active' : ''}`}>
+                        <Link to="/supervisor/booking" className={`nav-link ${location.pathname === '/supervisor/booking' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             <Calendar size={18} />
                             <span>Appointments</span>
                         </Link>
@@ -35,11 +43,11 @@ const Navbar = () => {
                 )}
                 {user?.role === 'student' && (
                     <>
-                        <Link to="/student" className={`nav-link ${location.pathname === '/student' ? 'active' : ''}`}>
+                        <Link to="/student" className={`nav-link ${location.pathname === '/student' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             <LayoutDashboard size={18} />
                             <span>Mon Projet</span>
                         </Link>
-                        <Link to="/student/booking" className={`nav-link ${location.pathname === '/student/booking' ? 'active' : ''}`}>
+                        <Link to="/student/booking" className={`nav-link ${location.pathname === '/student/booking' ? 'active' : ''}`} onClick={closeMobileMenu}>
                             <Calendar size={18} />
                             <span>Prendre RDV</span>
                         </Link>
