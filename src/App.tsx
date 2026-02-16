@@ -47,12 +47,6 @@ const AppContent = () => {
             setShowSplash(false);
         }, 2500); // 2.5 seconds splash
 
-        // Check for saved device preference
-        const savedDevice = localStorage.getItem('pfe_device_mode');
-        if (savedDevice) {
-            setDeviceMode(savedDevice as 'desktop' | 'mobile');
-        }
-
         // Check for guide
         const hasSeenGuide = localStorage.getItem('pfe_guide_seen');
         const guideTimer = setTimeout(() => {
@@ -89,7 +83,7 @@ const AppContent = () => {
 
     const handleDeviceSelect = (mode: 'desktop' | 'mobile') => {
         setDeviceMode(mode);
-        localStorage.setItem('pfe_device_mode', mode);
+        // localStorage.setItem('pfe_device_mode', mode); // REMOVED: Ask every time
     };
 
     const handleCloseGuide = () => {
