@@ -4,11 +4,13 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    overflow-y: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--color-bg-deep);
     z-index: 2000;
+    padding: 2rem 0;
 }
 
 .selection-container {
@@ -130,11 +132,20 @@
 }
 
 @media (max-width: 768px) {
+    .device-selection-page {
+        align-items: flex-start;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
     .device-options {
         flex-direction: column;
+        gap: 1.5rem;
     }
 
     .selection-container {
-        padding: 2rem;
+        padding: 2rem 1.5rem;
+        width: 95%;
+        margin-top: 2rem;
     }
 }
