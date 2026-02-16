@@ -6,18 +6,15 @@ const SplashScreen: React.FC = () => {
     const [fade, setFade] = useState(false);
 
     useEffect(() => {
-        // Start fade out after 7.5s to finish by 8s
+        // Trigger fade out shortly before unmount if needed, 
+        // but now App.tsx controls the lifecycle.
+        // We keep the internal fade visual state matching the CSS.
         const fadeTimer = setTimeout(() => {
             setFade(true);
         }, 7500);
 
-        const removeTimer = setTimeout(() => {
-            setVisible(false);
-        }, 8000);
-
         return () => {
             clearTimeout(fadeTimer);
-            clearTimeout(removeTimer);
         };
     }, []);
 

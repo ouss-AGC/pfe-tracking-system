@@ -42,12 +42,16 @@ const AppContent = () => {
     const [showGuide, setShowGuide] = useState(false);
 
     useEffect(() => {
+        // MATCHING SPLASH SCREEN ANIMATION DURATION
+        // The CSS animation 'logo-zoom' takes 8s. 
+        // We wait 8s before showing the Device Selection Screen.
         const timer = setTimeout(() => {
             setShowSplash(false);
-        }, 2500); // 2.5 seconds splash
+        }, 8000);
 
         // Check for guide
         const hasSeenGuide = localStorage.getItem('pfe_guide_seen');
+        // Show guide shortly after splash ends
         const guideTimer = setTimeout(() => {
             if (!hasSeenGuide) {
                 setShowGuide(true);
