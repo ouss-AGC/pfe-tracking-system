@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './SplashScreen.css';
 
 const SplashScreen: React.FC = () => {
-    const [visible, setVisible] = useState(true);
     const [fade, setFade] = useState(false);
 
     useEffect(() => {
@@ -17,8 +16,6 @@ const SplashScreen: React.FC = () => {
             clearTimeout(fadeTimer);
         };
     }, []);
-
-    if (!visible) return null;
 
     return (
         <div className={`splash-screen ${fade ? 'fade-out' : ''}`}>
