@@ -1,5 +1,5 @@
 import type { ProjetPFE, RendezVous } from '../types';
-import { MOCK_RENDEZVOUS } from '../data/mockProjects';
+import { MOCK_RENDEZVOUS, MOCK_PROJETS } from '../data/mockProjects';
 
 const STORAGE_KEYS = {
     PROJECTS: 'pfe_projects',
@@ -12,16 +12,17 @@ const STORAGE_KEYS = {
 export const storageService = {
     // INITIALISATION
     init() {
-        const VERSION = 'v2.16_appointment_photos'; // Force cleanup of test data
+        const VERSION = 'v2.17_email_fix'; // Force cleanup of test data & Fix Email
         const currentVersion = localStorage.getItem('pfe_storage_version');
 
         if (currentVersion !== VERSION) {
             console.log('Resetting storage to version:', VERSION);
             localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
             localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
+            localStorage.removeItem(STORAGE_KEYS.USERS); // Force re-seed of users from AuthContext
+            localStorage.removeItem(STORAGE_KEYS.FICHES);
             localStorage.setItem('pfe_storage_version', VERSION);
-
-            // Note: Users are handled in AuthContext or here. Let's seed them here if missing.
         }
 
         if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
