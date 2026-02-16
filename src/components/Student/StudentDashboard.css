@@ -619,3 +619,185 @@
         justify-content: space-between;
     }
 }
+
+/* PRINT STYLES FOR PDF GENERATION */
+@media print {
+
+    /* Hide non-printable elements */
+    .navbar,
+    .btn-back,
+    .btn-outline,
+    .btn-primary:not(.print-btn),
+    /* Hide buttons, but maybe keep some indicators if needed, or hide all */
+    .btn,
+    .update-reminder,
+    .dashboard-subheader,
+    .pdf-viewer-overlay,
+    .notifications-alert-panel,
+    .academic-tabs,
+    .scientific-requirement-dashboard,
+    /* Maybe keep this? For now hiding to focus on progress */
+    .document-submission-section,
+    .m-progress-interactive input[type="range"],
+    .header-actions {
+        display: none !important;
+    }
+
+    /* Reset background and text colors for print */
+    body,
+    .dashboard-page,
+    .glass {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* Header styling for report */
+    .dashboard-header {
+        position: relative;
+        border-bottom: 2px solid #000;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dashboard-header h1 {
+        color: #000 !important;
+        font-size: 24pt !important;
+        margin-bottom: 10px;
+    }
+
+    .welcome-tag {
+        color: #666 !important;
+        border: 1px solid #ccc !important;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+
+    .encadrant-contact {
+        color: #333 !important;
+        justify-content: center;
+    }
+
+    .encadrant-contact strong {
+        color: #000 !important;
+    }
+
+    /* Dashboard Cluster (Gauges) */
+    .mercedes-cluster-wrapper {
+        page-break-inside: avoid;
+        margin-bottom: 30px;
+    }
+
+    .mercedes-dashboard {
+        border: 1px solid #ccc;
+        padding: 20px;
+        gap: 20px;
+        background: white !important;
+        box-shadow: none !important;
+        border-radius: 0;
+    }
+
+    /* Gauges need to be legible in black/white or high contrast */
+    .gauge-track {
+        stroke: #eee !important;
+    }
+
+    .gauge-value-box {
+        background: #f0f0f0 !important;
+        color: #000 !important;
+        border: 1px solid #ccc;
+    }
+
+    .gauge-title {
+        color: #000 !important;
+    }
+
+    .needle {
+        stroke: #000 !important;
+        filter: none !important;
+    }
+
+    .needle-cap-inner {
+        fill: #000 !important;
+    }
+
+    /* Milestones */
+    .dashboard-content-grid {
+        display: block !important;
+        /* Stack columns */
+    }
+
+    .milestones-section {
+        border: 1px solid #ddd !important;
+        background: white !important;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+        padding: 1rem !important;
+    }
+
+    .section-title h2 {
+        color: #000 !important;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .section-title svg {
+        color: #000 !important;
+    }
+
+    .milestone-item {
+        border-bottom: 1px solid #eee !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .m-label {
+        color: #000 !important;
+    }
+
+    .m-percent {
+        color: #000 !important;
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        background: #eee !important;
+        border: 1px solid #ccc;
+    }
+
+    .fill {
+        background: #666 !important;
+        /* Dark grey for print */
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+        box-shadow: none !important;
+    }
+
+    /* Add signature area at bottom */
+    .dashboard-page::after {
+        content: "Signature de l'Encadrant: __________________________  Signature de l'Officier Élève: __________________________";
+        display: block;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+        font-size: 12pt;
+        text-align: center;
+        page-break-inside: avoid;
+        color: #000;
+    }
+
+    .academic-dossier-section {
+        display: none !important;
+    }
+
+    /* Ensure only the dashboard is printed if user tries to print from other pages, 
+       but here we assume they are on dashboard. 
+       We hide global UI if possible, or just rely on these specific classes. */
+}

@@ -11,29 +11,34 @@ const STORAGE_KEYS = {
 
 export const storageService = {
     // INITIALISATION
+    // INITIALISATION
     init() {
-        const VERSION = 'v2.17_email_fix'; // Force cleanup of test data & Fix Email
-        const currentVersion = localStorage.getItem('pfe_storage_version');
+        // PERMANENT STORAGE MODE: No more version checks that wipe data.
+        // We only seed data if the specialized keys are completely missing.
 
-        if (currentVersion !== VERSION) {
-            console.log('Resetting storage to version:', VERSION);
-            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
-            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
-            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
-            localStorage.removeItem(STORAGE_KEYS.USERS); // Force re-seed of users from AuthContext
-            localStorage.removeItem(STORAGE_KEYS.FICHES);
-            localStorage.setItem('pfe_storage_version', VERSION);
-        }
-
-        // Safeguard: If projects are missing for any reason (cleared manually or error), re-seed them
+        // Check if projects exist
         if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
-            console.log('Seeding missing projects...');
+            console.log('Initialize: Seeding Projects...');
             localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
         }
 
+        // Check if appointments exist
+        if (!localStorage.getItem(STORAGE_KEYS.APPOINTMENTS)) {
+            console.log('Initialize: Seeding Appointments...');
+            localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(MOCK_RENDEZVOUS));
+        }
+
+        // Check if notifications exist
+        if (!localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) {
+            localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify([]));
+        }
+
+        // Users are special: we might want to sync them or keep them.
+        // For now, if missing, we just let the app handle it (AuthContext usually has the hardcoded ones).
+        // But if we want to persist changes to users (like avatars), we should initialize it.
         if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
-            // We'll trust AuthContext to provide initial users if we can't import them here
-            // or we'll define them. For safety, let's keep them in AuthContext but provide sync methods.
+            // We don't seed users here to avoid overriding AuthContext's logic, 
+            // but if we did, we'd use MOCK_USERS if we had them here.
         }
     },
 
@@ -246,5 +251,39 @@ export const storageService = {
         const fiches = data ? JSON.parse(data) : {};
         fiches[fiche.projectId] = fiche;
         localStorage.setItem(STORAGE_KEYS.FICHES, JSON.stringify(fiches));
+    },
+
+    // BACKUP & RESTORE
+    exportData() {
+        const data = {
+            version: '1.0',
+            timestamp: new Date().toISOString(),
+            storage: {
+                projects: localStorage.getItem(STORAGE_KEYS.PROJECTS),
+                appointments: localStorage.getItem(STORAGE_KEYS.APPOINTMENTS),
+                notifications: localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS),
+                fiches: localStorage.getItem(STORAGE_KEYS.FICHES),
+                // We typically don't export users if they are auth-managed, but simple backup:
+                // users: localStorage.getItem(STORAGE_KEYS.USERS) 
+            }
+        };
+        return JSON.stringify(data, null, 2);
+    },
+
+    importData(jsonString: string): boolean {
+        try {
+            const data = JSON.parse(jsonString);
+            if (!data.storage) return false;
+
+            if (data.storage.projects) localStorage.setItem(STORAGE_KEYS.PROJECTS, data.storage.projects);
+            if (data.storage.appointments) localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, data.storage.appointments);
+            if (data.storage.notifications) localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, data.storage.notifications);
+            if (data.storage.fiches) localStorage.setItem(STORAGE_KEYS.FICHES, data.storage.fiches);
+
+            return true;
+        } catch (e) {
+            console.error('Import failed', e);
+            return false;
+        }
     }
 };

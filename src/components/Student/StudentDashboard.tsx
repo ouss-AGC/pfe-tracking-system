@@ -64,6 +64,10 @@ const StudentDashboard = () => {
     const [tempRedaction, setTempRedaction] = useState<any[]>([]);
     const [activeDocTab, setActiveDocTab] = useState<'fiche' | 'charte' | 'docs'>('fiche');
 
+    const handlePrint = () => {
+        window.print();
+    };
+
     useEffect(() => {
         if (user) {
             setNotifications(storageService.getNotifications().filter(n => n.idEtudiant === user.id));
@@ -164,6 +168,10 @@ const StudentDashboard = () => {
                     </div>
                 </div>
                 <div className="header-actions">
+                    <button className="btn btn-primary print-btn" onClick={handlePrint} style={{ marginRight: '1rem' }}>
+                        <FileText size={18} />
+                        <span>Télécharger Rapport</span>
+                    </button>
                     <button className="btn btn-outline" onClick={() => setShowPDF(true)}>
                         <Download size={18} /> Cahier des Charges
                     </button>

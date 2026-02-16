@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { User, Mail, Save, ArrowLeft, ShieldCheck, Camera, Phone } from 'lucide-react';
+import { storageService } from '../../services/storageService';
+import { User, Mail, Save, ArrowLeft, ShieldCheck, Camera, Phone, Download, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './Profile.css';
 
@@ -124,6 +125,57 @@ const Profile = () => {
                         </div>
                     )}
                 </form>
+
+                {/* DATA MANAGEMENT SECTION */}
+                <div className="data-management-section" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: '2rem', paddingTop: '2rem' }}>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#fff' }}>Gestion des Données (Sauvegarde)</h3>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
+                        Téléchargez une copie de vos données pour les sécuriser ou les transférer sur un autre appareil.
+                    </p>
+                    <div className="data-actions" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                        <button className="btn btn-outline" type="button" onClick={() => {
+                            const data = storageService.exportData();
+                            const blob = new Blob([data], { type: 'application/json' });
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `pfe_backup_${new Date().toISOString().split('T')[0]}.json`;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }}>
+                            <Download size={18} /> Sauvegarder
+                        </button>
+
+                        <div className="import-wrapper" style={{ position: 'relative' }}>
+                            <input
+                                type="file"
+                                accept=".json"
+                                id="import-file"
+                                style={{ display: 'none' }}
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    const reader = new FileReader();
+                                    reader.onload = (event) => {
+                                        const json = event.target?.result as string;
+                                        if (storageService.importData(json)) {
+                                            alert('Données restaurées avec succès ! La page va se recharger.');
+                                            window.location.reload();
+                                        } else {
+                                            alert('Erreur lors de la restauration des données. Fichier invalide.');
+                                        }
+                                    };
+                                    reader.readAsText(file);
+                                }}
+                            />
+                            <button className="btn btn-outline" type="button" onClick={() => document.getElementById('import-file')?.click()}>
+                                <Upload size={18} /> Restaurer
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
