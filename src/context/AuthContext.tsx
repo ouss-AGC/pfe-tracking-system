@@ -60,7 +60,7 @@ export const MOCK_STUDENTS: Utilisateur[] = [
     {
         id: 'std-5',
         nom: 'Mohamed Aziz Elayed',
-        email: 'mouahmedaziza12@gmail.com',
+        email: 'mouhamedaziza12@gmail.com',
         telephone: '23881847',
         role: 'student',
         motDePasse: '502847',

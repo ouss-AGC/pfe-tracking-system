@@ -62,7 +62,7 @@ export const MOCK_PROJETS: ProjetPFE[] = [
         titre: 'Étude de l\'Incorporation de Coquilles de Mollusques Concassées comme Substitution au Sable dans les Mortiers de Ciment',
         idEtudiant: 'std-5',
         nomEtudiant: 'Mohamed Aziz Elayed',
-        emailEtudiant: 'mouahmedaziza12@gmail.com',
+        emailEtudiant: 'mouhamedaziza12@gmail.com',
         avatarEtudiant: '/students/mohamed-aziz-elayed.png',
         telephoneEtudiant: '23881847',
         nomEncadrant: 'Dr. Oussama Atoui',
