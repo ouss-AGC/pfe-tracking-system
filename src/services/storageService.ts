@@ -25,6 +25,12 @@ export const storageService = {
             localStorage.setItem('pfe_storage_version', VERSION);
         }
 
+        // Safeguard: If projects are missing for any reason (cleared manually or error), re-seed them
+        if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
+            console.log('Seeding missing projects...');
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(MOCK_PROJETS));
+        }
+
         if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
             // We'll trust AuthContext to provide initial users if we can't import them here
             // or we'll define them. For safety, let's keep them in AuthContext but provide sync methods.

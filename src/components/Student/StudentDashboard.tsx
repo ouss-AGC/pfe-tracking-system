@@ -86,7 +86,7 @@ const StudentDashboard = () => {
             <LayoutDashboard size={64} className="empty-icon" style={{ color: 'var(--color-accent-blue)', opacity: 0.5, marginBottom: '2rem' }} />
             <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Dossier Académique Non Assigné</h2>
             <p style={{ color: 'var(--color-text-secondary)', maxWidth: '500px', margin: '0 auto' }}>
-                Votre matricule n'est actuellement rattaché à aucun projet de fin d'études.
+                Votre matricule (ID: {user?.id}) n'est actuellement rattaché à aucun projet de fin d'études.
                 Veuillez régulariser votre situation auprès du Bureau des PFE.
             </p>
         </div>
