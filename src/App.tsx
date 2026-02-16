@@ -1,33 +1,31 @@
-```javascript
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { storageService } from './services/storageService'; // Kept as it's used globally
+import { storageService } from './services/storageService';
 import Login from './components/Auth/Login';
 import SupervisorDashboard from './components/Supervisor/SupervisorDashboard';
 import StudentDashboard from './components/Student/StudentDashboard';
 import ProjectDetails from './components/Project/ProjectDetails';
 import Navbar from './components/Layout/Navbar';
-import BookingCalendar from './components/Booking/BookingCalendar'; // Re-added as it's used in routes
+import BookingCalendar from './components/Booking/BookingCalendar';
 import BookingManagement from './components/Booking/BookingManagement';
-import Profile from './components/Student/Profile'; // Re-added as it's used in routes
+import Profile from './components/Student/Profile';
 import SplashScreen from './components/Layout/SplashScreen';
-import UserGuide from './components/Guide/UserGuide'; // Kept as it's used in the original MainApp logic, though not in the provided AppContent snippet
-import ScientificPaperAlert from './components/Student/ScientificPaperAlert'; // Kept as it's used in AppContent JSX
+import UserGuide from './components/Guide/UserGuide';
+import ScientificPaperAlert from './components/Student/ScientificPaperAlert';
 import BroadcastBanner from './components/Layout/BroadcastBanner';
-import DeviceSelectionScreen from './components/Layout/DeviceSelectionScreen'; // Added
-import SupervisorBooking from './components/Booking/SupervisorBooking'; // Added (assuming this replaces BookingManagement for supervisor)
-import './App.css'; // Added
+import DeviceSelectionScreen from './components/Layout/DeviceSelectionScreen';
+import './App.css';
 
 // Protected Route Component
-const ProtectedRoute = ({ children, allowedRole }: { children: React.ReactNode, allowedRole: 'supervisor' | 'student' }) => {
+const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles: string[] }) => {
     const { user, isAuthenticated } = useAuth();
 
     if (!isAuthenticated) {
         return <Navigate to="/login" />;
     }
 
-    if (user?.role !== allowedRole) {
+    if (user && !allowedRoles.includes(user.role)) {
         return <Navigate to="/" />; // Redirect to home or unauthorized page
     }
 
@@ -38,9 +36,10 @@ const ProtectedRoute = ({ children, allowedRole }: { children: React.ReactNode, 
 storageService.init();
 
 const AppContent = () => {
-    const { isAuthenticated, user } = useAuth(); // Added 'user' to destructuring
+    const { isAuthenticated, user } = useAuth();
     const [showSplash, setShowSplash] = useState(true);
     const [deviceMode, setDeviceMode] = useState<'desktop' | 'mobile' | null>(null);
+    const [showGuide, setShowGuide] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -72,12 +71,12 @@ const AppContent = () => {
             }
         } else if (deviceMode === 'mobile') {
             document.getElementById('root')?.classList.remove('force-desktop');
-             // Reset viewport for mobile
-             const viewport = document.querySelector('meta[name="viewport"]');
-             if (viewport) {
-                 // @ts-ignore
-                 viewport.content = "width=device-width, initial-scale=1.0";
-             }
+            // Reset viewport for mobile
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                // @ts-ignore
+                viewport.content = "width=device-width, initial-scale=1.0";
+            }
         }
     }, [deviceMode]);
 
@@ -105,7 +104,7 @@ const AppContent = () => {
             {isAuthenticated && <BroadcastBanner />}
             {isAuthenticated && user?.role === 'student' && <ScientificPaperAlert />}
             {showGuide && <UserGuide role={user?.role} onClose={handleCloseGuide} />}
-            
+
             <main className="main-content">
                 <Routes>
                     <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to="/" />} />
@@ -158,14 +157,13 @@ const AppContent = () => {
 };
 
 function App() {
-  return (
-    <AuthProvider>
-        <Router>
-            <AppContent />
-        </Router>
-    </AuthProvider>
-  );
+    return (
+        <AuthProvider>
+            <Router>
+                <AppContent />
+            </Router>
+        </AuthProvider>
+    );
 }
 
 export default App;
-```
